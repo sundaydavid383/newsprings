@@ -1,0 +1,96 @@
+.footer_holder{
+
+    padding-block: 2.1rem;
+    gap: 2rem;
+}
+.footer{
+    display: flex;
+    flex-direction: column;
+    background: var(--gray);
+}
+.footer h3{
+   color:var(--secondary-color)
+}
+.footer .about{
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: .41rem;
+    margin-top: 2rem;
+}
+.footer .about img{
+    width: 12rem;
+}
+.footer .about p{
+   color: var(--footer-text);
+   font-weight: 300;
+   font-size: .9rem;
+}
+.footer .event_conference,
+.footer .resources,
+.footer .ministries{
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+}
+.footer .event_conference h3,
+.footer .resources h3,
+.footer .ministries h3{
+    margin-bottom: .5rem;
+    font-weight: 400;
+    font-size: 1rem;
+}
+.footer .event_conference a,
+.footer .resources a,
+.footer .ministries a{
+    color: var(--footer-text);
+    font-size: .85rem;
+    font-weight: 300;
+    line-height: 1.5rem;
+    transition: .2s linear;
+}
+.footer .event_conference a:hover,
+.footer .resources a:hover,
+.footer .ministries a:hover{
+    color:var(--secondary-color);
+}
+.footer_social{
+    display: flex;
+    justify-content: center;
+    gap:3rem;
+    padding-block: 1rem;
+    margin-top: 2rem;
+}
+.footer_terms{
+    display: flex;
+    gap:1rem;
+}
+.footer_terms p{
+    color: var(--secondary-color);
+    font-size: .85rem;
+    font-weight: 300;
+    line-height: 1.5rem;
+}
+.footer_terms a{
+    color: var(--secondary-color);
+    font-size: .87rem;
+    border-left: 1px solid var(--secondary-color);
+    padding-left: .5rem;
+    font-weight: 200;
+    line-height: 1.5rem;
+}
+.footer_social .footer_media{
+    display: flex;
+    gap: 1rem;
+}
+.footer_social .footer_media a{
+    font-size: .9rem;
+    color: var(--secondary-color);
+    font-weight: 300;
+}
+.footer_social .footer_media a i{
+    font-size: 1rem;
+}

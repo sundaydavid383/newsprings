@@ -1,0 +1,64 @@
+.features{
+    background: transparent;
+    box-shadow: var(--large-shadow);
+    gap:1rem;
+    background: var(--black);
+    color: var(--light-text);
+    box-shadow: 0px -70px 90px -30px black;
+    padding-block: 3rem;
+    position: relative;
+}
+.features iframe{
+    width: 34rem;
+    height: 20rem;
+    border-radius: 1rem;
+}
+.feature_text{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap:1rem
+}
+.feature_text h1{
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 3.5rem;
+    margin-bottom: 1rem;
+}
+.feature_text small{
+    font-size: .9rem;
+    font-weight: 300;
+}
+.feature_text p{
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.8rem;
+}
+.feature_bottom{
+    padding-block: 9rem;
+    column-gap: 3rem;
+}
+.feature_bottom .feature_card{
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 1rem
+
+}
+.feature_bottom .feature_card img{
+    width: 100%;
+}
+.feature_bottom .feature_card h2{
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+.feature_bottom .feature_card p{
+    font-size: .9rem;
+    font-weight: 300;
+}
+.feature_bottom .feature_card a{
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}

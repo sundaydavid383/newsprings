@@ -1,0 +1,115 @@
+.nav{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-shadow: var(--box-shadow);
+    height: 9rem;
+    /* position: fixed;
+    top: 0rem; */
+    z-index: 111;
+    background: var(--background-color);
+}
+.nav-lower,
+.nav-upper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--background-color);
+    color: var(--light-text);
+    padding : .4rem 1.4rem;
+}
+.nav-upper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0rem;
+    margin-top: .6rem;
+    gap:1rem;
+    width: 32rem;
+}
+.nav-upper a{
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .8rem;
+    
+    padding: .3rem;
+    border-radius: 1.3rem;
+    color: var(--text-color);
+}
+.nav-upper a i{
+    font-size: 1.4rem;
+}
+.nav-lower{
+     padding-block: 1rem;
+    background: transparent;
+    padding-inline: 5rem;
+    margin-top: 3rem;
+}
+
+.nav-lower .logo img{
+    width: 13rem;
+    margin-left: -2.5rem;
+    margin-top: -.5rem;
+}
+.nav-upper .email{
+    color: var(--text-color);font-size: 1.1rem;
+}
+.nav-upper .email i{
+    margin-right: .6rem;
+    font-size: 1.7rem;
+}
+
+.links{
+    display: flex;
+    gap: 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.links a,
+.links .droper{
+    color: var(--secondary-color);
+    position: relative;
+}
+.links a div,
+.links .droper div{
+    height: .3rem;
+    width: 0%;
+    background-color: var(--primary-color);
+    border-radius: 1rem;
+    cursor: pointer;
+    transition:.3s linear
+}
+.links a:hover div,
+.links .droper:hover div{
+    width: 100%;
+}
+.links a:hover,
+.links .droper:hover{
+    color: var(--primary-color);
+}
+.ministy{
+    position: relative;
+}
+.ministry_dropdown{
+    position: absolute;
+    background: var(--background-color);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    z-index: 11;
+    box-shadow: var(--box-shadow);
+    display: none;
+}
+.ministy .ministry_dropdown.active{
+    display: flex;
+}
+.ministy i{
+    margin-left: .6rem;
+}
+.ministy p{
+    cursor: pointer;
+}

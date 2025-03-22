@@ -1,0 +1,127 @@
+.sections  img{
+  width: 4rem;
+}
+.first-section{
+    flex-wrap: wrap;
+    column-gap:.5rem;
+    row-gap:2rem;
+}
+.first-section a{
+    width: 48%;
+    position: relative;
+    color: var(--text-color);
+}
+.first-section a img{
+    width: 100%;
+    height: 100%;
+}
+.first-section a .text{
+    position: absolute;
+    bottom:4%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--opaque-light-text);
+    padding: 1rem;
+    width: 70%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap:.3rem;
+}
+.first-section a .text h1{
+    font-size: 1.7rem;
+    font-weight: 500;
+    line-height: 1.7rem;
+    margin-bottom: .5rem;
+}
+.first-section a .text p{
+    font-size: .97rem;
+    font-weight: 300;
+    line-height: 1.5rem;
+    margin-bottom: .5rem;
+}
+.first-section a .text .link{
+    font-weight: 400;
+    font-size: .9rem;
+}
+.middle-section{
+    position: relative;
+}
+.middle-section img{
+  width: 100%;
+  height: 80vh;
+}
+.middle-section  .text {
+    position: absolute;
+    top:0rem;
+    padding: 32%;
+    padding-top: 12rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: var(--secondary-color);
+    width: 100%;
+height: 20vh;
+    backdrop-filter: blur(-15px);
+}
+.middle-section  .text p{
+    position: relative;
+}
+.middle-section  .text p::before{
+    content: '';
+    position: absolute;
+    bottom: -7.6rem;
+    left: 50%;
+    width: .2rem;
+    height: 8rem;
+    background: var(--secondary-color);
+}
+.middle-section  .text span{
+    position: relative;
+    bottom: -7.7rem;
+}
+
+.last-section{
+    column-gap:1.5rem;
+
+}
+.last-section a{
+    width: 50%;
+    position: relative;
+    overflow:hidden;
+}
+.last-section a img{
+    width: 100%;
+
+    
+}
+.last-section .text{
+    position: absolute;
+    top: 0rem;
+    left:50%;
+    transform: translateX(-50%);
+    color: var(--light-text);
+    text-align: center;
+    width: 100%;
+    background: rgba(0, 0, 0,.4);
+    box-shadow: 0px 0px 50px 40px rgba(0,0,0,.7),
+                inset 0px 0px 150px 170px rgba(0,0,0,.7);
+}
+.last-section .text h2{
+     font-weight: 500;
+     font-size: 2rem;
+}
+.last-section .text p{
+    font-weight: 300;
+    font-size: 1rem;
+}
+.last-section .text span{
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--primary-color);
+}

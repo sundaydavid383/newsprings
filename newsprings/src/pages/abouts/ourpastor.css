@@ -1,0 +1,21 @@
+.pastor_words_image{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    text-transform: capitalize;
+}
+.pastor_words_image .image{
+    width: 100%;
+}
+.pastor_words_image h3{
+    color: var(--primary-color);
+    text-align: center;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+
+}
+.pastor_words_image h1{
+    color: var(--secondary-color);
+    text-align: center;
+  
+}

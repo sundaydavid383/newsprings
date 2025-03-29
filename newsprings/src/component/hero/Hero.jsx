@@ -5,6 +5,7 @@ import image2 from "../../assets/church2.jpg"
 import image3 from "../../assets/church3.jpg"
 import image4 from "../../assets/church4.jpg"
 import Feature from "../feature/Feature";
+import { Link } from "react-router";
 
 const Hero = () => {
   const [printedTalk, setPrintedTalk] = useState(0)
@@ -100,11 +101,11 @@ useEffect(() => {
         <div className="ps">
           {page.ps.map(p=><p key={p}>{p}</p>)} 
         </div>
-        <div className="btn">
+        <Link className="btn" to="/connect">
           <p>
-            contact us <i className="fa-solid fa-arrow-right-long"></i>
+            CONTACT <i className="fa-solid fa-arrow-right-long"></i>
           </p>
-        </div>
+        </Link>
       </div>
        <div className="image">
         <img className="person" src={page.sectionimage} alt="" />

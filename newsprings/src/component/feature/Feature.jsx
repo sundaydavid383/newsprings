@@ -1,13 +1,16 @@
 import React from 'react'
 import "./feature.css"
-import { Link } from "react-router";
-
 import church1 from "../../assets/church8.jpg"
 import church2 from "../../assets/church10.jpg"
 import church3 from "../../assets/church11.jpg"
+import { Link } from "react-router";
+
+
+import FeatureBottom from './FeatureBottom';
 
 
 const Feature = () => {
+  const featureType = "homepage"
   const features = [
     {
       imgSrc: church1,
@@ -31,6 +34,7 @@ const Feature = () => {
       link: "/serve"
     }
   ];
+
   return (
     <div className='features '>
       <div className="feature_top container">
@@ -41,16 +45,7 @@ const Feature = () => {
         <p>What do we do when setbacks come our way? Pastor Daniel Floyd continues our Follow Me series, revealing the power of prayer as a spiritual weapon and showing us that while setbacks are inevitable, defeat doesn’t have the final word. Join us as we learn how a praying church can overcome every obstacle and walk in the victory God has promised.</p>
        </div>
       </div>
-      <div className="feature_bottom container">
-        {features.map((feature, index)=>( <div key={index} className="feature_card">
-          <img src={feature.imgSrc} alt="" />
-          <h2>{feature.title}</h2>
-          <p>{feature.description}</p>
-          <Link to={feature.link}>{feature.altText} <i class="fa-solid fa-caret-right"></i></Link>
-        </div>))}
-       
-      
-      </div>
+     <FeatureBottom cards={features} featureType={featureType}/>
       
     </div>
   )

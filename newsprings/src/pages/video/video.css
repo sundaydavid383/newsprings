@@ -1,0 +1,39 @@
+.video{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8rem;
+}
+.video iframe{
+    width: 70%;
+    aspect-ratio: 16/9;
+    border-radius: 1rem;
+}
+.video .text{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light-text);
+    width: 100%;
+    padding: 2rem;
+    padding-inline: 20%;
+     row-gap: 1.4rem;
+    text-align: left;
+}
+.video .feature_bottom .text{
+    padding-inline: 7%;
+}
+.video .text h3{
+    font-weight: 500;
+    font-size: 2rem;
+    color: var(--secondary-color);  
+}
+.video .text .date{
+   font-size: 1.1rem;
+   color: var(--text-color);
+}
+.video .text .description{
+    font-size: 1rem;
+    color: var(--text-color);
+    line-height: 1.4rem;
+ }

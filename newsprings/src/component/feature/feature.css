@@ -10,7 +10,7 @@
 }
 .features iframe{
     width: 34rem;
-    height: 20rem;
+    height: 19rem;
     border-radius: 1rem;
 }
 .feature_text{
@@ -34,9 +34,14 @@
     font-weight: 300;
     line-height: 1.8rem;
 }
+
 .feature_bottom{
     padding-block: 9rem;
-    column-gap: 3rem;
+    padding-inline: 2.5rem;
+    gap: 2rem;
+    row-gap: 4rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 .feature_bottom .feature_card{
     width: 25rem;
@@ -44,7 +49,6 @@
     flex-direction: column;
     position: relative;
     gap: 1rem
-
 }
 .feature_bottom .feature_card img{
     width: 100%;
@@ -61,4 +65,40 @@
     font-size: .8rem;
     font-weight: 500;
     color: var(--primary-color);
+}
+/*======================
+===========================sermon============
+========================*/
+.sermon_card{
+    display: flex;
+    flex-direction: column;
+    width: 24rem;
+    /*position: relative;*/
+    padding: 0rem;
+}
+.sermon_card img{
+    width: 100%;
+
+}
+.sermon_card .text{
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    padding: 0rem;
+}
+.sermon_card .text h2{
+    font-size: 1.31rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    
+}
+.sermon_card .text .details{
+    line-height: 1.3rem;
+    color: var(--secondary-color);
+}
+.sermon_card .text .description{
+    font-size: .9rem;
+    color: var(--text-color);
+    font-weight: 300;
+    line-height: 1.2rem;
 }

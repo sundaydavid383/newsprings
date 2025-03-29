@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rochester&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Rochester&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     text-decoration: none;
-    font-family: "Poppins", sans-serif;
+    list-style: none;
+    font-family: 'Inter', sans-serif;
 }
 .container {
     display: flex;
@@ -15,24 +19,27 @@
 :root{
     --primary-color:rgb(36, 110, 170);
     --gray: rgb(233, 232, 232);
-    --text-color : rgb(8, 17, 59);
+    --nav-color: rgb(255, 255, 255, .99);
+    --text-color : rgb(74, 74, 75);
     --light-text: rgb(243, 240, 240);
     --footer-text:rgb(120, 120, 121);
-    --opaque-light-text: rgba(243, 240, 240, .8);
-    --very-opaque-light-text: rgba(243, 240, 240, .5);
+    --opaque-light-text: rgba(233, 232, 232, 0.8);
+    --very-opaque-light-text: rgb(202, 200, 200);
     --secondary-color:rgb(5, 4, 65);
     --light-background:rgba(12, 13, 107, 0.7);
+    --dark-secondary : rgb(1, 0, 19);
+    --dark-secondary-shadow: rgba(1, 0, 19, 0.7);
     --background-color: rgb(255, 255, 255);
     --light-backgound: rgb(187, 238, 187);
+    --shadow-white: rgba(77, 75, 75, 0.3);
 
 
 
     --tetiary-color:rgb(212, 186, 38);
     --black: rgb(36, 35, 35);
-    --box-shadow:0px 0px 15px 4px rgba(34, 34, 34,.4);
+    --box-shadow:0px 0px 8px 1px rgba(34, 34, 34,.4);
     --light-shadow: 0px 0px 5px 4px rgba(232, 248, 227, 0.4);
     --bubbles-shadow: 0px 0px 7px 0px rgba(114, 121, 114, 0.7);
-    --shadow-white: rgba(77, 75, 75, 0.1);
     --primary-shadow: 0px 0px 5px 4px rgba(36, 170, 36,.4);
     --video-background: rgba(0,0,0,.9);
     --large-shadow: 0px 0px 130px 30px rgba(35, 36, 35, 0.6);
@@ -102,14 +109,14 @@ body{
     }
 }
 .btn{
-    background: var(--tetiary-color);
-    width: 10rem;
+    background: var(--primary-color);
+    width: 8rem;
     border-radius: 3rem;
-    height:3.6rem;
+    height:3rem;
     text-align: center;
-    line-height: 3.5rem;
-    font-weight: 500;
-    font-size: 1.1rem;
+    line-height: 3rem;
+    font-weight: 400;
+    font-size: .96rem;
     text-transform: capitalize;
     cursor: pointer;
     position: relative;
@@ -123,7 +130,7 @@ body{
     left:-8rem;
     transition: .5s ease-in-out;
     content: '';
-    background: var(--primary-color);
+    background: var(--tetiary-color);
     height: 9rem;
     width: 10rem;
     border-radius: 50%;
@@ -138,20 +145,23 @@ body{
     left: 2.9rem;
 }
 .btn:hover::before{
-    top: -.4rem;
+    top: -.6rem;
     left:-1.6rem;
 }
 .btn i{
     padding-left: .3rem;
 }
 .btn p{
-    position: absolute;
-    z-index: 11111;
-    color: var(--text-color);
-    left: 10%;
+    position: relative;
+    margin-left: -1.3rem;
+    z-index: 10;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--light-text);
+
 }
 .btn:hover p{
-    color: var(--light-text);
+    color: var(--text-color);
 }
 .title {
     text-align: center;
@@ -174,4 +184,249 @@ body{
 }
 .title .priamry{
     color: var(--primary-color);
+}
+
+/*================
+===============about component that is fr your 
+use  ia m justleatjing how to type fast=
+=================
+=-===============*/
+.about_nav{
+    width: 100%;
+    position: fixed;
+    display: flex;
+    padding: .8rem 1rem;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+    left: 0rem;
+    top: 7rem;
+    z-index: 1111;
+}
+
+.about_nav a{
+    color:var(--light-text);
+    font-weight: 300;
+    font-size: .9rem;
+    transition: .2s linear;
+    padding: .9rem 3rem;
+    text-align: center;
+    width: 19rem;
+    white-space: nowrap;
+
+ 
+}
+
+.about_nav .liactive,
+.about_nav li a:hover{
+   background-color: var(--very-opaque-light-text);
+   color: var(--text-color);
+}
+
+
+.about{
+    margin-top: 12rem;
+    gap:2rem;
+    display: flex;
+    flex-direction: column;
+    padding-inline: 10%;
+}
+.about p{
+    color:var(--text-color)
+}
+.getstarted,
+.about_text {
+    text-align: left;
+}
+.getstarted h3,
+.about_text h1{
+    margin-bottom: .6rem;
+    font-weight: 700;
+    color: var(--black);
+}
+.getstarted p,
+.about_text p{
+    font-size: .95rem;
+    line-height: 1.7rem;
+    font-weight: 300;
+}
+.getstarted a{
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: .2s linear;
+}
+.getstarted a:hover{
+    color: var(--tetiary-color);
+}
+.about_links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    padding-block: 4rem;
+}
+.about_links a{
+    transition: .3s linear;
+    color:  var(--primary-color);
+    font-family: "Rochester", cursive;
+    font-size: 1.4rem;
+}
+.about_links a:hover{
+    color: var(--tetiary-color);
+}
+.abouts_article_holder{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  
+}
+
+.abouts_article_holder .about-article h2{
+    margin-bottom: .6rem;
+    font-weight: 600;
+    color: var(--black);
+    color: var(--secondary-color);
+}
+.about_article_options{
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem;
+    margin-top: 2rem;
+    row-gap: .2rem;
+}
+.about_article_options h3{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+/*================
+===============about stories=
+=================
+=-===============*/
+.aboutstory{
+    padding-inline: 2.8rem;
+}
+.about_stories{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.about_stories h1{
+    text-align: center;
+    color: var(--secondary-color);
+
+}
+.about_stories_holder{
+    flex-wrap: wrap;
+    row-gap: 3rem;
+}
+.about_stories_holder  .testifier{
+    display: flex;
+    flex-direction: column;
+    width: 28rem;
+    position: relative;
+    gap:.6rem;
+    transition: .3s linear;
+    padding: .5rem .8rem;
+  
+}
+.about_stories_holder  .testifier:hover{
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+}
+.about_stories_holder  .testifier:hover .image img{
+    transform: scale(1.1);
+}
+.about_stories_holder .image{
+   position: relative;
+   width: 100%;
+   overflow: hidden;
+}
+.about_stories_holder .image img{
+    width: 100%;
+    transition: .2s linear;
+}
+.about_stories_holder  .testifier .testifier_text{
+    display: flex;
+    gap: .6rem;
+    flex-direction: column;
+
+}
+.about_stories_holder  .testifier .testifier_text .title{
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+.testifier_text_upper_details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+.testifier_text_upper_details  .name{
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    border-right: 1px solid var(--tetiary-color);
+    width: 50%;
+}
+.testifier_text_upper_details  .testimonyCategory{
+    color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 400;
+}
+.testifier_text_upper_details  .date{
+    color: var(--tetiary-color);
+    font-size: 1rem;
+    font-weight: 400;
+    align-self: flex-start;
+    margin-top: .5rem;
+    display: flex;
+    width: 100%;
+}
+
+.about_stories_holder  .testifier .testifier_text .testimony{
+    color: var(--text-color);
+    font-weight: 300;
+    font-size: .9rem;
+    line-height: 1.8rem;
+    text-align: left;
+    margin-left: -3rem;
+}
+.testifier_text_lower_details{
+    display: flex;
+    flex-direction: column;
+}
+.about_stories_holder .prayer_request span,
+.about_stories_holder .lessonlearned span{
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--secondary-color);
+}
+.about_stories_holder .prayer_request,
+.about_stories_holder .lessonlearned {
+    font-weight: 400;
+    font-size: .94rem;
+    color: var(--footer-text);
+    padding-bottom: .4rem;
+}
+.scripture_ref span{
+    margin-left: .5rem;
+    font-size: 1rem;
+    color: var(--tetiary-color);
+}
+.scripture_ref{
+    color: var(--secondary-color);
+    border-top: 1px solid var(--shadow-white);
+    border-bottom: 1px  solid var(--shadow-white);
+    padding-block: .5rem;
+    line-height: 1.7rem;
+}
+.about_stories .btn p{
+    color: var(--light-text);
+
+}
+.about_stories .btn:hover p{
+    color: var(--secondary-color);
 }

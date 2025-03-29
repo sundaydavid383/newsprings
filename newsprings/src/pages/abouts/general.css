@@ -1,0 +1,110 @@
+.general h2{
+   font-size: 3rem;
+   color: var(--secondary-color);
+   text-align: center;
+   margin: auto;
+   width: 100%;
+   border-bottom: 3px solid var(--gray);
+   margin-bottom: 4rem;
+}
+.general.about{
+    padding: 0rem;
+}
+.general .about_links{
+    padding-inline: 3rem;
+}
+.genral_overseer_words {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-around;
+    margin-bottom: 7rem;
+    padding-inline: 6rem;
+    
+}
+.genral_overseer_words .image{
+  width: 45%;
+  position: relative;
+  overflow: hidden;
+  transition: .3s linear;
+}
+.genral_overseer_words .image img{
+    width: 100%;
+    transition: .3s linear;
+  }
+  .genral_overseer_words .image img:hover{
+    transform: scale(1.1);
+  }
+.genral_overseer_words .text{
+    width: 50%;
+    line-height: 1.45rem;
+    font-size: .93rem;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+} 
+.pastors_blog{
+    gap: 2rem;
+    padding-inline: 3rem;
+    flex-wrap: wrap;
+    background-color: var(--very-opaque-light-text);
+    width: 100%;
+
+}
+.blog_card{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 24rem;
+    gap: .1rem;
+    background: var(--light-text);
+    transition: .2s linear;
+}
+ .blog_card:hover{
+    border-bottom: 4px solid var(--tetiary-color);
+    transform: translateY(-4px);
+}
+.blog_card:hover .image img{
+    transform: scale(1.1);
+}
+.blog_card .image {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.blog_card .image img {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: .2s linear;
+}
+.blog_card .text{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+     background: white;
+    padding-inline: 1.5rem;
+}
+.blog_card .text .name{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+.blog_card .text .title{
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+.blog_card .text .date{
+    color: var(--text-color);
+    border-top: 2px solid var(--opaque-light-text);
+    padding-top: .7rem;
+  
+}
+.blog_card .text .btn{
+    margin-block: .6rem;
+    margin-left: -.3rem;
+
+}

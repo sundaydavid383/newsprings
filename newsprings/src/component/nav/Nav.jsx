@@ -37,8 +37,12 @@ const Nav = ({activePage}) => {
     <p>SERMONS</p>
     <div></div>
   </Link>
-  <Link className={`${activePage == "give" ? "active" : ""}`} to="/give">
+  <Link className={`${activePage == "giving" ? "active" : ""}`} to="/giving">
     <p>GIVE</p>
+    <div></div>
+  </Link>
+  <Link className={`${activePage == "share-testimony" ? "active" : ""}`} to="/share-testimony">
+    <p>SHARE TESTIMONY</p>
     <div></div>
   </Link>
   <Link className={`${activePage == "locations" ? "active" : ""}`} to="/locations">
@@ -94,6 +98,16 @@ const Nav = ({activePage}) => {
         to="/events"
       >
         <p>EVENTS</p>
+        <div></div>
+      </Link>
+      <Link
+        className={`${activePage == "membership" ? "active" : ""}`}
+        onClick={() => {
+          document.querySelector(".ministry_dropdown").classList.remove("active");
+        }}
+        to="/membership-class"
+      >
+        <p>BELIVERS CLASS</p>
         <div></div>
       </Link>
     </div>

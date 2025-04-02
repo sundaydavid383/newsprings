@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./stories.css"
 import { Link } from 'react-router'
 import image1 from "../../assets/testifier1.jpg"
@@ -7,10 +7,13 @@ import image3 from "../../assets/testifier3.jpg"
 import image6 from "../../assets/testifier4.jpg"
 import image4 from "../../assets/testifier5.jpg"
 import image5 from "../../assets/testifier6.jpg"
+import image7 from "../../assets/testimony3.jpg"
+import image8 from "../../assets/testimony1.jpg"
+import image9 from "../../assets/testimony2.jpg"
 
 
 const Stories = ({setActivePage}) => {
-    const testimonies = [
+    let testimonies = [
         {  image:image1,
           name: "John Doe",
           date: "2025-03-24",
@@ -45,7 +48,7 @@ const Stories = ({setActivePage}) => {
             pastor: "Pastor Jane Smith"
           }
         },
-        {  image:image3,
+        { image:image3,
           name: "James Williams",
           date: "2025-03-15",
           title: "Family Restoration",
@@ -112,11 +115,89 @@ const Stories = ({setActivePage}) => {
             location: "Lagos, Nigeria",
             pastor: "Pastor Jane Smith"
           }
+        },
+        {
+          image: image7,
+          name: "Esther Oladipo",
+          date: "2025-02-15",
+          title: "Supernatural Conception",
+          testimony: "After five years of marriage without a child, I was on the verge of giving up hope. Doctors had diagnosed me with complications that made conception almost impossible. During a faith-building service at RCCG New Springs, I received a prophetic word that my barrenness would be turned to fruitfulness. I held onto that word and continued in prayer. Within three months, I conceived! Today, I am a joyful mother of twins, a testimony of God's faithfulness.",
+          scriptureReference: "Genesis 21:2",
+          testimonyCategory: "Fruitfulness",
+          followUpAction: "Encouraging waiting couples through testimonies and prayers.",
+          impact: "Restoring hope to other couples facing fertility challenges.",
+          lessonLearned: "God makes the impossible possible in His perfect time.",
+          prayerRequest: "That my children grow in the fear and wisdom of God.",
+          churchDetails: {
+            name: "RCCG New Springs",
+            location: "Lagos, Nigeria",
+            pastor: "Pastor Jane Smith"
+          }
+        },
+        {
+          image: image8,
+          name: "Samuel Okechukwu",
+          date: "2025-01-30",
+          title: "Deliverance from Addiction",
+          testimony: "For years, I struggled with substance addiction. It controlled my life, ruining my relationships and finances. My family had given up on me. One Sunday, I was invited to RCCG New Springs and reluctantly attended. During the worship session, I felt a heavy burden lift off me. After that day, I lost the desire for drugs and alcohol completely. I joined the deliverance team, and my life has never been the same.",
+          scriptureReference: "2 Corinthians 5:17",
+          testimonyCategory: "Deliverance",
+          followUpAction: "Ministering to those battling addiction.",
+          impact: "Helping others break free from destructive habits through faith.",
+          lessonLearned: "True freedom is found in Jesus Christ.",
+          prayerRequest: "That I continue to grow spiritually and help others find deliverance.",
+          churchDetails: {
+            name: "RCCG New Springs",
+            location: "Lagos, Nigeria",
+            pastor: "Pastor Jane Smith"
+          }
+        },
+        {
+          image: image9,
+          name: "Sarah Akinwale",
+          date: "2025-01-20",
+          title: "Divine Favor in Immigration",
+          testimony: "After years of trying to secure my residency abroad, I faced numerous rejections. Every attempt ended in disappointment. I decided to surrender my case to God, fasting and praying fervently. One Sunday, my pastor declared favor over pending applications, and I received it in faith. Miraculously, within weeks, my application was approved without any further hurdles! I now help others navigate their faith journey during immigration challenges.",
+          scriptureReference: "Psalm 5:12",
+          testimonyCategory: "Divine Favor",
+          followUpAction: "Helping others trust God during immigration processes.",
+          impact: "Encouraging people to put God first in major life decisions.",
+          lessonLearned: "God’s favor opens doors no man can shut.",
+          prayerRequest: "That I continue to walk in God's favor and be a blessing to others.",
+          churchDetails: {
+            name: "RCCG New Springs",
+            location: "Lagos, Nigeria",
+            pastor: "Pastor Jane Smith"
+          }
         }
       ];
     useEffect(() => {
         setActivePage("about")
       }, [])
+      const [search, setSearch] = useState("")
+      const [filteredTestimonies, setFilteredTestimonies] = useState([])
+
+      
+      const onSearch = (e) => {
+        e.preventDefault();
+        const label = document.getElementById("formlb");
+      
+        if (search.trim() === "") {
+          label.textContent = "You can't search with an empty search box";
+          setFilteredTestimonies([])
+          return;
+        } else {
+          label.textContent = ""; // Clear error message
+          setFilteredTestimonies(testimonies.filter((story)=>(
+            story.name.split(" ").some((word)=>word.toLowerCase().includes(search.toLowerCase())) ||
+            story.testimony.split(" ").some((word)=>word.toLowerCase().includes(search.toLowerCase())) ||
+            story.title.split(" ").some((word)=>word.toLowerCase().includes(search.toLowerCase()))
+          )))
+
+         
+          setSearch(""); // Clear search input
+        }
+      };
   return (
     
         <div className="about aboutstory">
@@ -143,8 +224,57 @@ const Stories = ({setActivePage}) => {
        </ul>
        <div className="about_stories">
         <h1>Stories</h1>
+        <h3>Go through people testimonies</h3>
+        <div className="formholder">
+  <div className="formconatianer">
+    <form className="story_form" onSubmit={onSearch}>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        type="search"
+        placeholder="Search for testimony by keyword, stories, etc..."
+      />
+      <button type="submit">
+        <i className="fa-solid fa-search"></i>
+      </button>
+    </form>
+    <label htmlFor="" id="formlb"></label>
+  </div>
+</div>
+     
         <div className="about_stories_holder container">
-        {testimonies.map((testifier, index) => (
+      { filteredTestimonies.length > 0 ? 
+        filteredTestimonies.map((testifier,index)=>(
+          <div className="testifier" key={index}>
+            <div className="image">
+            <img src={testifier.image} alt={testifier.name} />
+            </div>
+         
+          <div className="testifier_text">
+            <h2 className="title">{testifier.title}</h2>
+            <div className="testifier_text_upper_details">
+              <p className="name">{testifier.name}</p>
+              <div className="testimonyCategory">{testifier.testimonyCategory}</div>
+              <div className="date">{testifier.date}</div>
+        
+            </div>
+            <div className="testimony">{testifier.testimony.slice(0, 200)}......</div>
+            {/* <div className="testifier_text_lower_details">
+              <p className="lessonlearned"><span>{testifier.name} learnt    </span>:"{testifier.lessonLearned}"</p>
+              <div className="scripture_ref">reference:<span>{testifier.scriptureReference}</span></div>
+              <div className="prayer_request"><span>prayer request:</span> {testifier.prayerRequest}</div>
+            </div> */}
+
+          </div>
+          <Link className="btn" to={`/testimony/${index}`}>
+                    <p>
+                      CONTACT <i className="fa-solid fa-arrow-right-long"></i>
+                    </p>
+                    <div></div>
+                  </Link>
+        </div>
+        )) 
+       : testimonies.map((testifier, index) => (
         <div className="testifier" key={index}>
             <div className="image">
             <img src={testifier.image} alt={testifier.name} />

@@ -1,0 +1,62 @@
+.career_intro img{
+    width: 100%;
+}
+.career_intro{
+    position: relative;
+}
+.career_intro .text{
+    background: transparent;
+    width: 26rem;
+    position: absolute;
+    top: 2rem;
+    left: 2%;
+    z-index: 11;
+    color: var(---very-opaque-light-text);
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+}
+
+
+.career_intro .text h2{
+   font-weight: 500;
+   font-size: 2rem;
+   line-height: 2.6rem;
+   color: var(--light-text);
+}
+
+.career_intro .text p{
+    color: var(--light-text);
+    font-weight: 300;
+    line-height: 1.6rem;
+}
+.career_intro .giving_Img_background_text{
+    background: transparent;
+    width: 26rem;
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+    color: var(--secondary-color);
+}
+
+.career_intro .giving_Img_background  p{
+    color: var(--text-color);
+}
+.career_intro a{
+    font-size: .95rem;
+    color: var(--secondary-color);
+    display: flex;
+    gap: .7rem;
+    text-transform: capitalize;
+    align-items: center;
+}
+.giving_Img_background_text p{
+    color: var(--secondary-color) ;
+}
+.giving_Img_background_text h2{
+    color: var(--secondary-color) ;
+}

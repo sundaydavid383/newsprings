@@ -1,0 +1,19 @@
+.giving{
+    margin-top: 8rem;
+}
+.questionAndAnswer{
+    padding-inline: 18%;
+    margin-block: 2rem;
+}
+.moreInfo{
+    font-size: 1.09rem;
+    color: var(--secondary-color);
+    font-weight: 400;
+    margin-top: 2rem;
+}
+.moreInfo a{
+    color: var(--primary-color);
+}
+.moreInfo a:hover{
+    color:var(--tetiary-color)
+}

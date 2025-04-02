@@ -1,0 +1,31 @@
+.career_nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    top: 6.5rem;
+    left: 0rem;
+    padding-inline: 4.4rem;
+    background: var(--nav-color);
+    z-index: 111;
+    padding-top: .6rem;
+    padding-bottom: 0.7rem;
+    border-top: 1px dashed var(--opaque-light-text);
+  }
+  
+  .career_nav .btn {
+    width: 10rem;
+  }
+  .about.career .btn p{
+      color: var(--light-text);
+   
+  }
+  .about.career .btn:hover p{
+      color: var(--text-color);
+  }
+  .career_nav_p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-top: 1rem;
+  }

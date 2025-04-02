@@ -13,10 +13,14 @@ import testimony3 from "../../assets/testimony3.jpg"
 import testimony4 from "../../assets/testimony4.jpg"
 import testimony5 from "../../assets/testimony5.jpg"
 import benefit from "../../assets/benefit1.jpg"
+import SecondNav from '../../component/secondNav/SecondNav'
+import TxtImgBac from '../../component/txtImgBac/TxtImgBac'
 
 const Career = () => {
       const [printedSection, setPrintedSection] = useState(0)
       const [move, setMove] = useState(0)
+      const txtImaBach2 = "Here at Gateway, you're not just another employee—you’re an essential part of a vision-inspired, mission-driven team."
+      const txtImaBacP="We invest in relationships, operate with transparency and integrity, and are committed to helping you reach your full potential. And, we have a lot of fun!"
       const benefits = [
         {
           icon: "fa-solid fa-handshake",
@@ -114,14 +118,7 @@ const Career = () => {
        }, [])
   return (
     <div className='about career'>
-       <div className="career_nav">
-       <p className='career_nav_p'>Join the Team</p>
-    <Link className="btn" to="/connect">
-          <p>
-            View all Job <i className="fa-solid fa-arrow-right-long"></i>
-          </p>
-        </Link>
-       </div>
+      <SecondNav text={"join the team"} link={"/connect"} btntext={"view all jobs"}/>
        <div className="career_hero">
         <img src={image1} alt="" />
         <div className="text">
@@ -181,14 +178,7 @@ const Career = () => {
         </div>
     
        </div>
-       <div className="career_intro">
-        <div className="text">
-        <h2>Here at Gateway, you're not just another employee—you’re an essential part of a vision-inspired, mission-driven team.</h2>
-        <p>We invest in relationships, operate with transparency and integrity, and are committed to helping you reach your full potential. And, we have a lot of fun!</p>
-        
-        </div>
-      <img src={benefit} alt="" />
-       </div>
+     <TxtImgBac img={benefit} p={txtImaBacP} h2={txtImaBach2} textClass={"text"} link={""} linktext={""}/>
        <div className="university">
         <h2>The Convenant University</h2>
         <p>The King’s University (TKU) is an accredited, Spirit-empowered, evangelical university founded in partnership with Gateway Church. TKU combines higher education with practical ministry experience, preparing students to serve in the local church, the marketplace, and around the world. We’re constantly seeking dynamic individuals to join our team. Browse all open faculty and staff positions to find a place for you!</p>

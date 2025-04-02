@@ -1,115 +1,46 @@
-import React from 'react'
-import {useEffect, useState} from 'react'
+import { useState } from "react";
 import "./portfolio.css"
-import img1 from "../../assets/cleaner11.jpg"
-import img2 from "../../assets/cleaner12.jpg"
-import img4 from "../../assets/cleaner13.jpg"
-import img3 from "../../assets/cleaner14.jpg"
-import img5 from "../../assets/cleaner15.jpg"
-import img6 from "../../assets/cleaner16.jpg"
-import img7 from "../../assets/cleaner17.jpg"
-import img8 from "../../assets/cleaner18.jpg"
+function Portfolio() {
+  const [symptoms, setSymptoms] = useState([]);
+  const [result, setResult] = useState("");
 
-const Portfolio = () => {
-    const [translate, setTranslate] = useState(0)
-  useEffect(() => {
-        document.querySelector(".portfolio_container").style.transform = `translateX(${translate}px)`
-  }, [translate])
+  const symptomList = [
+    "Fever", "Chills", "Sweating", "Headache", "Nausea", "Vomiting", "Muscle pain"
+  ];
+
+  const handleCheck = (symptom) => {
+    setSymptoms((prev) =>
+      prev.includes(symptom) ? prev.filter((s) => s !== symptom) : [...prev, symptom]
+    );
+  };
+
+  const diagnose = async () => {
+    const response = await fetch("http://localhost:5000/diagnose", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ symptoms }),
+    });
+    const data = await response.json();
+    setResult(data.message);
+  };
+
   return (
-    <div className='portfolio'>
-            {translate < 0?<div onClick={()=>{setTranslate(prev=>prev+600)}} className="moveleft iconactive"><i className="fa-solid fa-arrow-left-long"></i></div>:null}
-            {translate > -2550?<div onClick={()=>{setTranslate(prev=>prev-600)}} className="moveright iconactive"><i className="fa-solid fa-arrow-right-long"></i></div>:null}
-       <div className="portfolio_heading">
-       <div className="title">
-          <span className='priamry'>our services</span>
-          <h2 className='bright'>Professional Cleaning Services</h2>
-        </div> 
-        <div className="btn">
-          <p>
-          View all works<i className="fa-solid fa-arrow-right-long"></i>
-          </p>
+    <div className="portfolio">
+      <h2>Malaria Diagnosis</h2>
+      {symptomList.map((symptom) => (
+        <div key={symptom}>
+          <input
+            type="checkbox"
+            onChange={() => handleCheck(symptom)}
+            checked={symptoms.includes(symptom)}
+          />
+          {symptom}
         </div>
-       </div>
-       <div className="portfolio_holder">
-       <div className="portfolio_container container">
-  <div className="portfolio_card">
-    <div className="person">John Doe</div>
-    <img src={img1} alt="John Doe" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>New York, USA</span>
-      <p>John Doe - Residential Cleaning Specialist</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
+      ))}
+      <button onClick={diagnose}>Check Diagnosis</button>
+      <p>{result}</p>
     </div>
-  </div>
-  <div className="portfolio_card">
-    <div className="person">Jane Smith</div>
-    <img src={img2} alt="Jane Smith" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>London, UK</span>
-      <p>Jane Smith - Office Cleaning Expert</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
-    </div>
-  </div>
-  <div className="portfolio_card">
-    <div className="person">Michael Johnson</div>
-    <img src={img3} alt="Michael Johnson" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>Toronto, Canada</span>
-      <p>Michael Johnson - Deep Cleaning Specialist</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
-    </div>
-  </div>
-  <div className="portfolio_card">
-    <div className="person">Alice Brown</div>
-    <img src={img4} alt="Alice Brown" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>Sydney, Australia</span>
-      <p>Alice Brown - Post-Construction Cleaning</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
-    </div>
-  </div>
-  <div className="portfolio_card">
-    <div className="person">David Wilson</div>
-    <img src={img5} alt="David Wilson" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>Berlin, Germany</span>
-      <p>David Wilson - Move-in/Move-out Cleaning</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
-    </div>
-  </div>
-  <div className="portfolio_card">
-    <div className="person">Emma Davis</div>
-    <img src={img6} alt="Emma Davis" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>Paris, France</span>
-      <p>Emma Davis - Carpet and Upholstery Cleaning</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
-    </div>
-  </div>
-  <div className="portfolio_card">
-    <div className="person">Chris Lee</div>
-    <img src={img7} alt="Chris Lee" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>Tokyo, Japan</span>
-      <p>Chris Lee - Window and Glass Cleaning</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
-    </div>
-  </div>
-  <div className="portfolio_card">
-    <div className="person">Mr Love</div>
-    <img src={img8} alt="Chris Lee" />
-    <div className="place">
-      <span><i className='fas fa-location-dot'></i>Newcastle British</span>
-      <p>Chris Lee - Window and Glass Cleaning</p>
-      <i class="fa-solid fa-circle-arrow-right"></i>
-    </div>
-  </div>
-</div>
-
-</div>
-       </div>
-   
-  )
+  );
 }
 
-export default Portfolio
+export default Portfolio;

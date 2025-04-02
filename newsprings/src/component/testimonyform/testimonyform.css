@@ -1,0 +1,45 @@
+.testimony_form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: var(--lighter-shadow);
+  padding: 3rem;
+  width: 60%;
+  margin: auto;
+  margin-bottom: 3rem;
+  border-radius: 1rem;
+}
+.testimony_form h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--secondary-color);
+  text-align: left;
+}
+.testimony_form div {
+  display: flex;
+  margin-bottom: 1rem;
+  gap: .3rem;
+  flex-direction: column;
+}
+.testimony_form div label {
+  font-size: 0.93rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+.testimony_form div input,
+.testimony_form div textarea {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-color);
+  padding: .8rem;
+  border-radius: .5rem;
+  border: 0;
+  box-shadow: var(--lighter-shadow);
+  outline: 0;
+}
+.testimony_form div textarea{
+    border: 1px solid var(--light-text);
+    box-shadow: none;
+    resize: none;
+    height: 8rem;
+}

@@ -1,0 +1,19 @@
+.membership{
+    display: flex;
+    flex-direction: column;
+    padding-inline: 7%;
+}
+.membership img{
+  width: 75%;
+  align-self: center;
+  justify-self: center;
+  margin-bottom: 2rem;
+}
+.membership_text{
+    padding-inline: 12%
+}
+.membership h1{
+    font-size: 2rem;
+    font-weight: 500;
+    
+}

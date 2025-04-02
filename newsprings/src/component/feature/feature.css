@@ -8,10 +8,30 @@
     padding-block: 3rem;
     position: relative;
 }
+.features .iframe{
+    display: flex;
+    flex-direction: column;
+   text-align: left;
+    gap: 1rem;
+}
+.features .iframe a{
+    color: var(--tetiary-color);
+    transition: .3s linear;
+}
+.features .iframe a:hover{
+    color: var(--primary-color)
+}
 .features iframe{
     width: 34rem;
     height: 19rem;
     border-radius: 1rem;
+}
+.loading{
+    width: 34rem;
+    height: 19rem;
+    border-radius: 1rem;
+    background: var(--text-color); 
+
 }
 .feature_text{
     display: flex;
@@ -19,10 +39,11 @@
     width: 50%;
     gap:1rem
 }
+
 .feature_text h1{
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 500;
-    line-height: 3.5rem;
+    line-height: 2.5rem;
     margin-bottom: 1rem;
 }
 .feature_text small{
@@ -34,7 +55,9 @@
     font-weight: 300;
     line-height: 1.8rem;
 }
-
+.giving_card .feature_text{
+    width: 100%;
+}
 .feature_bottom{
     padding-block: 9rem;
     padding-inline: 2.5rem;
@@ -101,4 +124,13 @@
     color: var(--text-color);
     font-weight: 300;
     line-height: 1.2rem;
+}
+
+/*==============================
+=====================giving_card=======*/
+.giving_card p{
+    line-height: 1.4rem;
+}
+.giving_card h2{
+    color: var(--secondary-color);
 }

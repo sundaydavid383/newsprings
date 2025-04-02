@@ -20,7 +20,20 @@ const FeatureBottom = ({ cards, featureType }) => {
             </Link>
           </div>
         ))
-      ) : featureType === "sermon" ? (
+      ) :
+      featureType === "giving" ? (
+        cards.map((feature, index) => (
+          <div key={index} className="feature_card giving_card">
+            <img src={feature.imgSrc} alt="" />
+            <div className="feature_text">
+            <h2>{feature.title}</h2>
+            <p>{feature.description}</p>
+            </div>
+         
+          </div>
+        ))
+      ) 
+      : featureType === "sermon" ? (
         !cards || !Array.isArray(cards) || cards.length === 0 ? (
           <p>unable to load data an error occured</p>
         ) : (

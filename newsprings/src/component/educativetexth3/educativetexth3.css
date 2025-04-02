@@ -1,0 +1,48 @@
+.educationTextH3{
+     display: flex;
+     flex-direction: column;
+}
+.educationTextH3 div{
+    margin-top: 2.4rem;
+}
+.educationTextH3 div h3{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+.educationTextH3 div ul{
+    margin-left: 1rem;
+    margin-block: .6rem;
+}
+.educationTextH3 div strong,
+.educationTextH3 div ul strong{
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+.educationTextH3 {
+    text-align: left;
+}
+.educationTextH3 h3{
+    margin-bottom: .6rem;
+    font-weight: 700;
+    color: var(--black);
+}
+.educationTextH3 p{
+    font-size: .95rem;
+    line-height: 1.7rem;
+    font-weight: 300;
+}
+.educationTextH3 a{
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: .2s linear;
+}
+.educationTextH3 a:hover{
+    color: var(--tetiary-color);
+}
+.educationTextH3 div ul li{
+    font-weight: 300;
+    font-size: .94rem;
+    line-height: 1.5rem;
+    list-style-type: decimal;
+}

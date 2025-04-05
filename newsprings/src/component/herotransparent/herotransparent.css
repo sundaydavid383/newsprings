@@ -10,7 +10,7 @@
 }
 .Herotransparent .imgaes{
     position: relative;
-    width: 60%;
+    width: 50%;
     margin-top: -15rem;
 }
 .Herotransparent .imgaes img{
@@ -19,17 +19,24 @@
     border-radius: 1rem;
 }
 .Herotransparent .imgaes .firstimg{
-    top: 3rem;
-    right: 0rem;
+    top: 7rem;
+    right: 3rem;
+    border: 5px solid var(--background-color);
 }
 .Herotransparent .imgaes .secondimg{
-    top: -2rem;
-    left: -3rem;
+    top: -6rem;
+    left: -2rem;
+    border: 5px solid var(--background-color);
+}
+.Herotransparent .imgaes .thirdimg{
+    top: -8rem;
+    right: -1rem;
+    z-index: -1;
 }
 .Herotransparent h2{
     font-size: 2.5rem;
     color:var(--secondary-color);
-     width: 40%;
+     width: 50%;
     letter-spacing: .0002rem;
     margin-right: 1rem;
     text-align: left;

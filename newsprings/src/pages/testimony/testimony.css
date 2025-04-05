@@ -116,3 +116,59 @@
     z-index: 112;
     border: 2px solid var(--tetiary-color)
    }
+    /*=================testimony_holder==================*/
+  .testimony_loading{
+     padding-inline: 0rem;
+     align-self: center;
+     align-items: center;
+     justify-content: center;
+     margin-top: 8rem;
+  }
+  .testimony_loading .loading_card{
+     width: 60%;
+     height: 90vh;
+  }
+  .testimony_loading .loading_card .loading_text{
+   height: 40%;
+  }
+  .testimony_loading .loading_card .loading_title{
+   height: 3rem;
+  }
+  .loading_description{
+   width: 32.0%;
+   height: 80vh;
+   border-radius: 1rem;
+   position: relative;
+   display: flex;
+   margin-block: 1rem;
+   flex-direction: column;
+   justify-content: space-between;
+  }
+  .loading_description .iframe,
+  .loading_description .loading_text{
+   width: 100%;
+   background: var(--light-text);
+   position: relative;
+   overflow: hidden;
+   border-radius: 1rem;
+  }
+  
+  .loading_description .loading_text{
+   height: 30%;
+  }
+  .loading_description .iframe{
+   height: 65%;
+
+  }
+ 
+  .loading_description  .iframe::before {
+   animation-delay: 0.6s;
+   animation-timing-function: linear;
+   animation-duration: 1.8s;
+ }
+ 
+ .loading_description  .loading_text::before {
+   animation-delay: 0.8s;
+   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* smooth custom */
+   animation-duration: 2s;
+ }

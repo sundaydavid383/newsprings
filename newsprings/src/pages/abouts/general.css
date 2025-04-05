@@ -55,7 +55,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 24rem;
+    width: 22rem;
     gap: .1rem;
     background: var(--light-text);
     transition: .2s linear;
@@ -106,5 +106,8 @@
 .blog_card .text .btn{
     margin-block: .6rem;
     margin-left: -.3rem;
-
+    width: 11.6rem;
+}
+.blog_card .text .btn p{
+    color:var(--light-text) !important
 }

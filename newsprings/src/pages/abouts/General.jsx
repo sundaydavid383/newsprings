@@ -98,7 +98,7 @@ The Church, which was not well known before Adeboye took charge, now claims bran
             <div className="title">{sermon.title}</div>
             <div className="date">{sermon.date}</div>
             <a href={sermon.soundcloudUrl} target="_blank" rel="noopener noreferrer" className="btn">
-              Listen on SoundCloud
+              <p>Listen on SoundCloud</p>
             </a>
           </div>
         </div>

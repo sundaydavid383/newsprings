@@ -41,7 +41,7 @@ const FeatureBottom = ({ cards, featureType }) => {
             <Link
               to={`/video/${index}`}
               state={{
-                sermon: sermon,
+                sermon,
                 relatedSermon: cards,
               }}
               key={index}

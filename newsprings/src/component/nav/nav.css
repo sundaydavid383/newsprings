@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 6.5rem;
+    height: 7.4rem;
      position: fixed;
     top: 0rem; 
     z-index: 1111;
@@ -48,7 +48,7 @@
      padding-block: .4rem;
     background: transparent;
     padding-inline: 5rem;
-    margin-top: 1.4rem;
+    margin-top: 2.3rem;
 }
 
 .nav-lower .logo img{
@@ -74,6 +74,7 @@
 .links .droper{
     color: var(--secondary-color);
     position: relative;
+    cursor: pointer;
 }
 .links a div,
 .ministy .ministry_dropdown a div,
@@ -120,4 +121,11 @@
 }
 .ministy p{
     cursor: pointer;
+}
+.dropdown_link div{
+    width: 0% !important;
+}
+.dropdown_link.active div,
+.dropdown_link:hover div{
+    width: 90% !important;
 }

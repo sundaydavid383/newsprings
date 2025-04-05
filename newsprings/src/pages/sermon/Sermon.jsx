@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,  useState } from 'react'
 import ShadowTextHero from '../../component/shadowtextHero/ShadowTextHero'
 import FeatureBottom from '../../component/feature/FeatureBottom'
 
@@ -9,6 +9,33 @@ const Sermon = ({setActivePage}) => {
   
   const featureType = "sermon"
   const sermons = [
+    {
+      id: 1,
+      title: "Lilian Nneji Powerful Praise at RCCG New Springs October Thanksgiving",
+      preacher: "Lilian Nneji",
+      date: "Published 3.5 years ago",
+      youtubeLink: "https://www.youtube.com/embed/B3d_8YRgfaQ",
+      imgSrc: "https://img.youtube.com/vi/B3d_8YRgfaQ/maxresdefault.jpg",
+      description: "Lilian Nneji delivers a powerful praise session during the RCCG New Springs October Thanksgiving service."
+    },
+    {
+      id: 2,
+      title: "Lilian Nneji Powerful Ministration at RCCG JSP",
+      preacher: "Lilian Nneji",
+      date: "Published 3.5 years ago",
+      youtubeLink: "https://www.youtube.com/embed/0lnxMpOAqco",
+      imgSrc: "https://img.youtube.com/vi/0lnxMpOAqco/maxresdefault.jpg",
+      description: "A powerful ministration by Lilian Nneji at RCCG JSP."
+    },
+    {
+      id: 3,
+      title: "Lilian Nneji Hot and Energetic Ministration at the 2024 RCCG",
+      preacher: "Lilian Nneji",
+      date: "Published 3 months ago",
+      youtubeLink: "https://www.youtube.com/embed/EzEezEHtLTo",
+      imgSrc: "https://img.youtube.com/vi/EzEezEHtLTo/maxresdefault.jpg",
+      description: "Lilian Nneji's hot and energetic ministration at the 2024 RCCG event."
+    },
     {
       id: 1,
       title: "The Secret Power in Prayer!",
@@ -167,10 +194,78 @@ const Sermon = ({setActivePage}) => {
       imgSrc: "https://img.youtube.com/vi/4-JARCqQdBE/maxresdefault.jpg",
       description: "God reveals His secrets to those who walk closely with Him. In this message, you will explore the depth of intimacy with the Lord and how cultivating a deep relationship with Him allows you to access divine wisdom, direction, and protection. This sermon is an invitation to go beyond surface-level Christianity and experience the mysteries of God's presence." }
   ];
+  const CHANNEL_ID = "UCjFN5R2r5U8avPicFnDjkng";
+  const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+  const FEED_URL = `${CORS_PROXY}https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+  
+  const [videos, setVideos] = useState([]);
+  
+  useEffect(() => {
+    const fetchFeed = async () => {
+      try {
+        const response = await fetch(FEED_URL);
+        const xmlText = await response.text();
+  
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, "application/xml");
+        const entries = xml.getElementsByTagName("entry");
+  
+        const data = Array.from(entries).map((entry) => {
+          const title = entry.querySelector("title")?.textContent;
+          const videoId = entry.getElementsByTagName("yt:videoId")[0]?.textContent;
+          const published = entry.querySelector("published")?.textContent;
+  
+          // Get description or add a default
+          let description =
+            entry.querySelector("media\\:description")?.textContent?.trim();
+  
+          if (!description) {
+            description = "This video has no description. Watch to learn more!";
+          }
+  
+          const thumbnail = entry.getElementsByTagName("media:thumbnail")[0]?.getAttribute("url");
+  
+          return {
+            title,
+            videoId,
+            date: new Date(published).toLocaleDateString(),
+            description,
+            imgSrc: thumbnail,
+            preacher: "Pastor Daniel Floyd", // Optional: you can change this dynamically
+          };
+        });
+  
+        setVideos(data);
+      } catch (error) {
+        console.error("Failed to fetch feed", error);
+      }
+    };
+  
+    fetchFeed();
+  }, []);
+//   return (
+//     <div>
+//       <h2>Latest Videos</h2>
+//       {videos.map((video) => (
+//         <div key={video.videoId} style={{ marginBottom: "20px" }}>
+//           <img src={video.thumbnail} alt={video.title} width="320" />
+//           <h3>{video.title}</h3>
+//           <p>{video.description}</p>
+//           <p><strong>Published:</strong> {new Date(video.published).toLocaleString()}</p>
+//           <a href={video.link} target="_blank" rel="noopener noreferrer">
+//             Watch on YouTube
+//           </a>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
+
+
   return (
     <div className='sermon'>
        <ShadowTextHero/>
-       <FeatureBottom cards={sermons} featureType={featureType}/>
+       <FeatureBottom cards={videos} featureType={featureType}/>
     </div>
   )
 }

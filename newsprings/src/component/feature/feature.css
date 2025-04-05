@@ -67,7 +67,7 @@
     flex-wrap: wrap;
 }
 .feature_bottom .feature_card{
-    width: 25rem;
+    width: 23rem;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -95,7 +95,7 @@
 .sermon_card{
     display: flex;
     flex-direction: column;
-    width: 24rem;
+    width: 21rem;
     /*position: relative;*/
     padding: 0rem;
 }

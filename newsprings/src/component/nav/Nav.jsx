@@ -61,7 +61,7 @@ const Nav = ({activePage}) => {
     </div>
     <div className="ministry_dropdown">
       <Link
-        className={`${activePage == "testimonies" ? "active" : ""}`}
+        className={`dropdown_link ${activePage == "testimonies" ? "active" : ""}`}
         onClick={() => {
           document.querySelector(".ministry_dropdown").classList.remove("active");
         }}
@@ -71,7 +71,7 @@ const Nav = ({activePage}) => {
         <div></div>
       </Link>
       <Link
-        className={`${activePage == "ministries" ? "active" : ""}`}
+        className={`dropdown_link ${activePage == "ministries" ? "active" : ""}`}
         onClick={() => {
           document.querySelector(".ministry_dropdown").classList.remove("active");
         }}
@@ -81,7 +81,7 @@ const Nav = ({activePage}) => {
         <div></div>
       </Link>
       <Link
-        className={`${activePage == "next-steps" ? "active" : ""}`}
+        className={`dropdown_link ${activePage == "next-steps" ? "active" : ""}`}
         onClick={() => {
           document.querySelector(".ministry_dropdown").classList.remove("active");
         }}
@@ -91,7 +91,7 @@ const Nav = ({activePage}) => {
         <div></div>
       </Link>
       <Link
-        className={`${activePage == "events" ? "active" : ""}`}
+        className={`dropdown_link ${activePage == "events" ? "active" : ""}`}
         onClick={() => {
           document.querySelector(".ministry_dropdown").classList.remove("active");
         }}
@@ -101,7 +101,7 @@ const Nav = ({activePage}) => {
         <div></div>
       </Link>
       <Link
-        className={`${activePage == "membership" ? "active" : ""}`}
+        className={`dropdown_link ${activePage == "membership" ? "active" : ""}`}
         onClick={() => {
           document.querySelector(".ministry_dropdown").classList.remove("active");
         }}

@@ -47,7 +47,7 @@ const Video = ({ setActivePage }) => {
           </Link>
           <iframe
             width="110"
-            src={sermon.youtubeLink}
+            src={`https://www.youtube.com/embed/${sermon.videoId}`}
             title={sermon.title}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

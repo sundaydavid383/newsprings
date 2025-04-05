@@ -12,27 +12,57 @@ const Feature = () => {
 
   const API_KEY = import.meta.env.VITE_API_KEY;
   const CHANNEL_ID = "UCjFN5R2r5U8avPicFnDjkng";
+  const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+  const horuku_url = `https://api.allorigins.win/raw?url=https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
   const APi_URL = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&order=date&part=snippet&type=video&maxResult=1`;
 
   useEffect(() => {
-    const fetchUpdatedData = async () => {
-      setLoading(true);
-      const response = await fetch(APi_URL);
-      const data = await response.json();
-      console.log("Fetched Data:", data); // Check the fetched data
-
-      if (data.items[0] && data.items[0].id.videoId) {
-        setTitle(data.items[0].snippet.title);
-        setVideoId(data.items[0].id.videoId);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        setTitle("Error fetching the data");
-        setVideoId(null);
+    const fetchLatestVideo = async () => {
+      try {
+        const response = await fetch(horuku_url);
+        const xmlText = await response.text();
+  
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, "application/xml");
+  
+        const entry = xml.querySelector("entry");
+  
+        if (entry) {
+          const videoIdTag = entry.getElementsByTagName("yt:videoId")[0] || entry.getElementsByTagName("videoId")[0];
+          const videoId = videoIdTag?.textContent;
+          const title = entry.querySelector("title")?.textContent;
+  
+          setVideoId(videoId);
+          setTitle(title);
+        } else {
+          console.log("No video entries found");
+        }
+      } catch (error) {
+        console.error("Error fetching RSS feed:", error);
       }
     };
-    fetchUpdatedData();
+  
+    fetchLatestVideo();
   }, []);
+  // useEffect(() => {
+  //   const fetchUpdatedData = async () => {
+  //     setLoading(true);
+  //     const response = await fetch(APi_URL);
+  //     const data = await response.json();
+  //     console.log("Fetched Data:", data); // Check the fetched data
+
+  //     if (data.items[0] && data.items[0].id.videoId) {
+  //       setTitle(data.items[0].snippet.title);
+  //       setVideoId(data.items[0].id.videoId);
+  //       setLoading(false);
+  //     } else {
+  //       setLoading(false);
+  //       setTitle("Error fetching the data");
+  //       setVideoId(null);
+  //     }
+  //   };
+  //   fetchUpdatedData();
+  // }, []);
 
   const featureType = "homepage";
   const features = [
@@ -86,7 +116,11 @@ const Feature = () => {
         ) : loading ? (
           <div className="loading"></div>
         ) : !loading && !videoId ? (
-          <p>No live stream currently available. Please refresh the page.</p>
+
+          <p>
+          No video found. Please refresh the page or check your connection or, 
+          <a href="https://www.youtube.com/@RCCGNewSprings"> here</a> to watch it on YouTube.
+        </p>
         ) : 
         null
         }

@@ -10,10 +10,10 @@
   margin-bottom: 3rem;
   border-radius: 1rem;
 }
-::placeholder{
+::placeholder {
   color: rgb(187, 186, 186);
 }
-.testimony_form_holder{
+.testimony_form_holder {
   background-color: var(--light-text);
   margin-bottom: -3rem;
   padding-block: 5rem;
@@ -24,7 +24,7 @@
   color: var(--secondary-color);
   text-align: left;
 }
-.testimony_form h3{
+.testimony_form h3 {
   color: var(--primary-color);
   margin-block: 1rem;
   margin-top: 2rem;
@@ -63,14 +63,14 @@
   width: 70%;
   border-radius: 1rem;
 }
-.testimony_form select{
+.testimony_form select {
   font-size: 1rem;
   border: 1px solid var(--text-color);
-  padding: .8rem;
+  padding: 0.8rem;
   outline: 0;
   font-weight: 300;
 }
-.testimony_form select option{
+.testimony_form select option {
   padding: 1rem;
 }
 input[type="file"] {
@@ -128,7 +128,7 @@ input[type="file"] {
 }
 
 .form-group-media-div {
-  flex: 1;  /* Ensures each div takes equal space in the container */
+  flex: 1; /* Ensures each div takes equal space in the container */
   background-color: red;
   width: 50%;
   padding: 1rem;
@@ -141,11 +141,73 @@ input[type="file"] {
   height: auto;
   object-fit: cover;
 }
-.form-group-media-div video{
-  width:50%;
-   height: auto;
+.form-group-media-div video {
+  width: 50%;
+  height: auto;
 }
+.testimonyFormLoader {
+  position: fixed;
+  top: 0rem;
+  left: 0rem;
+  width: 100%;
+  height: 100%;
+  background: var(--video-background);
+  z-index: 111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.testimonyFormLoader .loader {
+  width: 8rem;
+  height: 8rem;
+  background: transparent;
+  border-radius: 50%;
+  border: 1rem solid var(--primary-color);
+  border-left: 1rem solid var(--background-color);
+  animation: rotate 3s infinite;
+}
+.alert_holder {
+  position: fixed;
+  top: 0rem;
+  left: 0rem;
+  width: 100%;
+  height: 100%;
+  background-color: var(--dark-secondary-shadow);
+  z-index: 1111;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.alert {
+  width: 15rem;
+  height: 11rem;
+  background-color: var(--background-color);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--box-shadow);
+  line-height: 1.5rem;
+  padding: 1rem;
 
+}
+.alert p {
+  color: var(--text-color);
+  font-weight: 400;
+ 
+  font-size: 1rem;
+}
+.alert .btn {
+  width: 7rem;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /* Optional: Add responsive layout adjustments if necessary */
 @media (max-width: 768px) {
   .form-group-media {

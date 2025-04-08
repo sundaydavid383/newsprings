@@ -243,7 +243,8 @@ const Stories = ({ setActivePage }) => {
             (word) =>
               story.name.toLowerCase().includes(word) ||
               story.title.toLowerCase().includes(word) ||
-              story.testimony.toLowerCase().includes(word)
+              story.testimony.toLowerCase().includes(word) ||
+              story.testimonyCategory.toLowerCase().includes(word)
           )
         )
       );
@@ -300,7 +301,7 @@ const Stories = ({ setActivePage }) => {
         <div className="">
           {loading ? (
             <div className="loader_holder">
-              {Array.from({length:testimonies.length}).map((_, index) => (
+              {Array.from({length:5}).map((_, index) => (
                 <div key={index} className="loading_card">
                   <div className="loading_img"></div>
                   <div className="loading_title"></div>
@@ -311,64 +312,67 @@ const Stories = ({ setActivePage }) => {
               ))}
             </div>
           ) : 
-         
-          filteredTestimonies.length > 0 ? (
-            <div className="about_stories_holder container">
-              {filteredTestimonies.map((testifier, index) => (
-                <div className="testifier" key={index}>
-                  <div className="image">
-                    <img src={testifier.image} alt={testifier.name} />
-                  </div>
-        
-                  <div className="testifier_text">
-                    <h2 className="title">{testifier.title}</h2>
-                    <div className="testifier_text_upper_details">
-                      <p className="name">{testifier.name}</p>
-                      <div className="testimonyCategory">{testifier.testimonyCategory}</div>
-                      <div className="date">{testifier.date}</div>
-                    </div>
-                    <div className="testimony">
-                      {testifier.testimony.slice(0, 200)}......
-                    </div>
-                  </div>
-                  <Link className="btn" to={`/testimony/${index}`}>
-                    <p>
-                      CONTACT <i className="fa-solid fa-arrow-right-long"></i>
-                    </p>
-                    <div></div>
-                  </Link>
+         !testimonies ? 
+         filteredTestimonies.length > 0 ? (
+          <div className="about_stories_holder container">
+            {filteredTestimonies.map((testifier, index) => (
+              <div className="testifier" key={index}>
+                <div className="image">
+                  <img src={testifier.image} alt={testifier.name} />
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="about_stories_holder container">
-              {testimonies.map((testifier, index) => (
-                <div className="testifier" key={index}>
-                  <div className="image">
-                    <img src={testifier.image} alt={testifier.name} />
+      
+                <div className="testifier_text">
+                  <h2 className="title">{testifier.title} id_{testifier._id}</h2>
+                  <div className="testifier_text_upper_details">
+                    <p className="name">{testifier.name}</p>
+                    <div className="testimonyCategory">{testifier.testimonyCategory}</div>
+                    <div className="date">{testifier.date}</div>
                   </div>
-        
-                  <div className="testifier_text">
-                    <h2 className="title">{testifier.title}</h2>
-                    <div className="testifier_text_upper_details">
-                      <p className="name">{testifier.name}</p>
-                      <div className="testimonyCategory">{testifier.testimonyCategory}</div>
-                      <div className="date">{testifier.date}</div>
-                    </div>
-                    <div className="testimony">
-                      {testifier.testimony.slice(0, 200)}......
-                    </div>
+                  <div className="testimony">
+                    {testifier.testimony.slice(0, 200)}......
                   </div>
-                  <Link className="btn" to={`/testimony/${index}`}>
-                    <p>
-                      CONTACT <i className="fa-solid fa-arrow-right-long"></i>
-                    </p>
-                    <div></div>
-                  </Link>
                 </div>
-              ))}
-            </div>
-          )}
+                <Link className="btn" to={`/testimony/${index}`}>
+                  <p>
+                    Read more <i className="fa-solid fa-arrow-right-long"></i>
+                  </p>
+                  <div></div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : 
+        (
+          <div className="about_stories_holder container">
+            {testimonies.map((testifier, index) => (
+              <div className="testifier" key={index}>
+                <div className="image">
+                  <img src={testifier.image} alt={testifier.name} />
+                </div>
+      
+                <div className="testifier_text">
+                  <h2 className="title">{testifier.title}  {testifier._id}</h2>
+                  <div className="testifier_text_upper_details">
+                    <p className="name">{testifier.name}</p>
+                    <div className="testimonyCategory">{testifier.testimonyCategory}</div>
+                    <div className="date">{testifier.date}</div>
+                  </div>
+                  <div className="testimony">
+                    {testifier.testimony.slice(0, 200)}......
+                  </div>
+                </div>
+                <Link className="btn" to={`/testimony/${index}`}>
+                  <p>
+                    Read more <i className="fa-solid fa-arrow-right-long"></i>
+                  </p>
+                  <div></div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        ): 
+        <p className="nodata">No testimonies online yet</p>
+          }
         </div>
       </div>
       <div className="about_links">

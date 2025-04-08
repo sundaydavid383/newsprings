@@ -26,6 +26,7 @@
 .Herotransparent .imgaes .secondimg{
     top: -6rem;
     left: -2rem;
+    width: 70%;
     border: 5px solid var(--background-color);
 }
 .Herotransparent .imgaes .thirdimg{

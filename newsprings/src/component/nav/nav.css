@@ -16,7 +16,7 @@
     justify-content: space-between;
     width: 100%;
     background-color: var(--nav-color);
-    color: var(--light-text);
+
    
 }
 .nav-upper{
@@ -39,7 +39,7 @@
     
     padding: .3rem;
     border-radius: 1.3rem;
-    color: var(--text-color);
+    color: var(--secondary-color);
 }
 .nav-upper a i{
     font-size: 1.4rem;

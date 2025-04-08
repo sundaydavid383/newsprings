@@ -9,6 +9,7 @@ const { default: mongoose } = require("mongoose");
 
 // Express application
 const app = express();
+console.log("password:", process.env.PASSWORD)
 
 // Middleware
 app.use(express.json());
@@ -164,21 +165,14 @@ app.put("/update-story", async (req, res) => {
 
 app.delete("/delete-story", async (req, res) => {
   try {
-    const { name, title, testimony } = req.body;
+    const { id } = req.query;
 
-    if (
-      !name ||
-      !title ||
-      !testimony ||
-      typeof title !== "string" ||
-      typeof name !== "string" ||
-      typeof testimony !== "string"
-    ) {
+    if ( !id || typeof id !== "string") {
       return res
         .status(400)
         .json({ success: false, data: "Invalid user credentials" });
     }
-    const result = await Testimony.deleteOne({ name, title, testimony});
+   const result = await Testimony.deleteOne({_id:id})
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ success: false, data: "Story not found"})   
@@ -208,16 +202,6 @@ app.post("/uploading-story", upload.single("video"), async (req, res) => {
   } = req.body;
 
   const video = req.file;
-  if (!video || !video.mimetype.startsWith("video/")) {
-    return res.status(400).json({ success: false, data: "Invalid video file" });
-  }
-
-  const MAX_SIZE = 100 * 1024 * 1024; // 100MB
-  if (video.size > MAX_SIZE) {
-    return res
-      .status(400)
-      .json({ success: false, data: "Video file is too large" });
-  }
 
   try {
     await refreshAccessTokenIfNeeded();
@@ -287,7 +271,7 @@ app.post("/uploading-story", upload.single("video"), async (req, res) => {
     const storyData = {
       image,// YouTube video ID
       name,
-      date:new Date(),
+      date:new Date().toLocaleDateString("en-GB"),
       title,
       testimony,
       scriptureReference,
@@ -336,7 +320,7 @@ app.post("/diagnose", (req, res) => {
 // Initialize MongoDB connection and start server
 const connectDB = async () => {
   try {
-    
+  
     const mongoURL = `mongodb+srv://sundayudoh383:${process.env.PASSWORD}@newspringchurchdb.m83dh.mongodb.net/?retryWrites=true&w=majority&appName=newspringChurchDB`;
     await mongoose.connect(mongoURL);
     console.log("connected to mongoose successfully");

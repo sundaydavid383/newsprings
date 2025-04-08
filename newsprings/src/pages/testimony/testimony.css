@@ -102,10 +102,8 @@
     color: var(--primary-color);
     align-self: center;
     text-transform: capitalize;
-    position: relative;
-    left: 30%;
-    transform: translateX(-50%);
-   padding: 5rem;
+    margin-bottom: -2rem;
+   padding: 1rem;
    }
    .goback{
     position: fixed;

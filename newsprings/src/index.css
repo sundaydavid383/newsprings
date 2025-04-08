@@ -19,6 +19,7 @@
 :root{
     --primary-color:rgb(36, 110, 170);
     --gray: rgb(209, 209, 209);
+    --lighter-gray: rgb(228, 225, 225);
     --nav-color: rgb(255, 255, 255, .99);
     --text-color : rgb(74, 74, 75);
     --light-text: rgb(231, 230, 230);
@@ -32,6 +33,7 @@
     --background-color: rgb(255, 255, 255);
     --light-backgound: rgb(187, 238, 187);
     --shadow-white: rgba(77, 75, 75, 0.3);
+    --loading-shadow: 0px 0px 38px 1px var(--lighter-gray);
 
 
 

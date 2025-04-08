@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import image1 from "../../assets/testifier1.jpg";
 import image2 from "../../assets/testifier2.jpg";
@@ -130,120 +130,123 @@ const Testimony = ({}) => {
     },
   ];
 
-      const [testimonies, setTestimonies] = useState([])
-      const [loading, setLoading] = useState(false);
-      
-    
-      
-      useEffect(() => {
-          const fetchingStories = async ()=>{
-            try {
-              setLoading(true)
-              const response = await fetch("http://localhost:4000/getting-story")
-              const data = await response.json()
-              console.log("testimonies:", data)
-              if(data.error){
-                alert(data.error)
-              }
-              setTestimonies(data?.data)
-              setLoading(false);
-            
-  
-            } catch (error) {
-              alert("there was an error from the server we are sorry")
-              console.error("An unexpected Error occured here")
-              setLoading(false);
-            }
-          }
-  
-          fetchingStories()
-          
-        }, []) 
+  const [testimonies, setTestimonies] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchingStories = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:4000/getting-story");
+        const data = await response.json();
+        console.log("testimonies:", data);
+        if (data.error) {
+          alert(data.error);
+        }
+        setTestimonies(data?.data);
+        setLoading(false);
+      } catch (error) {
+        alert("there was an error from the server we are sorry");
+        console.error("An unexpected Error occured here");
+        setLoading(false);
+      }
+    };
+
+    fetchingStories();
+  }, []);
   const { id } = useParams();
 
   let numid = id ? Number(id) : null;
-  console.log("number",id);
-  return (
-    
-        
-         loading ? 
-         <div className="loader_holder testimony_loading">
-           <div  className="loading_card">
-             <div className="loading_img"></div>
-             <div className="loading_title"></div>
-             <div className="loading_details"></div>
-             <div className="loading_text"></div>
-             <div className="loading_btn"></div>
-           </div>
-           <div  className="loading_description">
-             <div className="loading_text"></div>
-             <div className="iframe"></div>
-           </div>
-       </div>:
-
-       <div className="testimony_container ">
-{testimonies.map((testimony, index) =>(
-    numid !== null && index === numid ? (
-    
-        <div key={index} className="testimony container">
+  console.log("number", id);
+  return loading ? (
+    <div className="loader_holder testimony_loading">
+      <div className="loading_card">
+        <div className="loading_img"></div>
+        <div className="loading_title"></div>
+        <div className="loading_details"></div>
+        <div className="loading_text"></div>
+        <div className="loading_btn"></div>
+      </div>
+      <div className="loading_description">
+        <div className="loading_text"></div>
+        <div className="iframe"></div>
+      </div>
+    </div>
+  ) : (
+    <div className="testimony_container ">
+      {testimonies.map((testimony, index) =>
+        numid !== null && index === numid ? (
+          <div key={index} className="testimony container">
             <Link className="goback iconactive" to={"/stories"}>
-            <i class="fa-solid fa-arrow-left"></i>
+              <i class="fa-solid fa-arrow-left"></i>
             </Link>
             {console.log("index", index)}
-             
-          <div className="testimony_content">
-                       <div className="image">
-                       <img src={testimony.image} alt={testimony.name} />
-                       </div>
-                    
-                     <div className="testimony_text">
-                      
-                       <h2 className="title">{testimony.title}</h2>
-                       <div className="testimony_text_upper_details">
-                         <p className="name">{testimony.name}</p>
-                         <div className="testimonyCategory">{testimony.testimonyCategory}</div>
-                         <div className="date">{testimony.date}</div>
-                   
-                       </div>
-                       <div className="testimonyP">{testimony.testimony}</div>
-                        <div className="testimony_text_lower_details">
-                         <p className="lessonlearned"><span>{testimony.name} learnt    </span>:"{testimony.lessonLearned}"</p>
-                         <div className="scripture_ref">reference:<span>{testimony.scriptureReference}</span></div>
-                       </div> 
-           
-                     </div>
-                   
-                     <Link className="shareTestimony" to={`/stories`}>
-    share your story of how God has help you <i className="fa-solid fa-caret-right"></i>
-  </Link>
-          </div>
-         
-          <div className="iframe">
-          <div className="watch">
-            <p>we would have videos for people testimonies on a social media platfrom We passionately pursue serving our communities, demonstrating the love of Jesus, and activating Outreach at Gateway Church is Christ-centered, church-led  <a href="#">disciples</a></p>
-          </div>
-               {testimony.videoUrl?<iframe
-            width="853"
-            height="480"
-            src={testimony.videoUrl}
-            title={`${testimony.name} ${testimony.title}`}
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>:<p>no video available</p>}
-          </div>
-       
-        </div>
-      ) : null
-)
+            
+            <div className="testimony_content">
+        
+              
+              <div className="image">
+                <img src={testimony.image} alt={testimony.name} />
+              </div>
+            
+              <div className="testimony_text">
+                <h2 className="title">{testimony.title}</h2>
+                <div className="testimony_text_upper_details">
+                  <p className="name">{testimony.name}</p>
+                  <div className="testimonyCategory">
+                    {testimony.testimonyCategory}
+                  </div>
+                  <div className="date">{testimony.date}</div>
+                </div>
+                <div className="testimonyP">{testimony.testimony}</div>
+                <div className="testimony_text_lower_details">
+                  <p className="lessonlearned">
+                    <span>{testimony.name} learnt </span>:"
+                    {testimony.lessonLearned}"
+                  </p>
+                  <div className="scripture_ref">
+                    reference:<span>{testimony.scriptureReference}</span>
+                  </div>
+                </div>
+              </div>
 
-  
-)}
+              
+            </div>
 
-
-        </div>
-       );
+            <div className="iframe">
+            <Link className="shareTestimony" to={`/stories`}>
+                share your story of how God has help you{" "}
+                <i className="fa-solid fa-caret-right"></i>
+              </Link>
+              <div className="watch">
+                <p>
+                  we would have videos for people testimonies on a social media
+                  platfrom We passionately pursue serving our communities,
+                  demonstrating the love of Jesus, and activating Outreach at
+                  Gateway Church is Christ-centered, church-led{" "}
+                  <a href="#">disciples</a>
+                </p>
+              </div>
+              {testimony.videoUrl ? (
+                <iframe
+                  width="853"
+                  height="480"
+                  src={testimony.videoUrl}
+                  title={`${testimony.name} ${testimony.title}`}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              ) : (
+                <p>no video available</p>
+              )}
+            </div>
+          </div>
+        ) : null
+      )}
+    </div>
+  );
 };
 
 export default Testimony;

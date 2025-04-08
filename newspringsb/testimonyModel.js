@@ -15,5 +15,5 @@ const TestimonySchema = new mongoose.Schema({
     churchDetails: { type: Object, required: false },
   }, { timestamps: true });
 
-const Testimony = mongoose.model('Testimony', TestimonySchema)
+const Testimony = mongoose.model("Testimony", TestimonySchema, "testimonies");
 module.exports = Testimony

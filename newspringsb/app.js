@@ -73,28 +73,90 @@ async function refreshAccessTokenIfNeeded() {
     }
   }
 }
-
 app.get("/getting-story", async (req, res) => {
   try {
-    const data = await Testimony.find();
+    if (req.query.id && !mongoose.Types.ObjectId.isValid(req.query.id)) {
+      return res.status(400).json({ success: false, error: "Invalid ID format" });
+    }
+
+    if (req.query.id) {
+      const data = await Testimony.findOne({ _id: req.query.id });
+      if (!data) {
+        return res.status(404).json({ success: false, error: "Story not found" });
+      }
+      console.log("story data:", data);
+      return res.status(200).json({ success: true, data });
+    }
+
+    const data = await Testimony.find(); // optionally add .sort()
     console.log("story data:", data);
-    return res.status(200).json({ success: true, data: data });
+    return res.status(200).json({ success: true, data });
+    
   } catch (err) {
-    console.error("unable to fetch data from the database");
+    console.error("unable to fetch data from the database", err);
     return res
       .status(500)
-      .json({ success: false, error:"unble to fetch data form the database" });
+      .json({ success: false, error: "Unable to fetch data from the database" });
   }
 });
 
 
 
 app.put("/update-story", async (req, res) => {
+ const {
+     _id,
+    image,
+    name,
+    title,
+    testimony,
+    scriptureReference,
+    testimonyCategory,
+    followUpAction,
+    impact,
+    lessonLearned,
+    prayerRequest,
+    churchDetails,
+  } = req.body;
+
+  const video = req.file;
+  if(!video){
+    console.log("no video specifie during update")
+    throw new Error("no video specifie during update");
+  }
   try {
-    const {
-      video,
+    await refreshAccessTokenIfNeeded();
+    const access_token = oauth2Client.credentials.access_token;
+    oauth2Client.setCredentials({ access_token });
+
+    const youtube = google.youtube({
+      version: "v3",
+      auth: oauth2Client,
+    });
+
+    const videoPath = video.path;
+
+    const response = await youtube.videos.insert({
+      part: "snippet,status",
+      requestBody: {
+        snippet: {
+          title: title,
+          description: testimony.slice(0, 200),
+        },
+        status: {
+          privacyStatus: "public",
+        },
+      },
+      media: {
+        body: fs.createReadStream(videoPath),
+      },
+    });
+
+    // Video uploaded successfully to YouTube
+    const storyData = {
+      video: response?.data?.id, // YouTube video ID
       image,
       name,
+      date:new Date().toLocaleDateString("en-GB"),
       title,
       testimony,
       scriptureReference,
@@ -104,33 +166,44 @@ app.put("/update-story", async (req, res) => {
       lessonLearned,
       prayerRequest,
       churchDetails,
-    } = req.body;
+    };
 
-    if (
-      !name ||
-      !title ||
-      !testimony ||
-      typeof title !== "string" ||
-      typeof name !== "string" ||
-      typeof testimony !== "string"
-    ) {
-      return res
-        .status(400)
-        .json({ success: false, data: "Missing or invalid input fields" });
-    }
+    const updatedStory = await Testimony.updateOne(
+      { _id: _id },
+      { $set: storyData }
+    );
+
+    // Clean up: Delete the video file from the server after uploading it
+    fs.unlink(video.path, (err) => {
+      if (err) {
+        console.error("Error deleting the video file:", err);
+      } else {
+        console.log("Video file deleted successfully");
+      }
+    });
+
+    return res.status(200).json({
+      success: true,
+      videoId: response.data.id,
+      message: "Successfully updated the video to YouTube",
+      formData: req.body,
+    });
+  } 
+  catch (error) {
+    console.error("Error updating video to YouTube:", error.message);
+   
 
     if (!video) {
       console.log("No video ID provided, keeping existing video.");
     }
 
-    const result = await Testimony.findOne({ name, title, testimony });
+    const result = await Testimony.findOne({_id:_id});
 
     if (!result) {
       return res.status(404).json({ success: false, data: "Story not found" });
     }
 
     const storyData = {
-      video: video || result.video, // fallback to previous video
       image,
       name,
       date: new Date().toLocaleDateString("en-GB"),
@@ -146,7 +219,7 @@ app.put("/update-story", async (req, res) => {
     };
 
     const updatedStory = await Testimony.updateOne(
-      { _id: result._id },
+      { _id: _id },
       { $set: storyData }
     );
 
@@ -155,12 +228,7 @@ app.put("/update-story", async (req, res) => {
       data: "Story updated successfully",
       updatedStory,
     });
-  } catch (error) {
-    console.error("An error occurred while updating data:", error);
-    return res
-      .status(500)
-      .json({ success: false, data: "There was an error updating the story" });
-  }
+  } 
 });
 
 app.delete("/delete-story", async (req, res) => {

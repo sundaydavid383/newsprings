@@ -312,7 +312,7 @@ const Stories = ({ setActivePage }) => {
               ))}
             </div>
           ) : 
-         !testimonies ? 
+         testimonies ? 
          filteredTestimonies.length > 0 ? (
           <div className="about_stories_holder container">
             {filteredTestimonies.map((testifier, index) => (
@@ -332,7 +332,7 @@ const Stories = ({ setActivePage }) => {
                     {testifier.testimony.slice(0, 200)}......
                   </div>
                 </div>
-                <Link className="btn" to={`/testimony/${index}`}>
+                <Link className="btn" to={`/testimony/${testifier._id}`}>
                   <p>
                     Read more <i className="fa-solid fa-arrow-right-long"></i>
                   </p>
@@ -351,7 +351,7 @@ const Stories = ({ setActivePage }) => {
                 </div>
       
                 <div className="testifier_text">
-                  <h2 className="title">{testifier.title}  {testifier._id}</h2>
+                  <h2 className="title">{testifier.title}  </h2>
                   <div className="testifier_text_upper_details">
                     <p className="name">{testifier.name}</p>
                     <div className="testimonyCategory">{testifier.testimonyCategory}</div>
@@ -361,7 +361,7 @@ const Stories = ({ setActivePage }) => {
                     {testifier.testimony.slice(0, 200)}......
                   </div>
                 </div>
-                <Link className="btn" to={`/testimony/${index}`}>
+                <Link className="btn" to={`/testimony/${testifier._id}`}>
                   <p>
                     Read more <i className="fa-solid fa-arrow-right-long"></i>
                   </p>

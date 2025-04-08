@@ -5,31 +5,14 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useNavigate } from "react-router";
 import "leaflet/dist/leaflet.css";
 
-const TestimonyForm = () => {
-  const [formData, setFormData] = useState({
-    video: null,
-    image: null,
-    name: "David Efiong",
-    title: "God healed me miraculously!",
-    testimony:
-      "I had a severe case of malaria that left me feeling extremely weak and drained. However, through consistent prayer and faith in God's healing power, along with taking the right medication, I gradually began to recover. Each day I felt stronger, and eventually, I was completely healed. I truly believe it was God's grace that restored my health fully.",
-    scriptureReference: "Isaiah 53:5",
-    testimonyCategory: "Healing",
-    impact: "It boosted my faith.",
-    lessonLearned: "God is faithful to heal.",
-    prayerRequest: "Pray for continued strength.",
-    followUpAction: "I shared this with my youth group.",
-    churchDetails: {
-      name: "NewSprings Chapel",
-      location: "Calabar, Nigeria",
-      pastor: "Pastor Daniel Floyd",
-    },
-  });
-  
-  const navigate = useNavigate()
-  const [alertText, setAlertText] = useState("I am here to alert to alert you about your problems")
-  const [alert, setAlert] = useState(false)
-  const [loading, setLoading] = useState(null)
+const TestimonyForm = ({ formData, setFormData }) => {
+  console.log(formData);
+  const navigate = useNavigate();
+  const [alertText, setAlertText] = useState(
+    "I am here to alert to alert you about your problems"
+  );
+  const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(null);
   const [videoPreview, setVideoPreview] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [locationSearch, setLocationSearch] = useState("");
@@ -82,7 +65,6 @@ const TestimonyForm = () => {
       pastor: 5, // Full or partial name expected
     },
   };
-  
 
   // Handle input changes
   const handleInputChange = (e, field) => {
@@ -103,16 +85,23 @@ const TestimonyForm = () => {
   };
 
   // Handle video upload and preview
+  //  useEffect(() => {
+  //   if(formData.video){
+  //     const previewURL = URL.createObjectURL(file);
+  //     setVideoPreview(previewURL);
+  //   }
+  //  }, [formData.video])
+
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
-    if(!file.type.startsWith("video/")){
+    if (!file.type.startsWith("video/")) {
       setAlert(true);
-      setAlertText("please upload a valid video")
+      setAlertText("please upload a valid video");
       return;
     }
     const MAX_SIZE = 100 * 1024 * 1024; // 100MB
     if (file.size > MAX_SIZE) {
-      return ;
+      return;
     }
     setFormData((prev) => ({ ...prev, video: file }));
     const previewURL = URL.createObjectURL(file);
@@ -120,10 +109,16 @@ const TestimonyForm = () => {
   };
 
   // Handle image upload and preview
+  useEffect(() => {
+    if (formData.image || typeof formData.image === "string") {
+      setImagePreview(formData.image);
+    }
+  }, [formData.image]);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file.name.match(/\.(jpg|png|jpeg)$/i)) {
-      setAlert(false)
+      setAlert(false);
       setAlertText("Please select a valid image (jpg, jpeg, or png).");
       return;
     }
@@ -216,7 +211,9 @@ const TestimonyForm = () => {
     }
     if (formData.testimony.length < minLengths.testimony) {
       let testimonyleft = minLengths.testimony - formData.testimony.length;
-      setAlertText(`Please your testimony is too short. Make it longer. Your current length is ${formData.testimony.length} and you have ${testimonyleft} characters left.`);
+      setAlertText(
+        `Please your testimony is too short. Make it longer. Your current length is ${formData.testimony.length} and you have ${testimonyleft} characters left.`
+      );
       setAlert(true);
       return;
     }
@@ -245,7 +242,7 @@ const TestimonyForm = () => {
       setAlert(true);
       return;
     }
-  
+
     const formDataToSend = new FormData();
     for (const key in formData) {
       if (key === "churchDetails") {
@@ -269,11 +266,11 @@ const TestimonyForm = () => {
         formDataToSend.append(key, formData[key]);
       }
     }
-  
+
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:4000/uploading-story",
+        `http://localhost:4000/${formData._id ?"update-story":"uploading-story"}`,
         formDataToSend,
         {
           headers: {
@@ -281,13 +278,15 @@ const TestimonyForm = () => {
           },
         }
       );
-  
+
       if (response.data.success) {
         setAlertText("You have successfully updated your testimony");
         setAlert(true);
-        navigate("/"); // Optional: redirect here
+        setTimeout(() => {
+          navigate("/"); // Optional: redirect here
+        }, 3000);
       }
-  
+
       setFormData({
         video: null,
         image: null,
@@ -320,217 +319,229 @@ const TestimonyForm = () => {
 
   return (
     <div className="testimony_form_holder">
-      {loading ? 
+      {loading ? (
         <div className="testimonyFormLoader">
           <div className="loader"></div>
         </div>
-      :
-      <div className="testimony_form">
-      <h2>
-        We love hearing what God is doing in your life! Share your story here.
-      </h2>
-      {alert ?  <div className="alert_holder">
-      <div className="alert">
-        <p>{alertText}</p>
-        <div onClick={()=> setAlert(false)} className="btn"><p>OK</p></div>
-      </div>
-      </div>: null}
-     
-     
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            value={formData.name}
-            onChange={(e) => handleInputChange(e, "name")}
-            placeholder="FirstName Lastname"
-          />
-          <div>
-            {formData.name.length}/{maxLengths.name}
-          </div>
-        </div>
+      ) : (
+        <div className="testimony_form">
+          <h2>
+            We love hearing what God is doing in your life! Share your story
+            here.
+          </h2>
+          {alert ? (
+            <div className="alert_holder">
+              <div className="alert">
+                <p>{alertText}</p>
+                <div onClick={() => setAlert(false)} className="btn">
+                  <p>OK</p>
+                </div>
+              </div>
+            </div>
+          ) : null}
 
-        <div className="form-group">
-          <label>Title:</label>
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) => handleInputChange(e, "title")}
-            placeholder="Enter the title of your testimony"
-          />
-          <div>
-            {formData.title.length}/{maxLengths.title}
-          </div>
-        </div>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Name:</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => handleInputChange(e, "name")}
+                placeholder="FirstName Lastname"
+              />
+              <div>
+                {formData.name.length}/{maxLengths.name}
+              </div>
+            </div>
 
-        <div className="form-group-media">
-          <div className="form-group">
-            <label htmlFor="video-input" className="btn">
-              <p>
-                CONTACT <i className="fa-solid fa-video"></i>
-              </p>
-            </label>
-            <input
-              type="file"
-              id="video-input"
-              name="video"
-              onChange={handleVideoChange}
-              placeholder="Choose a video to upload"
-            />
-          </div>
+            <div className="form-group">
+              <label>Title:</label>
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) => handleInputChange(e, "title")}
+                placeholder="Enter the title of your testimony"
+              />
+              <div>
+                {formData.title.length}/{maxLengths.title}
+              </div>
+            </div>
 
-          <div className="form-group">
-            {videoPreview && (
-              <video controls>
-                <source src={videoPreview} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            )}
-          </div>
+            <div className="form-group-media">
+              <div className="form-group">
+                {formData._id ? (
+                  <p>
+                    Dont bother select new image if you dont want to change it
+                  </p>
+                ) : null}
+                <label htmlFor="video-input" className="btn">
+                  <p>
+                    VIDOE <i className="fa-solid fa-video"></i>
+                  </p>
+                </label>
+                <input
+                  type="file"
+                  id="video-input"
+                  name="video"
+                  onChange={handleVideoChange}
+                  placeholder="Choose a video to upload"
+                />
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="image-input" className="btn">
-              <p>
-                Get Image <i className="fa-solid fa-image"></i>
-              </p>
-            </label>
-            <input
-              type="file"
-              id="image-input"
-              name="image"
-              onChange={handleImageChange}
-              placeholder="Choose an image to upload"
-            />
-          </div>
-        </div>
-        <div className="form-group">
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-            />
-          )}
-        </div>
+              <div className="form-group">
+                {videoPreview && (
+                  <video controls>
+                    <source src={videoPreview} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
+              </div>
 
-        <div className="form-group">
-          <label>Testimony:</label>
-          <textarea
-            value={formData.testimony}
-            rows="5"
-            onChange={(e) => handleInputChange(e, "testimony")}
-            placeholder="Share your testimony here"
-          />
-          <div>
-            {formData.testimony.length}/{maxLengths.testimony}
-          </div>
-        </div>
+              <div className="form-group">
+                <label htmlFor="image-input" className="btn">
+                  <p>
+                    Get Image <i className="fa-solid fa-image"></i>
+                  </p>
+                </label>
+                <input
+                  type="file"
+                  id="image-input"
+                  name="image"
+                  onChange={handleImageChange}
+                  placeholder="Choose an image to upload"
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              {imagePreview && <img src={imagePreview} alt="Preview" />}
+            </div>
 
-        <div className="form-group">
-          <label>Scripture Reference:</label>
-          <input
-            type="text"
-            value={formData.scriptureReference}
-            onChange={(e) => handleInputChange(e, "scriptureReference")}
-            placeholder="Enter a scripture reference for your testimony"
-          />
-          <div>
-            {formData.scriptureReference.length}/
-            {maxLengths.scriptureReference}
-          </div>
-        </div>
+            <div className="form-group">
+              <label>Testimony:</label>
+              <textarea
+                value={formData.testimony}
+                rows="5"
+                onChange={(e) => handleInputChange(e, "testimony")}
+                placeholder="Share your testimony here"
+              />
+              <div>
+                {formData.testimony.length}/{maxLengths.testimony}
+              </div>
+            </div>
 
-        <div className="form-group">
-          <label>Testimony Category:</label>
-          <select
-            value={formData.testimonyCategory}
-            onChange={handleCategoryChange}
-            required
-          >
-            <option value="">Select a category</option>
-            {testimonyCategories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div className="form-group">
+              <label>Scripture Reference:</label>
+              <input
+                type="text"
+                value={formData.scriptureReference}
+                onChange={(e) => handleInputChange(e, "scriptureReference")}
+                placeholder="Enter a scripture reference for your testimony"
+              />
+              <div>
+                {formData.scriptureReference.length}/
+                {maxLengths.scriptureReference}
+              </div>
+            </div>
 
-        {/* Church details */}
-        <h3>Church Details</h3>
-        <div className="form-group">
-          <label>Church Name:</label>
-          <input
-            type="text"
-            value={formData.churchDetails.name}
-            onChange={(e) =>
-              handleNestedInputChange(e, "churchDetails", "name")
-            }
-            placeholder="Enter your church's name"
-          />
-          <div>
-            {formData.churchDetails.name.length}/
-            {maxLengths.churchDetails.name}
-          </div>
-        </div>
+            <div className="form-group">
+              <label>Testimony Category:</label>
+              <select
+                value={formData.testimonyCategory}
+                onChange={handleCategoryChange}
+                required
+              >
+                <option value="">Select a category</option>
+                {testimonyCategories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div className="form-group">
-          <label>Location:</label>
-          <input
-            type="text"
-            value={formData.churchDetails.location}
-            onChange={(e) => {
-              handleLocationChange(e);
-              handleNestedInputChange(e, "churchDetails", "location");
-            }}
-            placeholder="Enter your church's location"
-          />
-          <div>
-            {formData.churchDetails.location.length}/
-            {maxLengths.churchDetails.location}
-          </div>
-        </div>
+            {/* Church details */}
+            <h3>Church Details</h3>
+            <div className="form-group">
+              <label>Church Name:</label>
+              <input
+                type="text"
+                value={formData.churchDetails.name}
+                onChange={(e) =>
+                  handleNestedInputChange(e, "churchDetails", "name")
+                }
+                placeholder="Enter your church's name"
+              />
+              <div>
+                {formData.churchDetails.name.length}/
+                {maxLengths.churchDetails.name}
+              </div>
+            </div>
 
-        {/* Location Map */}
-        <div className="form-group">
-          <MapContainer
-            center={coordinates}
-            zoom={13}
-            style={{ height: "300px", width: "100%" }}
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={coordinates}>
-              <Popup>{locationSearch}</Popup>
-            </Marker>
-          </MapContainer>
+            <div className="form-group">
+              <label>Location:</label>
+              <input
+                type="text"
+                value={formData.churchDetails.location}
+                onChange={(e) => {
+                  handleLocationChange(e);
+                  handleNestedInputChange(e, "churchDetails", "location");
+                }}
+                placeholder="Enter your church's location"
+              />
+              <div>
+                {formData.churchDetails.location.length}/
+                {maxLengths.churchDetails.location}
+              </div>
+            </div>
+
+            {/* Location Map */}
+            <div className="form-group">
+              <MapContainer
+                center={coordinates}
+                zoom={13}
+                style={{ height: "300px", width: "100%" }}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker position={coordinates}>
+                  <Popup>{locationSearch}</Popup>
+                </Marker>
+              </MapContainer>
+            </div>
+            <div className="form-group">
+              <label>Pastor's Name:</label>
+              <select
+                value={formData.churchDetails.pastor}
+                onChange={handlePastorChange}
+                required
+              >
+                <option value="">Select a pastor</option>
+                {pastorsList.map((pastor, index) => (
+                  <option key={index} value={pastor}>
+                    {pastor}
+                  </option>
+                ))}
+              </select>
+              <div>
+                {formData.churchDetails.pastor.length}/
+                {maxLengths.churchDetails.pastor}
+              </div>
+            </div>
+            <div>
+              {formData._id ? (
+                <p>
+                  <button className="btn" type="submit">
+                    <p>Update Testimony</p>
+                  </button>
+                </p>
+              ) : (
+                <button className="btn" type="submit">
+                  <p>Submit Testimony</p>
+                </button>
+              )}
+            </div>
+          </form>
         </div>
-        <div className="form-group">
-          <label>Pastor's Name:</label>
-          <select
-            value={formData.churchDetails.pastor}
-            onChange={handlePastorChange}
-            required
-          >
-            <option value="">Select a pastor</option>
-            {pastorsList.map((pastor, index) => (
-              <option key={index} value={pastor}>
-                {pastor}
-              </option>
-            ))}
-          </select>
-          <div>
-            {formData.churchDetails.pastor.length}/
-            {maxLengths.churchDetails.pastor}
-          </div>
-        </div>
-        <div>
-          <button className="btn" type="submit">
-            <p>Submit Testimony</p>
-          </button>
-        </div>
-      </form>
-    </div>}
-      
+      )}
     </div>
   );
 };

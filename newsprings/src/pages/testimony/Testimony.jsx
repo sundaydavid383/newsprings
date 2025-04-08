@@ -130,20 +130,22 @@ const Testimony = ({}) => {
     },
   ];
 
-  const [testimonies, setTestimonies] = useState([]);
+  const [testimony, setTestimony] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
 
+  let numid = id ? String(id) : null;
   useEffect(() => {
     const fetchingStories = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:4000/getting-story");
+        const response = await fetch(`http://localhost:4000/getting-story?id=${numid}`);
         const data = await response.json();
         console.log("testimonies:", data);
         if (data.error) {
           alert(data.error);
         }
-        setTestimonies(data?.data);
+        setTestimony(data?.data);
         setLoading(false);
       } catch (error) {
         alert("there was an error from the server we are sorry");
@@ -154,10 +156,8 @@ const Testimony = ({}) => {
 
     fetchingStories();
   }, []);
-  const { id } = useParams();
 
-  let numid = id ? Number(id) : null;
-  console.log("number", id);
+  console.log("_id", id);
   return loading ? (
     <div className="loader_holder testimony_loading">
       <div className="loading_card">
@@ -174,13 +174,13 @@ const Testimony = ({}) => {
     </div>
   ) : (
     <div className="testimony_container ">
-      {testimonies.map((testimony, index) =>
-        numid !== null && index === numid ? (
-          <div key={index} className="testimony container">
+      {testimony?
+         (
+          <div  className="testimony container">
             <Link className="goback iconactive" to={"/stories"}>
               <i class="fa-solid fa-arrow-left"></i>
             </Link>
-            {console.log("index", index)}
+  
             
             <div className="testimony_content">
         
@@ -243,8 +243,8 @@ const Testimony = ({}) => {
               )}
             </div>
           </div>
-        ) : null
-      )}
+        )
+      :<p className="nodata">No Data available on testimony</p>}
     </div>
   );
 };

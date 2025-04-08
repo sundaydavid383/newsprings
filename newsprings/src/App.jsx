@@ -7,7 +7,6 @@ import Footer from "./component/footer/footer";
 import Contact from "./pages/contact/Contact";
 import Home from "./pages/home/Home";
 import MissionandVision from "./pages/abouts/MissionandVision";
-import Stateoffaith from "./pages/abouts/Corevalues";
 import Corevalues from "./pages/abouts/Corevalues";
 import Stories from "./pages/abouts/Stories";
 import Testimony from "./pages/testimony/Testimony";
@@ -22,6 +21,8 @@ import Give from "./pages/giving/Giving";
 import Giving from "./pages/giving/Giving";
 import Membership from "./pages/membership/Membership";
 import ShareTestimony from "./pages/sharetestimony/ShareTestimony";
+import Updatingstory from "./pages/updatestory/updatingstory";
+
 
 const App = () => {
   const [activePage, setActivePage] = useState("home")
@@ -44,9 +45,11 @@ const App = () => {
         <Route path="/our-pastor" element={<Ourpastor/>} />
         <Route path="/career" element={<Career/>}/>
         <Route path="/diag" element={<Portfolio/>}/>
+        <Route path="/updatestory94033030485403893" element={<Updatingstory setActivePage={setActivePage}/>}/>
         <Route path="/giving" element={<Giving setActivePage={setActivePage}/>}/>
         <Route path="/membership-class" element={<Membership setActivePage={setActivePage}/>}/>
         <Route path="/share-testimony" element={<ShareTestimony setActivePage={setActivePage}/>}/>
+
       </Routes>
       <Footer />
     </BrowserRouter>

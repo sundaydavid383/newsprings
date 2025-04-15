@@ -66,7 +66,7 @@ const Section = () => {
     {churchPrograms.map((program,index)=>(
            <Link key={index} to={program.link}><img src={program.imgSrc} alt="" /><div className="text"><h1>{program.title}</h1>
            <p>{program.description}</p>
-           <div className="link">{program.btnText} <i class="fa-solid fa-caret-right"></i></div></div></Link>
+           <div className="link">{program.btnText} <i className="fa-solid fa-caret-right"></i></div></div></Link>
     ))}
      
       
@@ -87,7 +87,7 @@ const Section = () => {
 </div>
        <div className="last-section container">
         {churchInto.map((Intro, index)=>(
-     <Link to={Intro.link}>
+     <Link key={index} to={Intro.link}>
      <img src={Intro.img} alt="Live Service" />
      <div className="text">
        <h2>{Intro.h1}</h2>

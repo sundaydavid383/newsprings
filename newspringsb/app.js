@@ -3,17 +3,22 @@ const cors = require("cors");
 const { google } = require("googleapis");
 const multer = require("multer");
 const fs = require("fs");
+const bcrypt = require("bcrypt");
 require("dotenv").config();
-const Testimony = require("./testimonyModel");
+const connectDatabases = require("./db");
+const sendEmail = require("./utils/sendEmail")
 const { default: mongoose } = require("mongoose");
 
+//app password = anwf blsl unlp jixo
 // Express application
 const app = express();
-console.log("password:", process.env.PASSWORD)
+console.log("password:", process.env.PASSWORD);
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+
 
 // Initializing multer
 const storage = multer.diskStorage({
@@ -43,360 +48,553 @@ const oauth2Client = new google.auth.OAuth2(
   REDIRECT_URI
 );
 
-// Route to handle the OAuth2 callback
-app.get("/oauth2callback", async (req, res) => {
-  const { code } = req.query;
-
+const startServer = async () => {
   try {
-    const { tokens } = await oauth2Client.getToken(code);
-    oauth2Client.setCredentials(tokens);
-    res.send("You are now authorized! You can close this window.");
-  } catch (error) {
-    console.error("Error exchanging code for tokens:", error);
-    res.status(500).send("Error during authentication");
-  }
-});
+    // Connect to both databases
+    const { testimoniesConnection, registrationsConnection } =
+      await connectDatabases();
 
-async function refreshAccessTokenIfNeeded() {
-  const refreshToken = process.env.REFRESH_TOKEN;
-  oauth2Client.setCredentials({ refresh_token: refreshToken });
-
-  const currentToken = oauth2Client.credentials.access_token;
-  if (currentToken) {
-    try {
-      const response = await oauth2Client.getAccessToken();
-      if (response.token) {
-        oauth2Client.setCredentials({ access_token: response.token });
+    // Import models for each database connection
+    const TestimonyModel = require("./models/testimonyModel")(
+      testimoniesConnection
+    );
+    const Registration = require("./models/registrationModel")(
+      registrationsConnection
+    );
+    function calculateAge(dob) {
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
       }
-    } catch (err) {
-      console.error("Error refreshing access token:", err);
-    }
-  }
-}
-app.get("/getting-story", async (req, res) => {
-  try {
-    if (req.query.id && !mongoose.Types.ObjectId.isValid(req.query.id)) {
-      return res.status(400).json({ success: false, error: "Invalid ID format" });
+      return age;
     }
 
-    if (req.query.id) {
-      const data = await Testimony.findOne({ _id: req.query.id });
-      if (!data) {
-        return res.status(404).json({ success: false, error: "Story not found" });
-      }
-      console.log("story data:", data);
-      return res.status(200).json({ success: true, data });
-    }
 
-    const data = await Testimony.find(); // optionally add .sort()
-    console.log("story data:", data);
-    return res.status(200).json({ success: true, data });
+    //=================admin message===========
+    const adminMessageRoute = require("./routes/adminMessage");
+    app.use("/api", adminMessageRoute);
+
+    //===================validate admin===========
+    app.post("/verify/admin", async (req, res) => {
+      const { password } = req.body;
     
-  } catch (err) {
-    console.error("unable to fetch data from the database", err);
-    return res
-      .status(500)
-      .json({ success: false, error: "Unable to fetch data from the database" });
-  }
-});
-
-
-
-app.put("/update-story", async (req, res) => {
- const {
-     _id,
-    image,
-    name,
-    title,
-    testimony,
-    scriptureReference,
-    testimonyCategory,
-    followUpAction,
-    impact,
-    lessonLearned,
-    prayerRequest,
-    churchDetails,
-  } = req.body;
-
-  const video = req.file;
-  if(!video){
-    console.log("no video specifie during update")
-    throw new Error("no video specifie during update");
-  }
-  try {
-    await refreshAccessTokenIfNeeded();
-    const access_token = oauth2Client.credentials.access_token;
-    oauth2Client.setCredentials({ access_token });
-
-    const youtube = google.youtube({
-      version: "v3",
-      auth: oauth2Client,
-    });
-
-    const videoPath = video.path;
-
-    const response = await youtube.videos.insert({
-      part: "snippet,status",
-      requestBody: {
-        snippet: {
-          title: title,
-          description: testimony.slice(0, 200),
-        },
-        status: {
-          privacyStatus: "public",
-        },
-      },
-      media: {
-        body: fs.createReadStream(videoPath),
-      },
-    });
-
-    // Video uploaded successfully to YouTube
-    const storyData = {
-      video: response?.data?.id, // YouTube video ID
-      image,
-      name,
-      date:new Date().toLocaleDateString("en-GB"),
-      title,
-      testimony,
-      scriptureReference,
-      testimonyCategory,
-      followUpAction,
-      impact,
-      lessonLearned,
-      prayerRequest,
-      churchDetails,
-    };
-
-    const updatedStory = await Testimony.updateOne(
-      { _id: _id },
-      { $set: storyData }
-    );
-
-    // Clean up: Delete the video file from the server after uploading it
-    fs.unlink(video.path, (err) => {
-      if (err) {
-        console.error("Error deleting the video file:", err);
-      } else {
-        console.log("Video file deleted successfully");
+      if (!password) {
+        return res.status(400).json({ success: false, message: "Password is required." });
+        
+      }
+    
+      try {
+        const isMatch = await bcrypt.compare(password, process.env.ADMIN_PASSWORD);
+    
+        if (!isMatch) {
+          return res.status(401).json({ success: false, message: "Unauthorized. Incorrect password." });
+        }
+    
+        return res.status(200).json({ success: true, message: "Admin verified." });
+      } catch (err) {
+        console.error("Error verifying admin password:", err);
+        return res.status(500).json({ success: false, message: "Server error." });
       }
     });
 
-    return res.status(200).json({
-      success: true,
-      videoId: response.data.id,
-      message: "Successfully updated the video to YouTube",
-      formData: req.body,
-    });
-  } 
-  catch (error) {
-    console.error("Error updating video to YouTube:", error.message);
-   
 
-    if (!video) {
-      console.log("No video ID provided, keeping existing video.");
-    }
 
-    const result = await Testimony.findOne({_id:_id});
+    // ============ Broadcast endpoint ==========
+      app.post("/admin/broadcast", async (req,res) => {
+        const {message} = req.body
 
-    if (!result) {
-      return res.status(404).json({ success: false, data: "Story not found" });
-    }
+        try {
+           const users = await Registration.find({}, "email")
+           const emailPromises = users.map((user)=>
+          sendEmail(user.email, "Message from Admin", String(message)
+          ))
+          await Promise.all(emailPromises)
 
-    const storyData = {
-      image,
-      name,
-      date: new Date().toLocaleDateString("en-GB"),
-      title,
-      testimony,
-      scriptureReference,
-      testimonyCategory,
-      followUpAction,
-      impact,
-      lessonLearned,
-      prayerRequest,
-      churchDetails,
-    };
+          res.json({success:true, message:"Message sent to all users"});
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({success:false, message:"Failed to send emails"})
+          
+        }
+      })
 
-    const updatedStory = await Testimony.updateOne(
-      { _id: _id },
-      { $set: storyData }
-    );
+    // ========== Login Endpoint =============
+    app.post("/api/login", async (req, res) => {
+      const { email, password } = req.body;
 
-    return res.status(200).json({
-      success: true,
-      data: "Story updated successfully",
-      updatedStory,
-    });
-  } 
-});
+      try {
+        console.log(req.body);
+        // Find user by email
+        const user = await Registration.findOne({ email: String(email) });
 
-app.delete("/delete-story", async (req, res) => {
-  try {
-    const { id } = req.query;
+        if (!user) {
+          console.error("Invalid email or password.");
+          return res
+            .status(401)
+            .json({ success: false, message: "Unable to find user." });
+        } else {
+          // Compare passwords
+          const isMatch = await bcrypt.compare(password, user.password);
 
-    if ( !id || typeof id !== "string") {
-      return res
-        .status(400)
-        .json({ success: false, data: "Invalid user credentials" });
-    }
-   const result = await Testimony.deleteOne({_id:id})
-
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ success: false, data: "Story not found"})   
-     }
-    return res
-      .status(200)
-      .json({ success: true, data: "Story deleted successfully", deletedData:result});
-  } catch (error) {
-    console.error("an Error ocurred while deleting data:", error);
-    return res.status(500).json({success:false, data:"there was an error deleting user"})
-  }
-});
-
-app.post("/uploading-story", upload.single("video"), async (req, res) => {
-  const {
-    image,
-    name,
-    title,
-    testimony,
-    scriptureReference,
-    testimonyCategory,
-    followUpAction,
-    impact,
-    lessonLearned,
-    prayerRequest,
-    churchDetails,
-  } = req.body;
-
-  const video = req.file;
-
-  try {
-    await refreshAccessTokenIfNeeded();
-    const access_token = oauth2Client.credentials.access_token;
-    oauth2Client.setCredentials({ access_token });
-
-    const youtube = google.youtube({
-      version: "v3",
-      auth: oauth2Client,
-    });
-
-    const videoPath = video.path;
-
-    const response = await youtube.videos.insert({
-      part: "snippet,status",
-      requestBody: {
-        snippet: {
-          title: title,
-          description: testimony.slice(0, 200),
-        },
-        status: {
-          privacyStatus: "public",
-        },
-      },
-      media: {
-        body: fs.createReadStream(videoPath),
-      },
-    });
-
-    // Video uploaded successfully to YouTube
-    const storyData = {
-      video: response?.data?.id, // YouTube video ID
-      image,
-      name,
-      date:new Date().toLocaleDateString("en-GB"),
-      title,
-      testimony,
-      scriptureReference,
-      testimonyCategory,
-      followUpAction,
-      impact,
-      lessonLearned,
-      prayerRequest,
-      churchDetails,
-    };
-
-    const story = await Testimony.create(storyData);
-
-    // Clean up: Delete the video file from the server after uploading it
-    fs.unlink(video.path, (err) => {
-      if (err) {
-        console.error("Error deleting the video file:", err);
-      } else {
-        console.log("Video file deleted successfully");
+          if (!isMatch) {
+            console.error("Invalid email or password.");
+            return res
+              .status(401)
+              .json({ success: false, message: "Invalid email or password." });
+          }
+          console.log("login successfully")
+          return res.status(200).json({
+            success: true,
+            message: "Login successful!",
+            user: {
+              id: user._id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              age: user.age,
+              phone: user.phone,
+              gender: user.gender,
+              occupation: user.occupation,
+              hearAboutUs: user.hearAboutUs,
+              interest: user.interest,
+              prayerRequest: user.prayerRequest,
+              createdAt: user.createdAt,
+              updatedAt: user.updatedAt,
+            },
+          });
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        res
+          .status(500)
+          .json({ success: false, message: "An error occurred during login." });
       }
     });
 
-    return res.status(200).json({
-      success: true,
-      videoId: response.data.id,
-      message: "Successfully uploaded the video to YouTube",
-      formData: req.body,
-    });
-  } 
-  catch (error) {
-    console.error("Error uploading video to YouTube:", error.message);
-    const storyData = {
-      image,// YouTube video ID
-      name,
-      date:new Date().toLocaleDateString("en-GB"),
-      title,
-      testimony,
-      scriptureReference,
-      testimonyCategory,
-      followUpAction,
-      impact,
-      lessonLearned,
-      prayerRequest,
-      churchDetails,
-    };
-
-    const story = await Testimony.create(storyData);
-
-    // Clean up: Delete the video file from the server after uploading it
-    fs.unlink(video.path, (err) => {
-      if (err) {
-        console.error("Error deleting the video file:", err);
-      } else {
-        console.log("Video file deleted successfully");
+    // ======== Register Endpoint (with hashed password) ===========
+    app.post("/register", async (req, res) => {
+      try {
+        const {
+          firstName,
+          lastName,
+          email,
+          password,
+          dob,
+          phone,
+          gender,
+          occupation,
+          hearAboutUs,
+          interest,
+          prayerRequest,
+        } = req.body;
+    
+        // Hash the password before saving
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const age = calculateAge(dob);
+    
+        const user = new Registration({
+          firstName: String(firstName),
+          lastName: String(lastName),
+          email: String(email),
+          password: hashedPassword,
+          age: String(age),
+          phone: String(phone),
+          gender: String(gender),
+          occupation: String(occupation),
+          hearAboutUs: String(hearAboutUs),
+          interest: String(interest),
+          prayerRequest: String(prayerRequest),
+        });
+    
+        const currentUser = await user.save();
+    
+        // Remove password before sending back the user
+        const userWithoutPassword = currentUser.toObject();
+        delete userWithoutPassword.password;
+    
+        res.status(201).json({
+          success: true,
+          message: "Registration successful!",
+          user: userWithoutPassword,
+        });
+      } catch (error) {
+        console.error("Error registering user:", error);
+        res.status(500).json({
+          success: false,
+          message: "There was an error during registration.",
+        });
       }
     });
 
-    return res.status(200).json({
-      success: true,
-      videoId: "no video uploaded",
-      message: "We uploaded it without using the video",
-      formData: req.body,
+    // Route to handle the OAuth2 callback
+    app.get("/oauth2callback", async (req, res) => {
+      const { code } = req.query;
+
+      try {
+        const { tokens } = await oauth2Client.getToken(code);
+        oauth2Client.setCredentials(tokens);
+        res.send("You are now authorized! You can close this window.");
+      } catch (error) {
+        console.error("Error exchanging code for tokens:", error);
+        res.status(500).send("Error during authentication");
+      }
     });
-  }
-});
-app.post("/diagnose", (req, res) => {
-  const { symptoms } = req.body;
-  const malariaSymptoms = ["Fever", "Chills", "Sweating", "Headache"];
 
-  const matches = symptoms.filter((symptom) =>
-    malariaSymptoms.includes(symptom)
-  );
+    async function refreshAccessTokenIfNeeded() {
+      const refreshToken = process.env.REFRESH_TOKEN;
+      oauth2Client.setCredentials({ refresh_token: refreshToken });
 
-  if (matches.length >= 3) {
-    res.json({ message: "High chance of malaria. Visit a doctor!" });
-  } else {
-    res.json({ message: "Unlikely malaria, but monitor your symptoms." });
-  }
-});
+      const currentToken = oauth2Client.credentials.access_token;
+      if (currentToken) {
+        try {
+          const response = await oauth2Client.getAccessToken();
+          if (response.token) {
+            oauth2Client.setCredentials({ access_token: response.token });
+          }
+        } catch (err) {
+          console.error("Error refreshing access token:", err);
+        }
+      }
+    }
+    app.get("/getting-story", async (req, res) => {
+      try {
+        if (req.query.id && !mongoose.Types.ObjectId.isValid(req.query.id)) {
+          return res
+            .status(400)
+            .json({ success: false, error: "Invalid ID format" });
+        }
 
-// Initialize MongoDB connection and start server
-const connectDB = async () => {
-  try {
-  
-    const mongoURL = `mongodb+srv://sundayudoh383:${process.env.PASSWORD}@newspringchurchdb.m83dh.mongodb.net/?retryWrites=true&w=majority&appName=newspringChurchDB`;
-    await mongoose.connect(mongoURL);
-    console.log("connected to mongoose successfully");
+        if (req.query.id) {
+          const data = await TestimonyModel.findOne({ _id: req.query.id });
+          if (!data) {
+            return res
+              .status(404)
+              .json({ success: false, error: "Story not found" });
+          }
+          console.log("story data:", data);
+          return res.status(200).json({ success: true, data });
+        }
+
+        const data = await TestimonyModel.find(); // optionally add .sort()
+        console.log("story data:", data);
+        return res.status(200).json({ success: true, data });
+      } catch (err) {
+        console.error("unable to fetch data from the database", err);
+        return res
+          .status(500)
+          .json({
+            success: false,
+            error: "Unable to fetch data from the database",
+          });
+      }
+    });
+
+    app.put("/update-story", async (req, res) => {
+      const {
+        _id,
+        image,
+        name,
+        title,
+        testimony,
+        scriptureReference,
+        testimonyCategory,
+        followUpAction,
+        impact,
+        lessonLearned,
+        prayerRequest,
+        churchDetails,
+      } = req.body;
+
+      const video = req.file;
+      if (!video) {
+        console.log("no video specifie during update");
+        throw new Error("no video specifie during update");
+      }
+      try {
+        await refreshAccessTokenIfNeeded();
+        const access_token = oauth2Client.credentials.access_token;
+        oauth2Client.setCredentials({ access_token });
+
+        const youtube = google.youtube({
+          version: "v3",
+          auth: oauth2Client,
+        });
+
+        const videoPath = video.path;
+
+        const response = await youtube.videos.insert({
+          part: "snippet,status",
+          requestBody: {
+            snippet: {
+              title: title,
+              description: testimony.slice(0, 200),
+            },
+            status: {
+              privacyStatus: "public",
+            },
+          },
+          media: {
+            body: fs.createReadStream(videoPath),
+          },
+        });
+
+        // Video uploaded successfully to YouTube
+        const storyData = {
+          video: response?.data?.id, // YouTube video ID
+          image,
+          name,
+          date: new Date().toLocaleDateString("en-GB"),
+          title,
+          testimony,
+          scriptureReference,
+          testimonyCategory,
+          followUpAction,
+          impact,
+          lessonLearned,
+          prayerRequest,
+          churchDetails,
+        };
+
+        const updatedStory = await TestimonyModel.updateOne(
+          { _id: _id },
+          { $set: storyData }
+        );
+
+        // Clean up: Delete the video file from the server after uploading it
+        fs.unlink(video.path, (err) => {
+          if (err) {
+            console.error("Error deleting the video file:", err);
+          } else {
+            console.log("Video file deleted successfully");
+          }
+        });
+
+        return res.status(200).json({
+          success: true,
+          videoId: response.data.id,
+          message: "Successfully updated the video to YouTube",
+          formData: req.body,
+        });
+      } catch (error) {
+        console.error("Error updating video to YouTube:", error.message);
+
+        if (!video) {
+          console.log("No video ID provided, keeping existing video.");
+        }
+
+        const result = await TestimonyModel.findOne({ _id: _id });
+
+        if (!result) {
+          return res
+            .status(404)
+            .json({ success: false, data: "Story not found" });
+        }
+
+        const storyData = {
+          image,
+          name,
+          date: new Date().toLocaleDateString("en-GB"),
+          title,
+          testimony,
+          scriptureReference,
+          testimonyCategory,
+          followUpAction,
+          impact,
+          lessonLearned,
+          prayerRequest,
+          churchDetails,
+        };
+
+        const updatedStory = await TestimonyModel.updateOne(
+          { _id: _id },
+          { $set: storyData }
+        );
+
+        return res.status(200).json({
+          success: true,
+          data: "Story updated successfully",
+          updatedStory,
+        });
+      }
+    });
+
+    app.delete("/delete-story", async (req, res) => {
+      try {
+        const { id } = req.query;
+
+        if (!id || typeof id !== "string") {
+          return res
+            .status(400)
+            .json({ success: false, data: "Invalid user credentials" });
+        }
+        const result = await TestimonyModel.deleteOne({ _id: id });
+
+        if (result.deletedCount === 0) {
+          return res
+            .status(404)
+            .json({ success: false, data: "Story not found" });
+        }
+        return res
+          .status(200)
+          .json({
+            success: true,
+            data: "Story deleted successfully",
+            deletedData: result,
+          });
+      } catch (error) {
+        console.error("an Error ocurred while deleting data:", error);
+        return res
+          .status(500)
+          .json({ success: false, data: "there was an error deleting user" });
+      }
+    });
+
+    app.post("/uploading-story", upload.single("video"), async (req, res) => {
+      const {
+        image,
+        name,
+        title,
+        testimony,
+        scriptureReference,
+        testimonyCategory,
+        followUpAction,
+        impact,
+        lessonLearned,
+        prayerRequest,
+        churchDetails,
+      } = req.body;
+
+      const video = req.file;
+
+      try {
+        await refreshAccessTokenIfNeeded();
+        const access_token = oauth2Client.credentials.access_token;
+        oauth2Client.setCredentials({ access_token });
+
+        const youtube = google.youtube({
+          version: "v3",
+          auth: oauth2Client,
+        });
+
+        const videoPath = video.path;
+
+        const response = await youtube.videos.insert({
+          part: "snippet,status",
+          requestBody: {
+            snippet: {
+              title: title,
+              description: testimony.slice(0, 200),
+            },
+            status: {
+              privacyStatus: "public",
+            },
+          },
+          media: {
+            body: fs.createReadStream(videoPath),
+          },
+        });
+
+        // Video uploaded successfully to YouTube
+        const storyData = {
+          video: response?.data?.id, // YouTube video ID
+          image,
+          name,
+          date: new Date().toLocaleDateString("en-GB"),
+          title,
+          testimony,
+          scriptureReference,
+          testimonyCategory,
+          followUpAction,
+          impact,
+          lessonLearned,
+          prayerRequest,
+          churchDetails,
+        };
+
+        const story = await TestimonyModel.create(storyData);
+
+        // Clean up: Delete the video file from the server after uploading it
+        fs.unlink(video.path, (err) => {
+          if (err) {
+            console.error("Error deleting the video file:", err);
+          } else {
+            console.log("Video file deleted successfully");
+          }
+        });
+
+        return res.status(200).json({
+          success: true,
+          videoId: response.data.id,
+          message: "Successfully uploaded the video to YouTube",
+          formData: req.body,
+        });
+      } catch (error) {
+        console.error("Error uploading video to YouTube:", error.message);
+        const storyData = {
+          image, // YouTube video ID
+          name,
+          date: new Date().toLocaleDateString("en-GB"),
+          title,
+          testimony,
+          scriptureReference,
+          testimonyCategory,
+          followUpAction,
+          impact,
+          lessonLearned,
+          prayerRequest,
+          churchDetails,
+        };
+
+        const story = await TestimonyModel.create(storyData);
+
+        // Clean up: Delete the video file from the server after uploading it
+        fs.unlink(video.path, (err) => {
+          if (err) {
+            console.error("Error deleting the video file:", err);
+          } else {
+            console.log("Video file deleted successfully");
+          }
+        });
+
+        return res.status(200).json({
+          success: true,
+          videoId: "no video uploaded",
+          message: "We uploaded it without using the video",
+          formData: req.body,
+        });
+      }
+    });
+
+    //register user
+    app.post("/register", async (req, res) => {});
+
+    app.post("/diagnose", (req, res) => {
+      try {
+        const { symptoms } = req.body;
+        const malariaSymptoms = ["Fever", "Chills", "Sweating", "Headache"];
+
+        const matches = symptoms.filter((symptom) =>
+          malariaSymptoms.includes(symptom)
+        );
+
+        if (matches.length >= 3) {
+          res.json({ message: "High chance of malaria. Visit a doctor!" });
+        } else {
+          res.json({ message: "Unlikely malaria, but monitor your symptoms." });
+        }
+      } catch (error) {
+        console.error("they is an error dignosing");
+      }
+    });
 
     app.listen(4000, () => console.log("Server running on port 4000"));
-  } catch (error) {
-    console.error("an error occured unable to connect mongoose", error);
+  } catch (err) {
+    console.error("Server failed to start because DB connection failed.", err);
   }
 };
 
-connectDB();
+startServer();

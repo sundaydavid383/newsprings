@@ -151,6 +151,10 @@ body{
     top: -.6rem;
     left:-1.6rem;
 }
+.btn:hover p i{
+transform: translateX(4rem);
+transition: .3s linear;
+}
 .btn i{
     padding-left: .3rem;
 }

@@ -1,0 +1,9 @@
+.AdminSendmessage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 31rem;
+}
+.AdminSendmessage .signup-form .btn{
+    border: 0;
+}

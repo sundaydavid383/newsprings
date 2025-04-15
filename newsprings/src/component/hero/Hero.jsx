@@ -10,14 +10,6 @@ import { Link } from "react-router";
 const Hero = () => {
   const [printedTalk, setPrintedTalk] = useState(0)
   const [printedSection, setPrintedSection] = useState(0)
-
-  
-
-
-
-
-
-
   const section = [
     {
       id:1,

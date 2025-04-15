@@ -1,0 +1,121 @@
+.sign {
+  margin-top: 5rem;
+}
+.signuppage img,
+.signuppage span {
+  width: 100%;
+  min-height: 600px;
+  position: fixed;
+  top: 7rem;
+  left: 0rem;
+  z-index: -1111;
+  background-blend-mode: lighten;
+}
+.signinorup{
+  display: flex;
+  justify-content: space-between;
+}
+.signinorup a{
+  color: var(--light-text);
+  transition: .2s linear;
+}
+.signinorup a:hover{
+  color: var(--tetiary-color);
+}
+.signuppage span {
+  background: var(--dark-secondary-shadow);
+  z-index: -1;
+}
+.sign.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    flex-direction: column;
+  }
+  
+  .signuppage {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .signuppage img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 0.rem;
+  }
+  
+  .signup-form {
+
+    border-radius: 0.7rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    backdrop-filter: blur(12px);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid var(--light-text);
+  }
+  .signup-form small{
+    color: var(--light-text);
+  }
+  .signup-form h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    color: var(--light-text);
+    margin-bottom: 1rem;
+  }
+  
+  .signup-form input,
+  .signup-form select,
+  .signup-form textarea {
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: var(--light-text);
+    width: 100%;
+    background: var(--fadedWhite);
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  
+  .signup-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .signup-form select option {
+    background-color: var(--black);
+    color: var(--light-text);
+  }
+  
+  
+  /* Validation / alert animation */
+  #phone.alert,
+  #email.alert,
+  #firstName.alert,
+  #lastName.alert,
+  #age.alert,
+  #occupation.alert,
+  #hearAboutUs.alert,
+  #interest.alert {
+    animation: shake 0.5s forwards;
+    outline: 2px solid red;
+  }
+  .double_input{
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+  }
+  .double_input .input_with_counter{
+    width: 100%;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-7px); }
+    20%, 40%, 60%, 80% { transform: translateX(7px); }
+  }

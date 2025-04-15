@@ -21,49 +21,34 @@ const Feature = () => {
       try {
         const response = await fetch(horuku_url);
         const xmlText = await response.text();
-  
+    
         const parser = new DOMParser();
         const xml = parser.parseFromString(xmlText, "application/xml");
-  
-        const entry = xml.querySelector("entry");
-  
-        if (entry) {
+    
+        const entries = xml.querySelectorAll("entry");
+    
+        for (let entry of entries) {
           const videoIdTag = entry.getElementsByTagName("yt:videoId")[0] || entry.getElementsByTagName("videoId")[0];
+          const titleTag = entry.querySelector("title");
+    
           const videoId = videoIdTag?.textContent;
-          const title = entry.querySelector("title")?.textContent;
-  
-          setVideoId(videoId);
-          setTitle(title);
-        } else {
-          console.log("No video entries found");
+          const title = titleTag?.textContent;
+    
+          if (videoId && !videoId.includes("RESTRICTED")) {
+            setVideoId(videoId);
+            setTitle(title);
+            return;
+          }
         }
+    
+        console.log("No suitable videos found in the feed.");
       } catch (error) {
         console.error("Error fetching RSS feed:", error);
       }
     };
+    fetchLatestVideo()
+  }, [])
   
-    fetchLatestVideo();
-  }, []);
-  // useEffect(() => {
-  //   const fetchUpdatedData = async () => {
-  //     setLoading(true);
-  //     const response = await fetch(APi_URL);
-  //     const data = await response.json();
-  //     console.log("Fetched Data:", data); // Check the fetched data
-
-  //     if (data.items[0] && data.items[0].id.videoId) {
-  //       setTitle(data.items[0].snippet.title);
-  //       setVideoId(data.items[0].id.videoId);
-  //       setLoading(false);
-  //     } else {
-  //       setLoading(false);
-  //       setTitle("Error fetching the data");
-  //       setVideoId(null);
-  //     }
-  //   };
-  //   fetchUpdatedData();
-  // }, []);
-
   const featureType = "homepage";
   const features = [
     {

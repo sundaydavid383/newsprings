@@ -16,7 +16,7 @@ const FeatureBottom = ({ cards, featureType }) => {
             <h2>{feature.title}</h2>
             <p>{feature.description}</p>
             <Link to={feature.link}>
-              {feature.altText} <i class="fa-solid fa-caret-right"></i>
+              {feature.altText} <i className="fa-solid fa-caret-right"></i>
             </Link>
           </div>
         ))

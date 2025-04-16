@@ -1,0 +1,41 @@
+.live_video{
+    margin-top: 8rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 2.1rem;
+    padding-inline: 3rem;
+}
+.live_video h2{
+   font-size: 2.3rem;
+   color: var(--secondary-color);
+   text-underline-offset: 12px;
+   text-align: center;
+   text-decoration: underline;
+}
+.live_video iframe{
+    width: 70%;
+    aspect-ratio: 16/9;
+    border-radius: 1rem;
+    margin: auto;
+    margin-left: 16.5%;
+}
+.video_title{
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    line-height: 1.9rem;
+    text-align: center;
+
+}
+.video_date{
+    text-align: left;
+    align-self: flex-start;
+    margin-left: 16.5%;
+    color: var(--primary-color);
+}
+.live_video .description{
+    margin-left: 16.5%;
+    font-size: .96rem;
+    color: var(--secondary-color);
+}

@@ -2,12 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const { google } = require("googleapis");
 const multer = require("multer");
+const path = require("path")
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const connectDatabases = require("./db");
 const sendEmail = require("./utils/sendEmail")
 const { default: mongoose } = require("mongoose");
+
 
 //app password = anwf blsl unlp jixo
 // Express application
@@ -73,9 +75,19 @@ const startServer = async () => {
     }
 
 
+    //==================sermon details================
+    const sermonRoutes = require('./routes/sermonRoutes');
+    app.use('/api', sermonRoutes);
+
+
     //=================admin message===========
     const adminMessageRoute = require("./routes/adminMessage");
     app.use("/api", adminMessageRoute);
+   
+
+    //===================admin servicetext==============
+    const serviceTextRoute = require("./routes/serviceText")
+    app.use("/api", serviceTextRoute);
 
     //===================validate admin===========
     app.post("/verify/admin", async (req, res) => {

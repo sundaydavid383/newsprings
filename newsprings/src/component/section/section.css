@@ -107,6 +107,9 @@ height: 20vh;
     transform: translateX(-50%);
     color: var(--light-text);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
     width: 100%;
     background: rgba(0, 0, 0,.4);
     box-shadow: 0px 0px 50px 40px rgba(0,0,0,.7),

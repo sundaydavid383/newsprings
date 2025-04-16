@@ -4,6 +4,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
+  const [serviceDescription, setServiceDescription] = useState("")
   const [user, setUser] = useState(null); // user = response.data.user
   const fetchMessages = async () => {
     try {

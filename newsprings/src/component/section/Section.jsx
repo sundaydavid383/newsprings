@@ -46,14 +46,14 @@ const Section = () => {
       ];
     const churchInto = [
         {
-            link:"/watch-live",
+            link:"/lastestservice",
             img:church6,
             h1:"Join Our Live Service",
             p:"Experience powerful worship, inspiring sermons, and the presence of God from wherever you are.",
             spanText:"Watch Live"
         },
         {
-            link:"/about",
+            link:"/mission-and-vision",
             img:church7,
             h1:"Who We Are",
             p:"Discover our mission, vision, and core values as a church committed to spreading God’s love.",

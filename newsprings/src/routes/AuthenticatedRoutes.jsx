@@ -21,19 +21,23 @@ import Membership from "../pages/membership/Membership";
 import ShareTestimony from "../pages/sharetestimony/ShareTestimony";
 import Updatingstory from "../pages/updatestory/Updatingstory";
 import AdminSendmessage from "../pages/admin/AdminSendmessage";
+import LatestService from "../pages/latestService/LatestService";
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
   console.log(isAuthenticated);
   const { messages, user } = useUser();
+   const [seeMessage, setSeeMessage] = useState(false)
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />; // Redirect to login page if not authenticated
   }
   return (
     <>
-        {/* 🔥 Fixed Messages Card */}
-        {messages.length > 0 && (
+       <i onClick={()=>setSeeMessage(true)} className="iconactive message_state fa-solid fa-message"></i>
+        {seeMessage && messages.length > 0 && (
+          <div className="message_box_holder">
+                   <i onClick={()=>setSeeMessage(false)} className="iconactive fa-solid fa-times"></i>
           <div className="message_box">
-            <h4 >Messages</h4>
+            <div className="title">Messages</div>
             <ul>
               {messages.map((msg, idx) => (
                 <li key={idx}>
@@ -55,11 +59,14 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
               ))}
             </ul>
           </div>
+          </div>
+   
         )}
     <Routes>
       <Route path="/" element={<Home setActivePage={setActivePage} />} />
       <Route path="/service" element={<Service />} />
-      <Route path="/admin45435t65455" element={<AdminSendmessage />} />
+      <Route path="/lastestservice" element={<LatestService />} />
+      <Route path="/admin45435t654dddsdffgdsdfdfdfdfasdfdedfdfdfdf55" element={<AdminSendmessage />} />
       <Route path="/contact" element={<Contact />} />
       <Route
         path="/sermon"

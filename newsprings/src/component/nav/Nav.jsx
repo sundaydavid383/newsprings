@@ -14,7 +14,9 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
     setUser(null);
     console.log(user);
     localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user"); // Optionally store in localStorage
+    localStorage.removeItem("user");
+    setShowUserDetails(false)
+     // Optionally store in localStorage
     // Redirect to the login page
     navigate("/signin"); // or use <Navigate /> to redirect
   };

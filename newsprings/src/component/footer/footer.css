@@ -1,7 +1,9 @@
 .footer_holder{
-
-    padding-block: 2.1rem;
+    padding-block: 1.1rem;
     gap: 2rem;
+}
+.footer_holder.container{
+    padding-inline: 1rem;
 }
 .footer{
     display: flex;
@@ -12,7 +14,7 @@
    color:var(--secondary-color)
 }
 .footer .about{
-    width: 35%;
+    width: 65%;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -33,8 +35,9 @@
 .footer .resources,
 .footer .ministries{
     display: flex;
-    width: 25%;
+    width: 30%;
     flex-direction: column;
+    margin-top: 5rem;
 }
 .footer .event_conference h3,
 .footer .resources h3,

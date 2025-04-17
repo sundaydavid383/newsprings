@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import image1 from "../../assets/church15.jpg";
 import { useUser } from '../../context/Usercontext';
+import alarm from "../../assets/alarm.mp3"
 import "./admin.css"
 
 const AdminSendmessage = () => {
@@ -104,10 +105,11 @@ const AdminSendmessage = () => {
       console.error('Failed to update sermon config', error);
     }
   };
-    
+  const audioRef = useRef(new Audio(alarm));
   const fetchMessages = async () => {
     const res = await axios.get("http://localhost:4000/api/admin/messages");
     setMessages(res.data.messages);
+    audioRef.current.play();
   };
 
 
@@ -224,7 +226,8 @@ const AdminSendmessage = () => {
       <img src={image1} alt="Church welcome" />
     </div>
     <form className="signup-form" onSubmit={handleSubmit}>
-      <textarea
+    <h2>Verify You Are An Admin</h2>
+    <textarea
         placeholder="Type your message here..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}

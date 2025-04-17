@@ -10,7 +10,7 @@ const Footer = () => {
   <div className="about">
         <img src={logo} alt="RCCG Newspring Logo" />
         <h3>About</h3>
-        <p>RCCG Newspring is a place of worship, love, and transformation, committed to spreading the gospel of Christ.</p>
+        <p>"RCCG Newspring is a vibrant and welcoming place of worship, love, and transformation, where people from all walks of life come together to experience the presence of God. Rooted in the teachings of Jesus Christ, we are committed to spreading the gospel with passion and purpose, empowering individuals to grow spiritually, live purposefully, and impact their communities positively. At RCCG Newspring, every soul is valued, every heart is nurtured, and every life is given the opportunity to be transformed by the grace and power of God.</p>
     </div>
 
     {/* Ministries Section */}

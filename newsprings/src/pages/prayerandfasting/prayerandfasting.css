@@ -1,0 +1,89 @@
+
+.prayerandfasting {
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+  }
+  .prayerandfasting.container{
+    flex-direction: column;
+    padding-top: 4rem;
+  }
+  .first_image{
+    width: 70%;
+  }
+  .prayer-header {
+    color: var(--black);
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .prayer-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+  
+  .prayer-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .prayer-section {
+    background-color: var(--background-color);
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .prayer-section h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .prayer-section p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+  
+  .prayer-section blockquote {
+    background-color: #eee;
+    border-left: 5px solid #333;
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-style: italic;
+  }
+  
+  .prayer-section ul {
+    padding-left: 20px;
+    list-style-type: disc;
+  }
+  
+  .prayer-section ul li {
+    margin-bottom: 8px;
+  }
+  
+  .prayer-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .prayer-gallery img {
+    border-radius: 8px;
+    width: 280px;
+    height: 160px;
+    object-fit: cover;
+  }
+  
+  .prayer-section.join {
+    text-align: center;
+  }
+  
+  .prayer-section.join p {
+    font-weight: bold;
+    line-height: 1.6;
+  }
+  

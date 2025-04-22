@@ -15,17 +15,17 @@ const Section = () => {
           imgSrc: church1,
           altText: "Easter Celebration",
           title: "Easter Celebration",
-          description: "Celebrate the resurrection of Christ with a special service, worship, and fellowship.",
+          description: "Celebrate Christ's resurrection with a special service, powerful worship, and meaningful fellowship as we honor this life-changing event together.",
           link: "/easter",
           btnText: "Join Us"
         },
         {
           imgSrc: church2,
-          altText: "Church Anniversary",
-          title: "Church Anniversary",
-          description: "Join us as we give thanks to God for another year of His faithfulness and blessings.",
-          link: "/anniversary",
-          btnText: "Celebrate"
+          altText: "Church Prayer and fasting",
+          title: "Church Prayer and fasting",
+          description: "Join us for our 100 Days of Prayer and Fasting every January. This is a time to seek God's guidance, deepen your faith, and experience spiritual transformation as we pray and fast together.",
+          link: "/prayer-and-fasting",
+          btnText: "prayer and fasting"
         },
         {
           imgSrc: church3,

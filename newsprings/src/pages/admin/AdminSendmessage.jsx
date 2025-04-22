@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react'
 import image1 from "../../assets/church15.jpg";
 import { useUser } from '../../context/Usercontext';
-import alarm from "../../assets/alarm.mp3"
 import "./admin.css"
 
 const AdminSendmessage = () => {
@@ -105,12 +104,8 @@ const AdminSendmessage = () => {
       console.error('Failed to update sermon config', error);
     }
   };
-  const audioRef = useRef(new Audio(alarm));
-  const fetchMessages = async () => {
-    const res = await axios.get("http://localhost:4000/api/admin/messages");
-    setMessages(res.data.messages);
-    audioRef.current.play();
-  };
+
+
 
 
     const sendMessage = async () => {
@@ -129,7 +124,6 @@ const AdminSendmessage = () => {
           setAlertText("Message sent!");
           setAlert(true)
           setNewMsg("");
-          fetchMessages();
           setLoading(false)
         }
       } catch (err) {
@@ -139,9 +133,9 @@ const AdminSendmessage = () => {
       }
     };
   
-    useEffect(() => {
-      fetchMessages();
-    }, []);
+    // useEffect(() => {
+    //   fetchMessages();
+    // }, []);
 
 
     const setLatestorLiveServiceText = async (e) => {
@@ -226,7 +220,7 @@ const AdminSendmessage = () => {
       <img src={image1} alt="Church welcome" />
     </div>
     <form className="signup-form" onSubmit={handleSubmit}>
-    <h2>Verify You Are An Admin</h2>
+    <h2>Send message on Email</h2>
     <textarea
         placeholder="Type your message here..."
         value={message}
@@ -239,6 +233,7 @@ const AdminSendmessage = () => {
       </button>
     </form>
     <div className="signup-form">
+    <h2>Send message to user in real time</h2>
           <textarea
             value={newMsg}
             onChange={(e) => setNewMsg(e.target.value)}
@@ -248,6 +243,7 @@ const AdminSendmessage = () => {
         </div>
 
         <div className="signup-form">
+        <h2>change service latest description</h2>
           <textarea
             value={serviceDescription}
             onChange={(e) => setServiceDescription(e.target.value)}
@@ -261,7 +257,7 @@ const AdminSendmessage = () => {
       <input type="number" name="id" max={2} placeholder="ID" onChange={handleChange} required />
       <input type="text" name="preacher" placeholder="Preacher" onChange={handleChange} required />
       <textarea name="description" placeholder="Description" onChange={handleChange} required></textarea>
-      <button type="submit">Update Sermon</button>
+      <button className='btn' type="submit">Update Sermon</button>
     </form>
 
   </>

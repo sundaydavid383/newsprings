@@ -7,6 +7,9 @@ import { useUser } from "../../context/Usercontext";
 
 
 const SignUp = ({setIsAuthenticated}) => {
+  const [showOtpInput, setShowOtpInput] = useState(false);
+const [otp, setOtp] = useState("");
+const [isOtpSent, setIsOtpSent] = useState(false);
   const {user, setUser } = useUser();
   const navigate = useNavigate();
   const [alertText, setAlertText] = useState(
@@ -49,8 +52,63 @@ const SignUp = ({setIsAuthenticated}) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    if (isOtpSent && showOtpInput) {
+      // 2nd stage: Verify OTP and Register user
+      try {
+        setLoading(true);
+        const verifyResponse = await axios.post("http://localhost:4000/verify-otp", {
+          email: formData.email,
+          otp,
+        });
   
-    const requiredFields = [
+        if (!verifyResponse.data.success) {
+          setAlertText("Invalid OTP. Please check your email and try again.");
+          setAlert(true);
+          setLoading(false);
+          return;
+        }
+  
+        const response = await axios.post("http://localhost:4000/register", formData);
+        if (response.data.success) {
+          setAlertText(`${response.data.message}. Check your inbox or spam.`);
+          setIsAuthenticated(true);
+          localStorage.setItem("isAuthenticated", "true");
+          setUser(response.data.user);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            dob: "",
+            phone: "",
+            gender: "",
+            occupation: "",
+            hearAboutUs: "",
+            interest: "",
+            prayerRequest: "",
+          });
+          setShowOtpInput(false);
+          setOtp("");
+        }
+  
+        setLoading(false);
+      } catch (err) {
+        let errorMessage = "Registration failed. Please try again."
+
+         if(err.response && err.response.data && err.response.data.message){
+          errorMessage = err.response.data.message;
+         }
+        setAlertText(errorMessage);
+        setAlert(true);
+        setLoading(false);
+      }
+      return;
+    }
+  
+    else{
+          const requiredFields = [
       "firstName", "lastName", "email", "password",
       "dob", "phone", "gender", "occupation",
       "hearAboutUs", "interest", "prayerRequest"
@@ -177,46 +235,60 @@ const SignUp = ({setIsAuthenticated}) => {
   
     try {
       setLoading(true);
-     const response = await axios.post("http://localhost:4000/register", formData);
-  
-      if (response.data.success) {
-        setAlertText(`${response.data.message}. check your email or spam list in your email to get latest response`);
-        setIsAuthenticated(true)
-        localStorage.setItem("isAuthenticated", "true");
-        setLoading(false)
-        setAlert(true)
-        setUser(response.data.user);
-        localStorage.setItem("user", JSON.stringify(response.data.user))
-        console.log(response.data.user) // 🟢 Set user context here
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          dob: "",
-          phone: "",
-          gender: "",
-          occupation: "",
-          hearAboutUs: "",
-          interest: "",
-          prayerRequest: "",
-        });
-  
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+
+      //verify if email already use
+      const checkEmailRes = await axios.post("http://localhost:4000/check-email", {
+        email: formData.email,
+      });
+
+      if(!checkEmailRes.data.success){
+        setAlertText(
+          <>
+            {checkEmailRes.data.message}{" "}
+            <Link to="/signin" style={{ color: "blue", textDecoration: "underline" }}>
+              Click here to sign in.
+            </Link>
+          </>
+        );
+        setAlert(true);
+        setLoading(false);
+        return;
       }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error registering:", error);
-      setAlertText("There was an error during registration. Please try again.");
+  // Send OTP
+    const otpResponse = await axios.post("http://localhost:4000/send-otp", {
+      email: formData.email,
+    });
+
+    if (otpResponse.data.success) {
+      setShowOtpInput(true);
+      setIsOtpSent(true);
+      setAlertText("OTP sent to your email. Please enter it to complete registration.");
       setAlert(true);
       setLoading(false);
     }
+    else {
+      setAlertText("Failed to send OTP. Try again.");
+      setAlert(true);
+    }
+  
+      setLoading(false);
+    } catch (error) {
+      let message = "Failed to send OTP. Please try again."
+      if(error.response?.data.message){
+        message = error.response.data.message
+      }
+      console.error("Error sending OTP:", error);
+      setAlertText("error sending otp");
+      setAlert(true);
+      setLoading(false);
+    }
+  }
   };
    setTimeout(() => {
     console.log(user)
    }, 3000);
+
+
 
   return (
     <div className="sign container">
@@ -233,7 +305,7 @@ const SignUp = ({setIsAuthenticated}) => {
       {alert ? (
             <div className="alert_holder">
               <div className="alert">
-                <p>{alertText}</p>
+                {alertText}
                 <div onClick={() => setAlert(false)} className="btn">
                   <p>OK</p>
                 </div>
@@ -241,7 +313,9 @@ const SignUp = ({setIsAuthenticated}) => {
             </div>
           ) : null}
       
-      <form onSubmit={handleSignUp} className="signup-form">
+   
+      { showOtpInput ?
+          <form onSubmit={handleSignUp} className="signup-form">
       <h2>Sign Up</h2>
       <div className="double_input">
   <div className="input_with_counter">
@@ -387,8 +461,23 @@ const SignUp = ({setIsAuthenticated}) => {
           <p>Register <i class="fa-solid fa-arrow-right"></i></p>
         </button>
              <Link to="/signin">SignIn</Link>
-        </div>
-      </form>
+        </div></form>
+          :
+          <form onSubmit={handleSignUp} className="signup-form">
+      <h2>Sign Up</h2> 
+  <input
+    type="text"
+    placeholder="Enter OTP sent to your email"
+    value={otp}
+    onChange={(e) => setOtp(e.target.value)}
+  />
+     <button style={{border:0}}  className="btn" type="submit">
+          <p>Register <i class="fa-solid fa-arrow-right"></i></p>
+        </button>
+        </form>
+}
+      
+
     </>
       )}
     </div>

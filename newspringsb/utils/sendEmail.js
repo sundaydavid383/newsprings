@@ -5,14 +5,14 @@ console.log("app passwoord:", process.env.APP_PASSWORD)
 const transporter = nodemailer.createTransport({
     service:"Gmail",
     auth: {
-        user:"sundayudoh383@gmail.com",
+        user:process.env.EMAIL_USER,
         pass:process.env.APP_PASSWORD,
     },
 });
  
 const sendEmail = async (to, subject, text) => {
     const mailOptions = {
-        from: "sundayudoh383@gmail.com",
+        from: process.env.EMAIL_USER,
         to,
         subject,
         text,

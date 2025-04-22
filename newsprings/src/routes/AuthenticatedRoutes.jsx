@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Service from "../pages/service/Service";
 import { Routes, Route, Navigate } from "react-router";
 import { useUser } from "../context/Usercontext";
@@ -21,12 +21,24 @@ import Membership from "../pages/membership/Membership";
 import ShareTestimony from "../pages/sharetestimony/ShareTestimony";
 import Updatingstory from "../pages/updatestory/Updatingstory";
 import AdminSendmessage from "../pages/admin/AdminSendmessage";
-import LatestService from "../pages/latestService/LatestService";
+import LatestService from "../pages/latestService/LatestService"
+import PrayerAndFasting from "../pages/prayerandfasting/PrayerAndFasting";
+
+
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
   console.log(isAuthenticated);
   const { messages, user } = useUser();
+  const messageEndRef = useRef(null);
    const [seeMessage, setSeeMessage] = useState(false)
+   const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(() => {
+    if (seeMessage) {
+      scrollToBottom();
+    }
+  }, [seeMessage, messages]);
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />; // Redirect to login page if not authenticated
   }
@@ -37,7 +49,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
           <div className="message_box_holder">
                    <i onClick={()=>setSeeMessage(false)} className="iconactive fa-solid fa-times"></i>
           <div className="message_box">
-            <div className="title">Messages</div>
+            <div className="title">Message</div>
             <ul>
               {messages.map((msg, idx) => (
                 <li key={idx}>
@@ -54,11 +66,14 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
                       hour12:true
                     })}
                   </div>
-
+                  
                 </li>
               ))}
+             <div ref={messageEndRef} />
             </ul>
+            
           </div>
+          
           </div>
    
         )}
@@ -96,6 +111,10 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
       <Route
         path="/updatestory94033030485403893"
         element={<Updatingstory setActivePage={setActivePage} />}
+      />
+        <Route
+        path="/prayer-and-fasting"
+        element={<PrayerAndFasting />}
       />
       <Route
         path="/giving"

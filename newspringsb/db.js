@@ -7,7 +7,8 @@ const connectDatabases = async () => {
   try {
     // Testimonies DB connection
     const testimoniesConnection = mongoose.createConnection(
-        `mongodb+srv://sundayudoh383:${process.env.PASSWORD}@newspringchurchdb.m83dh.mongodb.net/Newsprings-for-big-church?retryWrites=true&w=majority&appName=newspringChurchDB`
+      `mongodb+srv://sundayudoh383:${process.env.PASSWORD}@newspringchurchdb.m83dh.mongodb.net/Newsprings-for-big-church?retryWrites=true&w=majority&appName=newspringChurchDB`
+       
     );
 
     // Registrations DB connection

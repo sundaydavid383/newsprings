@@ -9,6 +9,9 @@ require("dotenv").config();
 const connectDatabases = require("./db");
 const sendEmail = require("./utils/sendEmail")
 const { default: mongoose } = require("mongoose");
+const otpStore = require('./otpStore');
+const bodyParser = require('body-parser');
+const nodemailer = require("nodemailer")
 
 
 //app password = anwf blsl unlp jixo
@@ -17,8 +20,19 @@ const app = express();
 console.log("password:", process.env.PASSWORD);
 
 // Middleware
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
+
+
+//email transporter
+const transporter = nodemailer.createTransport({
+    service:"Gmail",
+    auth: {
+        user:process.env.EMAIL_USER,
+        pass:process.env.APP_PASSWORD,
+    },
+});
 
 
 
@@ -73,7 +87,50 @@ const startServer = async () => {
       }
       return age;
     }
+   
 
+    //=========================send otp==============
+    
+const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
+
+app.post('/api/send-otp', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const otp = generateOtp();
+    const expires = Date.now() + 5 * 60 * 1000; // 5 minutes
+
+    otpStore.set(email, { otp, expires });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Your OTP Code',
+      text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+    });
+
+    res.json({ success: true, message: 'OTP sent' });
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+    res.status(500).json({ success: false, message: 'Failed to send OTP. Please try again later.' });
+  }
+});
+
+app.post('/api/verify-otp', (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const stored = otpStore.get(email);
+
+    if (!stored) return res.status(400).json({ success: false, message: 'No OTP found' });
+    if (stored.expires < Date.now()) return res.status(400).json({ success: false, message: 'OTP expired' });
+    if (stored.otp !== otp) return res.status(400).json({ success: false, message: 'Invalid OTP' });
+
+    otpStore.delete(email); // Remove used OTP
+    res.json({ success: true, message: 'OTP verified. User signed in!' });
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+    res.status(500).json({ success: false, message: 'An error occurred during OTP verification.' });
+  }
+});
 
     //==================sermon details================
     const sermonRoutes = require('./routes/sermonRoutes');
@@ -186,6 +243,18 @@ const startServer = async () => {
       }
     });
 
+
+
+    // =============== checking email==========================
+    app.post("/check-email", async (req,res)=>{
+      const {email} = req.body
+      const existingUser = await Registration.findOne({email})
+       if(existingUser){
+        return res.status(400).json({success:false, message:"Email already exists"})
+       }
+       return res.status(200).json({success:true})
+    })
+
     // ======== Register Endpoint (with hashed password) ===========
     app.post("/register", async (req, res) => {
       try {
@@ -202,7 +271,11 @@ const startServer = async () => {
           interest,
           prayerRequest,
         } = req.body;
-    
+       
+        const existingUser = await Registration.findOne({ email });
+      if (existingUser) {
+             return res.status(400).json({ success: false, message: "Email already exists" });
+}
         // Hash the password before saving
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);

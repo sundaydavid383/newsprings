@@ -25,8 +25,8 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
     <div className="nav">
       <div className="nav-upper">
 
-        <a href="mailto:klanohelp@gmail" className="email">
-          <i className="fa-solid fa-envelope"></i>klanohelp@gmail.com
+        <a href="mailto:rccgnewsprings@yahoo.com" className="email">
+          <i className="fa-solid fa-envelope"></i>rccgnewsprings@yahoo.com
         </a>
         <Link className="" to="/search">
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -183,7 +183,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
             </div>
           </div>
         </div>
-        <Link className="btn" to="/connect">
+        <Link className="btn" to="/contact">
           <p>
             CONTACT <i className="fa-solid fa-arrow-right-long"></i>
           </p>

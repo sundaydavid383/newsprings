@@ -166,41 +166,7 @@ input[type="file"] {
   border-left: 1rem solid var(--background-color);
   animation: rotate 3s infinite;
 }
-.alert_holder {
-  position: fixed;
-  top: 0rem;
-  left: 0rem;
-  width: 100%;
-  height: 100%;
-  background-color: var(--dark-secondary-shadow);
-  z-index: 1111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.alert {
-  width: 15rem;
-  height: 11rem;
-  background-color: var(--background-color);
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: var(--box-shadow);
-  line-height: 1.5rem;
-  padding: 1rem;
 
-}
-.alert p {
-  color: var(--text-color);
-  font-weight: 400;
- 
-  font-size: 1rem;
-}
-.alert .btn {
-  width: 7rem;
-}
 @keyframes rotate {
   0% {
     transform: rotate(0deg);

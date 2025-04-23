@@ -91,6 +91,9 @@ const [isOtpSent, setIsOtpSent] = useState(false);
           });
           setShowOtpInput(false);
           setOtp("");
+          setTimeout(() => {
+            navigate("/")
+          }, 2000);
         }
   
         setLoading(false);
@@ -314,7 +317,7 @@ const [isOtpSent, setIsOtpSent] = useState(false);
           ) : null}
       
    
-      { showOtpInput ?
+      { !showOtpInput ?
           <form onSubmit={handleSignUp} className="signup-form">
       <h2>Sign Up</h2>
       <div className="double_input">

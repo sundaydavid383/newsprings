@@ -7,13 +7,11 @@ const connectDatabases = async () => {
   try {
     // Testimonies DB connection
     const testimoniesConnection = mongoose.createConnection(
-      `mongodb+srv://sundayudoh383:${process.env.PASSWORD}@newspringchurchdb.m83dh.mongodb.net/Newsprings-for-big-church?retryWrites=true&w=majority&appName=newspringChurchDB`
-       
+      `mongodb+srv://sundayudoh383:${process.env.PASSWORD}@newspringchurchdb.m83dh.mongodb.net/?retryWrites=true&w=majority&appName=newspringChurchDB`
     );
-
-    // Registrations DB connection
-     const registrationsConnection = mongoose.createConnection(
-        `mongodb+srv://sundayudoh383:${process.env.PASSWORDFORUSERCREATION}@newspringschurchdbforus.9krik63.mongodb.net/Newsprins-for-big-church-user?retryWrites=true&w=majority&appName=newspringschurchdbforuser`
+    
+    const registrationsConnection = mongoose.createConnection(
+      `mongodb+srv://sundayudoh383:${process.env.PASSWORDFORUSERCREATION}@newspringschurchdbforus.9krik63.mongodb.net/?retryWrites=true&w=majority&appName=newspringschurchdbforuser`
     );
 
     // Wait for both connections to be ready

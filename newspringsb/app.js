@@ -94,7 +94,10 @@ const startServer = async () => {
       }
       return age;
     }
-   
+    //=========================change and send contact info ==============
+    const contactRoutes = require('./routes/contact.js'); 
+    // Use the church info route
+      app.use('/api', contactRoutes);
 
     //=========================send otp==============
     
@@ -281,9 +284,9 @@ app.post("/verify-otp", (req, res)=>{
         } = req.body;
        
         const existingUser = await Registration.findOne({ email });
-      if (existingUser) {
+       if (existingUser) {
              return res.status(400).json({ success: false, message: "Email already exists" });
-}
+          }
         // Hash the password before saving
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);

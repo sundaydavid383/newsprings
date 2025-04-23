@@ -1,0 +1,19 @@
+{
+    "phoneNumbers": [
+      "+234 812 428 5225",
+      "+234 802 033 9007",
+      "+234 701 234 5678",
+      "+234 803 987 6543"
+    ],
+    "address": "The Capital Building, 332 Ikorodu Road, Maryland, Lagos, Nigeria",
+    "mapSrc": "https://www.openstreetmap.org/export/embed.html?bbox=3.36672%2C6.56341%2C3.36872%2C6.56541&layer=mapnik&marker=6.56441,3.36772",
+    "email": "newspringchristiancentre@gmail.com",
+    "about": "NewSpring is one of the warmest and friendliest churches you would ever attend. We love people; therefore, our desire is to see the message of Christ reach out, inspire our community, and fulfill destinies. God has a plan and a purpose for you. This plan involves building your life upon biblical principles. We believe in growing together, serving joyfully, and living with purpose. Our church family is always ready to welcome you with open arms. Every soul matters to God and to us.",
+    "socials": [
+      { "name": "Facebook", "link": "https://facebook.com/202929673070037", "iconClass": "fab fa-facebook-f" },
+      { "name": "Instagram", "link": "https://instagram.com/rccgnewsprings", "iconClass": "fab fa-instagram" },
+      { "name": "SoundCloud", "link": "https://soundcloud.com/rccg-newsprings", "iconClass": "fab fa-soundcloud" },
+      { "name": "YouTube", "link": "https://youtube.com/rccgnewsprings", "iconClass": "fab fa-youtube" },
+      { "name": "Twitter", "link": "https://twitter.com/rccgnewsprings", "iconClass": "fab fa-twitter" }
+    ]
+  }

@@ -281,7 +281,7 @@ const [isOtpSent, setIsOtpSent] = useState(false);
         message = error.response.data.message
       }
       console.error("Error sending OTP:", error);
-      setAlertText("error sending otp");
+      setAlertText(message);
       setAlert(true);
       setLoading(false);
     }

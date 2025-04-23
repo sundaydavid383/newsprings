@@ -38,7 +38,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
     if (seeMessage) {
       scrollToBottom();
     }
-  }, [seeMessage, messages]);
+  }, [seeMessage]);
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />; // Redirect to login page if not authenticated
   }

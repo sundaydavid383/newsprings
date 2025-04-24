@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Service from "../pages/service/Service";
 import { Routes, Route, Navigate } from "react-router";
 import { useUser } from "../context/Usercontext";
+import logo from "../assets/logo.png"
 
 import "./authenticated.css"
 import Contact from "../pages/contact/Contact";
@@ -23,6 +24,7 @@ import Updatingstory from "../pages/updatestory/Updatingstory";
 import AdminSendmessage from "../pages/admin/AdminSendmessage";
 import LatestService from "../pages/latestService/LatestService"
 import PrayerAndFasting from "../pages/prayerandfasting/PrayerAndFasting";
+import WaterBaptisim from "../pages/waterBaptisim/WaterBaptisim";
 
 
 
@@ -35,10 +37,19 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(() => {
+    if ('Notification' in window && Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  }, []);
+  
+  useEffect(() => {
     if (seeMessage) {
       scrollToBottom();
     }
   }, [seeMessage]);
+
+
+  
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />; // Redirect to login page if not authenticated
   }
@@ -81,6 +92,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
       <Route path="/" element={<Home setActivePage={setActivePage} />} />
       <Route path="/service" element={<Service />} />
       <Route path="/lastestservice" element={<LatestService />} />
+      <Route path="/baptisim" element={<WaterBaptisim />} />
       <Route path="/admin45435t654dddsdffgdsdfdfdfdfasdfdedfdfdfdf55" element={<AdminSendmessage />} />
       <Route path="/contact" element={<Contact />} />
       <Route

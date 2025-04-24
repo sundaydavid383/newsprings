@@ -29,10 +29,10 @@ const Section = () => {
         },
         {
           imgSrc: church3,
-          altText: "Revival Service",
-          title: "Revival Service",
+          altText: "Water Baptisim",
+          title: "Water Baptisim",
           description: "A time of refreshing in God’s presence with powerful worship, word, and miracles.",
-          link: "/revival",
+          link: "/baptisim",
           btnText: "Be Revived"
         },
         {

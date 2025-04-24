@@ -1,0 +1,71 @@
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: #0066cc;
+  }
+  
+  .header p {
+    margin-top: 8px;
+    color: #555;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-top: 16px;
+    font-weight: 500;
+  }
+  
+  input,
+  select,
+  textarea {
+    margin-top: 6px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  button {
+    margin-top: 24px;
+    padding: 12px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0052a3;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container {
+      margin: 20px;
+      padding: 15px;
+    }
+  
+    .header h1 {
+      font-size: 1.5rem;
+    }
+  
+    button {
+      font-size: 0.95rem;
+    }
+  }

@@ -29,7 +29,12 @@
     margin-top: .2rem;
     gap:1rem;
     width: 32rem;
-
+}
+.nav-upper .btn p{
+    margin-top: -.66rem;
+}
+a.btn p{
+    margin-top: 0rem;
 }
 .nav-upper a{
     display: flex;

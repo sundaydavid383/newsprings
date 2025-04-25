@@ -21,6 +21,46 @@ const AdminSendmessage = () => {
       );
       const [alert, setAlert] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [registrants, setRegistrants] = useState([]);
+
+      // Handle update of registrant
+  const handleUpdate = async (index, updatedData) => {
+    try {
+      const response = await axios.put(`http://localhost:4000/api/events/baptism/register/${index}`, updatedData);
+      if (response.data.success) {
+        alert('Baptism registrant updated successfully!');
+        setRegistrants(prevRegistrants => prevRegistrants.map((r, idx) => idx === index ? { ...r, ...updatedData } : r));
+      }
+    } catch (error) {
+      console.error('Error updating registrant:', error);
+      alert('Failed to update registrant');
+    }
+  };
+
+  // Handle delete of registrant
+  const handleDelete = async (index) => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/events/baptism/register/${index}`);
+      if (response.data.success) {
+        alert('Baptism registrant deleted successfully!');
+        setRegistrants(prevRegistrants => prevRegistrants.filter((_, idx) => idx !== index));
+      }
+    } catch (error) {
+      console.error('Error deleting registrant:', error);
+      alert('Failed to delete registrant');
+    }
+  }; 
+  useEffect(() => {
+    const fetchBaptisimRegistrant = async () => {
+      const registrantsRes = await axios.get('http://localhost:4000/api/events/baptism/registrants');
+      if (registrantsRes.data.success) {
+        setRegistrants(registrantsRes.data.registrants);
+      }
+    }
+    fetchBaptisimRegistrant()
+  }, [])
+  
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
@@ -68,8 +108,12 @@ const AdminSendmessage = () => {
           }
         } catch (error) {
           setAlert(true);
+          let message = "❌ error while verifying admin check if password is correct."
+          if(error.response?.data.message){
+            message = error.response.data.message
+          }
           console.error("Error verifying admin:", error);
-          setAlertText("❌ Server error while verifying admin.");
+          setAlertText(message);
           setLoading(false);
         }
     }
@@ -227,6 +271,7 @@ const AdminSendmessage = () => {
         onChange={(e) => setMessage(e.target.value)}
         name="message"
         id=""
+        required
       />
       <button type="submit" className="btn">
         <p>Submit <i className="fa-solid fa-right-from-bracket"></i></p>
@@ -257,9 +302,25 @@ const AdminSendmessage = () => {
       <input type="number" name="id" max={2} placeholder="ID" onChange={handleChange} required />
       <input type="text" name="preacher" placeholder="Preacher" onChange={handleChange} required />
       <textarea name="description" placeholder="Description" onChange={handleChange} required></textarea>
-      <button className='btn' type="submit">Update Sermon</button>
+      <button className='btn' type="submit"><p>Update<i class="fa-solid fa-pen"></i></p></button>
     </form>
-
+   
+    <div>
+        <h2>Existing Registrants</h2>
+        {registrants.length > 0 ? (
+          <ul>
+            {registrants.map((registrant, idx) => (
+              <li key={idx}>
+                {registrant.fullName} - {registrant.email}
+                <button onClick={() => handleUpdate(idx, { fullName: 'Updated Name' })}>Update</button>
+                <button onClick={() => handleDelete(idx)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No registrants yet.</p>
+        )}
+      </div>
   </>
 )}    </div>
   )

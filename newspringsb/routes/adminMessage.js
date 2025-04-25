@@ -37,7 +37,7 @@ router.post("/admin/message", (req, res) => {
         const newMessage = { message, time: new Date().toISOString() }
         messages.push(newMessage);
 
-        if(messages.length > 50){
+        if(messages.length > 70){
             messages = messages.slice(10)
         }
         fs.writeFileSync(filePath, JSON.stringify(messages, null, 2));

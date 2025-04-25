@@ -9,8 +9,6 @@ require("dotenv").config();
 const connectDatabases = require("./db");
 const sendEmail = require("./utils/sendEmail")
 const { default: mongoose } = require("mongoose");
-const otpStore = require('./routes/otpStore');
-const bodyParser = require('body-parser');
 const nodemailer = require("nodemailer")
 
 
@@ -18,6 +16,8 @@ const nodemailer = require("nodemailer")
 // Express application
 const app = express();
 console.log("password:", process.env.PASSWORD);
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("APP_PASSWORD:", process.env.APP_PASSWORD);
 
 // Middleware
 
@@ -94,6 +94,10 @@ const startServer = async () => {
       }
       return age;
     }
+
+    //===========================water baptisim page fetch =====================
+    const baptismRoute = require("./routes/waterBaptisim");
+      app.use("/api/events", baptismRoute);
     //=========================change and send contact info ==============
     const contactRoutes = require('./routes/contact.js'); 
     // Use the church info route
@@ -105,26 +109,32 @@ const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString()
 
 const {setOtp, getOtp, deleteOtp} = require("./routes/otpStore.js") 
   
-app.post('/send-otp', async (req, res)=>{
-  try{
-    const {email} = req.body;
+app.post('/send-otp', async (req, res) => {
+  try {
+    const { email } = req.body;
     const otp = generateOtp();
-    const expires = Date.now()+5*60*1000;
+    const expires = Date.now() + 5 * 60 * 1000;
 
-    setOtp(email, {otp, expires})
+    setOtp(email, { otp, expires });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to:email,
-      subject:'Your OTP Code',
-      text:`Your OTP is ${otp}. it will expire in the next 5 minutes.`
-    });
-    res.json({success:true, message:'OTP sent'})
-  }catch(error){
-    console.error('Error sending OTP:', error);
-   res.status(500).json({success:true, message:'Failed to send OTP. please try again later'})
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Your OTP Code',
+        text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+      });
+    } catch (mailError) {
+      console.error("Error during email sending:", mailError);
+      return res.status(500).json({ success: false, message: "Error sending email" });
+    }
+
+    res.json({ success: true, message: 'OTP sent' });
+  } catch (error) {
+    console.error("General error:", error);
+    res.status(500).json({ success: false, message: 'Failed to send OTP' });
   }
-})
+});
 
 
 app.post("/verify-otp", (req, res)=>{
@@ -160,12 +170,11 @@ app.post("/verify-otp", (req, res)=>{
     //===================validate admin===========
     app.post("/verify/admin", async (req, res) => {
       const { password } = req.body;
+ 
     
       if (!password) {
         return res.status(400).json({ success: false, message: "Password is required." });
-        
       }
-    
       try {
         const isMatch = await bcrypt.compare(password, process.env.ADMIN_PASSWORD);
     
@@ -266,6 +275,7 @@ app.post("/verify-otp", (req, res)=>{
        return res.status(200).json({success:true})
     })
 
+
     // ======== Register Endpoint (with hashed password) ===========
     app.post("/register", async (req, res) => {
       try {
@@ -325,6 +335,64 @@ app.post("/verify-otp", (req, res)=>{
         });
       }
     });
+
+    // ================== Fetch all users ==================
+app.get("/users", async (req, res) => {
+  try {
+    const users = await Registration.find();
+
+    if (!users.length) {
+      return res.status(404).json({ success: false, message: "No users found" });
+    }
+
+    // Remove password from all users before sending the data
+    const usersWithoutPassword = users.map(user => {
+      const userObj = user.toObject();
+      delete userObj.password;
+      return userObj;
+    });
+
+    res.status(200).json({
+      success: true,
+      users: usersWithoutPassword,
+      message: "Users fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({
+      success: false,
+      message: "There was an error fetching the users.",
+    });
+  }
+});
+
+// ================== Fetch user by email ==================
+app.get("/user/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await Registration.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Remove password before sending back the user data
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+
+    res.status(200).json({
+      success: true,
+      user: userWithoutPassword,
+      message: "User fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({
+      success: false,
+      message: "There was an error fetching the user.",
+    });
+  }
+});
 
     // Route to handle the OAuth2 callback
     app.get("/oauth2callback", async (req, res) => {
@@ -664,9 +732,6 @@ app.post("/verify-otp", (req, res)=>{
         });
       }
     });
-
-    //register user
-    app.post("/register", async (req, res) => {});
 
     app.post("/diagnose", (req, res) => {
       try {

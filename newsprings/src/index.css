@@ -201,6 +201,7 @@ transition: .3s linear;
     font-size: .9rem;
     font-weight: 500;
     color: var(--light-text);
+    margin-top: -.9rem;
 
 }
 .btn:hover p{

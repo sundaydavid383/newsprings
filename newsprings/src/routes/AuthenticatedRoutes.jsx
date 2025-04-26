@@ -29,10 +29,53 @@ import WaterBaptisim from "../pages/waterBaptisim/WaterBaptisim";
 
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
+  
+  const getNextServiceTime = () => {
+    const now = new Date();
+    const currentDay = now.getDay(); // 0 = sunday, 1 = monday...
+    const currentTime  = now.getTime();
+
+    //helper tocreate a future date
+    const createDate = (dayOffset, hour, minute) => {
+        const date = new Date(now);
+        date.setDate(date.getDate() + dayOffset);
+        date.setHours(hour, minute, 0, 0);
+        return date;
+    };
+    const serviceTimes = []
+    //Add possible upcoming services
+    const daysUntil = (targetDay) => (targetDay - currentDay + 7) % 7 || 7;
+
+    const sunday = createDate(daysUntil(0), 8, 0); //sunday 8am
+    const tuesday = createDate(daysUntil(2), 18, 0) //Tuesday 6pm
+    const thursday = createDate(daysUntil(4), 18, 0);//thursday 6pm
+
+    //If its today and the time hasnt passed, priortize it
+    if(currentDay === 0 && now.getHours() < 8) serviceTimes.push(sunday);
+    else if (currentDay === 2 && now.getHours() < 18) serviceTimes.push(tuesday);
+    else if (currentDay === 4 && now.getHours() < 18) serviceTimes.push(thursday);
+
+    //Add all the future valid service times
+    serviceTimes.push(sunday, tuesday, thursday)
+
+    //Find the next valid one 
+    const nextService = serviceTimes.find(service => service.getTime() >  currentTime);
+    
+    const diff = nextService - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24 ));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60)
+
+    return ` ${days} Day: ${hours} Hours: ${minutes} minute:  ${seconds} second`;
+
+   }
   console.log(isAuthenticated);
   const { messages, user } = useUser();
   const messageEndRef = useRef(null);
    const [seeMessage, setSeeMessage] = useState(false)
+   const [seeShedule, setSeeShedule] = useState(true)
+   const [serviceTime, setServiceTime] = useState('')
    const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -40,6 +83,9 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
     if ('Notification' in window && Notification.permission !== 'granted') {
       Notification.requestPermission();
     }
+    setInterval(() => {
+       setServiceTime(getNextServiceTime())
+    }, 1000);
   }, []);
   
   useEffect(() => {
@@ -88,6 +134,17 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
           </div>
    
         )}
+       <i onClick={()=>setSeeShedule(true)} className="iconactive schedule_state fa-solid fa-calendar-week"></i>
+       {seeShedule && (
+          <div className="schedule_box_holder">
+                   <i onClick={()=>setSeeShedule(false)} className="iconactive fa-solid fa-times"></i>
+            <div className="text"><div className="title">Next service</div>
+           <p>Next service is in :<br/><span>{serviceTime}</span></p></div>
+            </div>
+   
+        )}
+
+
     <Routes>
       <Route path="/" element={<Home setActivePage={setActivePage} />} />
       <Route path="/service" element={<Service />} />

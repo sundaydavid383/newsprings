@@ -10,3 +10,10 @@
 .AdminSendmessage .signup-form .btn{
     border: 0;
 }
+.baptisim-registrant{
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+}

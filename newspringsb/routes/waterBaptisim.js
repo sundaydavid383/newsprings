@@ -78,27 +78,26 @@ router.put('/baptism/register/:index', (req, res) => {
 });
 
 // Delete a baptism registrant by index
-router.delete('/baptism/register/:index', (req, res) => {
+app.delete('/baptism/register/:index', (req, res) => {
   const index = parseInt(req.params.index);
 
-  try {
-    const raw = fs.readFileSync(registrantsFile, 'utf8');
-    const registrants = JSON.parse(raw);
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) return res.status(500).json({ success: false, message: 'Could not read file' });
+
+    const registrants = JSON.parse(data);
 
     if (index < 0 || index >= registrants.length) {
-      return res.status(404).json({ success: false, message: 'Baptism registrant not found' });
+      return res.status(400).json({ success: false, message: 'Invalid index' });
     }
 
-    const removed = registrants.splice(index, 1);
+    registrants.splice(index, 1); // Remove registrant
 
-    // Save the updated list
-    fs.writeFileSync(registrantsFile, JSON.stringify(registrants, null, 2));
+    fs.writeFile(filePath, JSON.stringify(registrants, null, 2), err => {
+      if (err) return res.status(500).json({ success: false, message: 'Could not write file' });
 
-    res.json({ success: true, message: 'Registrant deleted', removed });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Error deleting registrant' });
-  }
+      res.json({ success: true });
+    });
+  });
 });
 
 module.exports = router;

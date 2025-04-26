@@ -146,6 +146,7 @@ body{
   }
   .alert .btn {
     width: 7rem;
+    padding-top: .9rem;
   }
 .btn{
     background: var(--primary-color);

@@ -5,11 +5,25 @@ import { useUser } from '../../context/Usercontext';
 import "./admin.css"
 
 const AdminSendmessage = () => {
+  const fetchBaptisimRegistrant = async () => {
+    const registrantsRes = await axios.get('http://localhost:4000/api/events/baptism/registrants');
+    if (registrantsRes.data.success) {
+      setRegistrants(registrantsRes.data.registrants);
+    }
+  }
   const [formData, setFormData] = useState({
     id: '',
     preacher: '',
     description: ''
   });
+  const [editingIndex, setEditingIndex] = useState(null);
+const [editFormData, setEditFormData] = useState({
+  fullName: '',
+  email: '',
+  phone: '',
+  gender: '',
+  age: ''
+});
     const [message, setMessage] = useState("")
     const [newMsg, setNewMsg] = useState("");
     const [adminAuthorized, setAdminAuthorized] = useState(false)
@@ -24,19 +38,32 @@ const AdminSendmessage = () => {
     const [registrants, setRegistrants] = useState([]);
 
       // Handle update of registrant
-  const handleUpdate = async (index, updatedData) => {
-    try {
-      const response = await axios.put(`http://localhost:4000/api/events/baptism/register/${index}`, updatedData);
-      if (response.data.success) {
-        alert('Baptism registrant updated successfully!');
-        setRegistrants(prevRegistrants => prevRegistrants.map((r, idx) => idx === index ? { ...r, ...updatedData } : r));
-      }
-    } catch (error) {
-      console.error('Error updating registrant:', error);
-      alert('Failed to update registrant');
-    }
-  };
-
+      const updateBaptisimRegistrant = (index) => {
+        setEditingIndex(index);
+        setEditFormData(registrants[index]);
+      };
+      
+      const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditFormData(prev => ({ ...prev, [name]: value }));
+      };
+      
+      const handleEditSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.put(`http://localhost:4000/api/events/baptism/register/${editingIndex}`, editFormData);
+          if (response.data.success) {
+            alert('Update successful!');
+            const updated = [...registrants];
+            updated[editingIndex] = editFormData;
+            setRegistrants(updated);
+            setEditingIndex(null);
+          }
+        } catch (err) {
+          console.error('Error updating registrant:', err);
+          alert('Update failed.');
+        }
+      };
   // Handle delete of registrant
   const handleDelete = async (index) => {
     try {
@@ -44,6 +71,7 @@ const AdminSendmessage = () => {
       if (response.data.success) {
         alert('Baptism registrant deleted successfully!');
         setRegistrants(prevRegistrants => prevRegistrants.filter((_, idx) => idx !== index));
+        fetchBaptisimRegistrant()
       }
     } catch (error) {
       console.error('Error deleting registrant:', error);
@@ -51,12 +79,6 @@ const AdminSendmessage = () => {
     }
   }; 
   useEffect(() => {
-    const fetchBaptisimRegistrant = async () => {
-      const registrantsRes = await axios.get('http://localhost:4000/api/events/baptism/registrants');
-      if (registrantsRes.data.success) {
-        setRegistrants(registrantsRes.data.registrants);
-      }
-    }
     fetchBaptisimRegistrant()
   }, [])
   
@@ -304,15 +326,55 @@ const AdminSendmessage = () => {
       <textarea name="description" placeholder="Description" onChange={handleChange} required></textarea>
       <button className='btn' type="submit"><p>Update<i class="fa-solid fa-pen"></i></p></button>
     </form>
-   
-    <div>
+
+
+    <div className='baptisim-registrant'>
         <h2>Existing Registrants</h2>
         {registrants.length > 0 ? (
           <ul>
             {registrants.map((registrant, idx) => (
               <li key={idx}>
                 {registrant.fullName} - {registrant.email}
-                <button onClick={() => handleUpdate(idx, { fullName: 'Updated Name' })}>Update</button>
+                {editingIndex === idx ? (
+  <form className='signup-form' onSubmit={handleEditSubmit}>
+    <input
+      name="fullName"
+      value={editFormData.fullName}
+      onChange={handleEditChange}
+      placeholder="Full Name"
+    />
+    <input
+      name="email"
+      value={editFormData.email}
+      onChange={handleEditChange}
+      placeholder="Email"
+    />
+    <input
+      name="phone"
+      value={editFormData.phone}
+      onChange={handleEditChange}
+      placeholder="Phone"
+    />
+    <input
+      name="gender"
+      value={editFormData.gender}
+      onChange={handleEditChange}
+      placeholder="Gender"
+    />
+    <input
+      name="age"
+      value={editFormData.age}
+      onChange={handleEditChange}
+      placeholder="Age"
+    />
+    <button type="submit">Save</button>
+    <button type="button" onClick={() => setEditingIndex(null)}>Cancel</button>
+  </form>
+) : (
+  <>
+    <button onClick={() => updateBaptisimRegistrant(idx)}>Update</button>
+  </>
+)}
                 <button onClick={() => handleDelete(idx)}>Delete</button>
               </li>
             ))}

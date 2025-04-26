@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "fullName": "david sunday",
+    "email": "sundayudoh383@gmail.com",
+    "phone": "+2349014886853",
+    "dob": "2004-05-05",
+    "gender": "Male",
+    "bornAgain": "Yes"
+  },
+  {
+    "fullName": "david sunday",
+    "email": "sundayudoh383@gmail.com",
+    "phone": "+2349014886853",
+    "dob": "2010-03-31",
+    "gender": "Male",
+    "bornAgain": "Yes"
+  },
+  {
+    "fullName": "mark elon mousk",
+    "email": "sundayudoh383@gmail.com",
+    "phone": "+2349014886853",
+    "dob": "2005-05-06",
+    "gender": "Male",
+    "bornAgain": "Yes"
+  },
+  {
+    "fullName": "foster david",
+    "email": "foster@gmail.com",
+    "phone": "+2349038388388",
+    "dob": "2004-04-04",
+    "gender": "Male",
+    "bornAgain": "Yes"
+  }
+]

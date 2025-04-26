@@ -60,7 +60,7 @@ const WaterBaptisim = () => {
     }
   
     if (!phoneRegex.test(formData.phone)) {
-      setAlertText("Enter a valid Nigerian phone number.");
+      setAlertText("Enter a valid Nigerian phone number like +2349012345678.");
       setAlert(true);
       return;
     }
@@ -154,7 +154,7 @@ const WaterBaptisim = () => {
         </div>
 
         <div className="upcoming-events">
-          <h3>Upcoming Events</h3>
+          <h2>Upcoming Events</h2>
           {event.upcomingEvents && event.upcomingEvents.map((upcomingEvent, idx) => (
             <div key={idx} className="upcoming-event">
               <div className='text'>

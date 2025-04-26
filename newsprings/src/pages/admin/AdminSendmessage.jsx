@@ -17,12 +17,12 @@ const AdminSendmessage = () => {
     description: ''
   });
   const [editingIndex, setEditingIndex] = useState(null);
-const [editFormData, setEditFormData] = useState({
+  const [editFormData, setEditFormData] = useState({
   fullName: '',
   email: '',
   phone: '',
   gender: '',
-  age: ''
+  dob: ''
 });
     const [message, setMessage] = useState("")
     const [newMsg, setNewMsg] = useState("");
@@ -50,18 +50,62 @@ const [editFormData, setEditFormData] = useState({
       
       const handleEditSubmit = async (e) => {
         e.preventDefault();
+      
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^(\+234|0)[789][01]\d{8}$/; // Nigerian phone number format
+      
+        if (!editFormData.fullName.trim()) {
+          setAlert(true)
+          setAlertText('Full name is required.');
+          return;
+        }
+      
+        if (!emailRegex.test(editFormData.email)) {
+          setAlert(true)
+          setAlertText('Please enter a valid email address.');
+          return;
+        }
+      
+        if (!phoneRegex.test(editFormData.phone)) {
+          setAlert(true)
+          setAlertText('Enter a valid Nigerian phone number.');
+          return;
+        }
+      
+        if (!editFormData.gender) {
+          setAlert(true)
+          setAlertText('Please select a gender.');
+          return;
+        }
+      
+        if (!editFormData.dob ) {
+          setAlert(true)
+          setAlertText('Please enter a valid age.');
+          return;
+        }
+      
+        const ageNumber = parseInt(editFormData.age);
+        if (ageNumber < 14) {
+          setAlert(true)
+          setAlertText('Registrant must be at least 14 years old.');
+          return;
+        }
+      
         try {
           const response = await axios.put(`http://localhost:4000/api/events/baptism/register/${editingIndex}`, editFormData);
           if (response.data.success) {
-            alert('Update successful!');
+            setAlert(true)
+            setAlertText('Update successful!');
             const updated = [...registrants];
             updated[editingIndex] = editFormData;
             setRegistrants(updated);
             setEditingIndex(null);
+            setEditFormData({ fullName: '', email: '', phone: '', gender: '', age: '' });
           }
         } catch (err) {
           console.error('Error updating registrant:', err);
-          alert('Update failed.');
+          setAlert(true)
+          setAlertText('Update failed.');
         }
       };
   // Handle delete of registrant
@@ -69,17 +113,23 @@ const [editFormData, setEditFormData] = useState({
     try {
       const response = await axios.delete(`http://localhost:4000/api/events/baptism/register/${index}`);
       if (response.data.success) {
-        alert('Baptism registrant deleted successfully!');
+        setAlert(true)
+        setAlertText('Baptism registrant deleted successfully!');
         setRegistrants(prevRegistrants => prevRegistrants.filter((_, idx) => idx !== index));
         fetchBaptisimRegistrant()
       }
     } catch (error) {
       console.error('Error deleting registrant:', error);
-      alert('Failed to delete registrant');
+      setAlert(true)
+      setAlertText('Failed to delete registrant');
     }
   }; 
   useEffect(() => {
-    fetchBaptisimRegistrant()
+    const interval = setInterval(() => {
+      fetchBaptisimRegistrant()
+    }, 10000);
+  
+    return ()=>clearInterval(interval)
   }, [])
   
 
@@ -90,6 +140,7 @@ const [editFormData, setEditFormData] = useState({
             const res = await axios.post("http://localhost:4000/admin/broadcast", {message});
 
             if(res.data.success){
+                setAlert(true)
                 setAlertText('✅ Message sent to all users.');
                 setAlert(true)
                 setMessage("")
@@ -334,9 +385,10 @@ const [editFormData, setEditFormData] = useState({
           <ul>
             {registrants.map((registrant, idx) => (
               <li key={idx}>
-                {registrant.fullName} - {registrant.email}
+                {registrant.fullName} - {registrant.email} 
+                <div className='btns'>
                 {editingIndex === idx ? (
-  <form className='signup-form' onSubmit={handleEditSubmit}>
+  <form className='signup-form update_baptisim_form' onSubmit={handleEditSubmit}>
     <input
       name="fullName"
       value={editFormData.fullName}
@@ -362,21 +414,24 @@ const [editFormData, setEditFormData] = useState({
       placeholder="Gender"
     />
     <input
-      name="age"
-      value={editFormData.age}
+      name="dob"
+      type='date'
+      value={editFormData.dob}
       onChange={handleEditChange}
       placeholder="Age"
     />
+    <div className='btns'>
     <button type="submit">Save</button>
     <button type="button" onClick={() => setEditingIndex(null)}>Cancel</button>
-  </form>
+  </div></form>
 ) : (
   <>
     <button onClick={() => updateBaptisimRegistrant(idx)}>Update</button>
   </>
 )}
                 <button onClick={() => handleDelete(idx)}>Delete</button>
-              </li>
+                </div>
+                </li>
             ))}
           </ul>
         ) : (

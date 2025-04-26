@@ -78,10 +78,10 @@ router.put('/baptism/register/:index', (req, res) => {
 });
 
 // Delete a baptism registrant by index
-app.delete('/baptism/register/:index', (req, res) => {
+router.delete('/baptism/register/:index', (req, res) => {
   const index = parseInt(req.params.index);
 
-  fs.readFile(filePath, 'utf8', (err, data) => {
+  fs.readFile(registrantsFile, 'utf8', (err, data) => {
     if (err) return res.status(500).json({ success: false, message: 'Could not read file' });
 
     const registrants = JSON.parse(data);
@@ -92,7 +92,7 @@ app.delete('/baptism/register/:index', (req, res) => {
 
     registrants.splice(index, 1); // Remove registrant
 
-    fs.writeFile(filePath, JSON.stringify(registrants, null, 2), err => {
+    fs.writeFile(registrantsFile, JSON.stringify(registrants, null, 2), err => {
       if (err) return res.status(500).json({ success: false, message: 'Could not write file' });
 
       res.json({ success: true });

@@ -147,9 +147,9 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
                 }}
-                to="/next-steps"
+                to="/baptisim"
               >
-                <p>NEXT STEPS</p>
+                <p>WATER BAPTISMS</p>
                 <div></div>
               </Link>
               <Link

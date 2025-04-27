@@ -83,7 +83,7 @@ font-size: .8rem;
 .iconactive.schedule_state{
     position: fixed;
     bottom: 2rem;
-    left: 4rem;
+    left: 1.4rem;
     cursor: pointer;
     width: 4.5rem !important;
     height: 4.5rem !important;

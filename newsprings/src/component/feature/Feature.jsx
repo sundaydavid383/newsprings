@@ -52,7 +52,7 @@ const Feature = () => {
   const featureType = "homepage";
   const features = [
     {
-      imgSrc: church1,
+      imgSrc: "https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/490746010_1096424042511543_3841843314015306465_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHQqodBRiFeFIWO-1StuM1hDz1ih53oqpEPPWKHneiqkcd8vKbCn5BsPW9G_14MTBCT26rgXbqmur4wjwFpusou&_nc_ohc=ExIQxVR1YT4Q7kNvwFrRy6z&_nc_oc=AdljrJ5tHBHCeHWf4t9lE65qHVuWJwdPdk_NLBUg0zSYngvRXAm2ghp9WEQyISkMpv8&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=MdZbus1ZElJakk1wZoTKXQ&oh=00_AfFqIWUnVY6y-Z-9eSB9SAPUWqB6ZYNZimjhVFL_6dyw9Q&oe=6815E6C7",
       altText: "Worship Service",
       title: "Join Our Worship",
       description:

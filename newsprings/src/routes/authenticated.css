@@ -54,6 +54,10 @@
     font-weight: 600;
     color: var(--secondary-color);
 }
+.schedule_box_holder .text span small{
+    font-size: .9rem;
+    color: var(--text-color);
+}
 .message_box ul{
    padding-left: 1rem;
    display: flex;

@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 
 //email transporter
 const transporter = nodemailer.createTransport({
-    service:"Gmail",
+    service:"gmail",
     auth: {
         user:process.env.EMAIL_USER,
         pass:process.env.APP_PASSWORD,
@@ -95,12 +95,16 @@ const startServer = async () => {
       return age;
     }
 
+    //============================= hero section details ============
+    const heroRoute = require("./routes/heroRoutes.js")
+    app.use("/api", heroRoute)
+
     //===========================water baptisim page fetch =====================
     const baptismRoute = require("./routes/waterBaptisim");
       app.use("/api/events", baptismRoute);
-    //=========================change and send contact info ==============
+    
+      //=========================change and send contact info ==============
     const contactRoutes = require('./routes/contact.js'); 
-    // Use the church info route
       app.use('/api', contactRoutes);
 
     //=========================send otp==============
@@ -157,6 +161,10 @@ app.post("/verify-otp", (req, res)=>{
     const sermonRoutes = require('./routes/sermonRoutes');
     app.use('/api', sermonRoutes);
 
+    
+    //===================contact form===============
+    const contactFormRoutes  = require("./routes/contactForm.js")
+    app.use('/api/contact', contactFormRoutes)
 
     //=================admin message===========
     const adminMessageRoute = require("./routes/adminMessage");

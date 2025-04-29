@@ -4,13 +4,9 @@ import image1 from "../../assets/church15.jpg";
 import { useUser } from '../../context/Usercontext';
 import "./admin.css"
 
+
 const AdminSendmessage = () => {
-  const fetchBaptisimRegistrant = async () => {
-    const registrantsRes = await axios.get('http://localhost:4000/api/events/baptism/registrants');
-    if (registrantsRes.data.success) {
-      setRegistrants(registrantsRes.data.registrants);
-    }
-  }
+
   const [formData, setFormData] = useState({
     id: '',
     preacher: '',
@@ -35,7 +31,14 @@ const AdminSendmessage = () => {
       );
       const [alert, setAlert] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [registrants, setRegistrants] = useState([]);
+    const [registrants, setRegistrants] = useState([])
+    const [heroSections, setHeroSections] = useState([]);
+    const fetchBaptisimRegistrant = async () => {
+      const registrantsRes = await axios.get('http://localhost:4000/api/events/baptism/registrants');
+      if (registrantsRes.data.success) {
+        setRegistrants(registrantsRes.data.registrants);
+      }
+    }
 
       // Handle update of registrant
       const updateBaptisimRegistrant = (index) => {
@@ -125,13 +128,83 @@ const AdminSendmessage = () => {
     }
   }; 
   useEffect(() => {
+    //fetch the existing hero sections
+    axios.get("http://localhost:4000/api/hero-sections")
+     .then((response)=>{
+      if(response.data && response.data.sections){
+        setHeroSections(response.data.sections)
+      }
+     }).catch((err)=>{
+      console.error("Error fetching data:", err)
+     });
+
     const interval = setInterval(() => {
       fetchBaptisimRegistrant()
     }, 10000);
   
     return ()=>clearInterval(interval)
   }, [])
+
+
+  const handleHeroAddSection = () =>{
+    setHeroSections([
+      ...heroSections,
+      {
+        id:heroSections.length+1,
+        header:"",
+        headerspan: "",
+        ps: ["",""],
+        sectionimage: ""
+      }
+    ])
+  };
+
+    // Update ps array for a specific section
+    const handlePsChange = (sectionId, index, value) => {
+      setHeroSections(prevSections =>
+        prevSections.map(section => 
+          section.id === sectionId
+            ? {
+                ...section,
+                ps: section.ps.map((text, i) =>
+                  i === index ? value : text
+                )
+              }
+            : section
+        )
+      );
+    };
+
+  const handelRemoveHeroSection = (id) => {
+    setHeroSections(heroSections.filter((section)=> section.id !== id))
+  }
+
+  const handleHeroChange = (e, id) =>{
+    const {name,value} = e.target;
+    const UpdateSections = heroSections.map((section)=>
+    section.id === id ? {...section, [name]: name === "ps" ? value.split("\n") : value} : section);
+    setHeroSections(UpdateSections)
+  }
   
+  const handleHeroSave = ()=>{
+    setLoading(true)
+    axios.post('http://localhost:4000/api/hero-sections', {sections: heroSections})
+    .then((response) => {
+      console.log("Updated hero sections:", response.data)
+      setHeroSections(response.data.data)
+      setAlert(true)
+      setAlertText("the hero data has been saved")
+      setLoading(false)
+    })
+    .catch((error)=>{
+      console.error("Error saving data:", error)
+      setAlert(true)
+      setAlertText("unable to saved data refresh and try agian")
+      setLoading(false)
+    })
+  }
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -286,7 +359,7 @@ const AdminSendmessage = () => {
     };
 
   return (
-    <div className='sign  container AdminSendmessage'>
+    <div className='sign container AdminSendmessage'>
 {loading ? (
   <div className="testimonyFormLoader">
     <div className="loader"></div>
@@ -375,7 +448,7 @@ const AdminSendmessage = () => {
       <input type="number" name="id" max={2} placeholder="ID" onChange={handleChange} required />
       <input type="text" name="preacher" placeholder="Preacher" onChange={handleChange} required />
       <textarea name="description" placeholder="Description" onChange={handleChange} required></textarea>
-      <button className='btn' type="submit"><p>Update<i class="fa-solid fa-pen"></i></p></button>
+      <button className='btn' type="submit"><p>Update<i className="fa-solid fa-pen"></i></p></button>
     </form>
 
 
@@ -438,6 +511,32 @@ const AdminSendmessage = () => {
           <p>No registrants yet.</p>
         )}
       </div>
+
+    <div className='hero_hero'>
+      <form className='signup-form'>
+      <h2>Hero Sections</h2>
+      {
+        heroSections.map((section)=>(
+          <div key={section.id} className='hero-section'>
+          <input type='text' name='header' value={section.header} placeholder='Header' onChange={(e)=> handleHeroChange(e, section.id)}/>
+          <input type='text' name='headerspan'  value={section.headerspan}  placeholder='Header Span"' onChange={(e)=> handleHeroChange(e, section.id)}/>
+          {section.ps.map((paragraph, index) => (
+              <div key={index}>
+                <input
+                  type="text"
+                  value={paragraph}
+                  onChange={(e) => handlePsChange(section.id, index, e.target.value)}
+                />
+              </div>
+            ))}<input type='text' name='sectionimage'  value={section.sectionimage} placeholder='"Image URL"' onChange={(e)=> handleHeroChange(e, section.id)}/>
+          <button className='btn' type='button' onClick={()=> handelRemoveHeroSection(section.id)}><p>Remove <i className="fa-solid fa-arrow-right"></i></p></button>
+          </div>
+        ))
+      }
+       <button  className="btn" type="button" onClick={handleHeroAddSection}><p>Add  <i className="fa-solid fa-arrow-right"></i></p></button>
+      </form>
+      <button className="btn" type='button' onClick={handleHeroSave}><p>Save <i className="fa-solid fa-arrow-right"></i> </p></button>
+    </div>
   </>
 )}    </div>
   )

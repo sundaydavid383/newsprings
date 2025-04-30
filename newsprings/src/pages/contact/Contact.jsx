@@ -11,6 +11,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone:'',
     message: '',
   });
 
@@ -50,7 +51,7 @@ const Contact = () => {
       await axios.post('http://localhost:4000/api/contact/send-contact-message', formData);
       setAlert(true)
       setAlertText('Message sent successfully!');
-      setFormData({ name: '', email: '', message: '' }); // Reset form
+      setFormData({ name: '', email: '', phone:'', message: '' }); // Reset form
     } catch (error) {
       console.error('Error sending message:', error);
       let message = 'Failed to send message. Please try again.'
@@ -162,7 +163,15 @@ const Contact = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Your Email"
+            placeholder="example@gmail.com"
+            required
+          />
+                    <input
+            type="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Your phone number"
             required
           />
           <textarea

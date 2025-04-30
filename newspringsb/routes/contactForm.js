@@ -7,16 +7,17 @@ const router = express.Router()
 
 
 router.post("/send-contact-message", async (req, res) => {
-    let { name, email, message } = req.body;
+    let { name, email, phone, message } = req.body;
   
     // Check if all fields exist
-    if (!name || !email || !message) {
-      return res.status(400).json({ message: "All fields (name, email, message) are required." });
+    if (!name || !email || !phone || !message) {
+      return res.status(400).json({ message: "All fields (name, email, phone, message) are required." });
     }
   
     // Make sure they are strings
     name = String(name).trim();
     email = String(email).trim();
+    phone = String(phone).trim();
     message = String(message).trim();
   
     // Optional: simple email validation (basic check)
@@ -24,7 +25,13 @@ router.post("/send-contact-message", async (req, res) => {
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: "Invalid email address." });
     }
-  
+  // Basic phone number validation (international support)
+const cleanedPhone = phone.replace(/[\s-]/g, '');
+const digitOnlyPhone = cleanedPhone.replace(/\D/g, '');
+
+if (!/^\+?[\d\s-]+$/.test(phone) || digitOnlyPhone.length < 10) {
+  return res.status(400).json({ message: "Invalid phone number." });
+}
     // Create transporter
     let transporter = nodemailer.createTransport({
       service: "gmail",
@@ -39,7 +46,7 @@ router.post("/send-contact-message", async (req, res) => {
       from: email,
       to: process.env.EMAIL_USER,
       subject: `New contact message from ${name}`,
-      text: `${email} said: ${message}\n\nReply to: ${email}`
+      text: `${name} said: ${message}\n\nReply to: ${email} or ${phone}`
     };
   
     try {

@@ -84,29 +84,24 @@ font-size: .8rem;
     border-radius: .3rem;
     color: var(--light-text);
 }
+.iconactive.message_state,
 .iconactive.schedule_state{
-    position: fixed;
-    bottom: 2rem;
-    left: 1.4rem;
     cursor: pointer;
-    width: 4.5rem !important;
-    height: 4.5rem !important;
-    font-size: 2.3rem;
-    line-height: 4.7rem;
+    width: 3.4rem !important;
+    height: 3.4rem !important;
+    font-size: 1.9rem;
+    line-height: 3.6rem;
     z-index:11;
     animation: scaleInAndOut 3s infinite;
+    position: fixed;
+    bottom: 2rem;
+}
+.iconactive.schedule_state{
+    left: 1.4rem;
+
 }
 .iconactive.message_state{
-    position: fixed;
-    bottom: 2rem;
     right: 4rem;
-    cursor: pointer;
-    width: 4.5rem !important;
-    height: 4.5rem !important;
-    font-size: 2.3rem;
-    line-height: 4.7rem;
-    z-index:11;
-    animation: scaleInAndOut 3s infinite;
 }
 .schedule_box_holder .fa-times,
 .message_box_holder .fa-times{

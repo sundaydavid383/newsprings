@@ -20,6 +20,7 @@ const AdminSendmessage = () => {
   gender: '',
   dob: ''
 });
+    const [prayerAndFasting, setPrayerAndFasting] = useState(null)
     const [message, setMessage] = useState("")
     const [newMsg, setNewMsg] = useState("");
     const [adminAuthorized, setAdminAuthorized] = useState(false)
@@ -33,6 +34,79 @@ const AdminSendmessage = () => {
     const [loading, setLoading] = useState(false)
     const [registrants, setRegistrants] = useState([])
     const [heroSections, setHeroSections] = useState([]);
+    
+  //prayer and fasting change and manipulation 
+    useEffect(() => {
+      setLoading(true)
+      axios.get('http://localhost:4000/api/prayer-and-fasting')
+        .then(res => {
+          setPrayerAndFasting(res.data);
+         setLoading(false);
+        })
+        .catch(err => {
+          console.error(err);
+          setLoading(false);
+          setAlert(true)
+          setAlertText("there was an error fetcihng the prayer and fasting content")
+        });
+    }, []);
+    
+  const handlePrayerAndFastingInputChange = (section, field, value) => {
+    setPrayerAndFasting(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [field]: value
+      }
+    }));
+  };
+
+  const handlePrayerAndFastingListChange = (section, index, value) => {
+    const updated = [...content[section]];
+    updated[index] = value;
+    setPrayerAndFasting(prev => ({ ...prev, [section]: updated }));
+  };
+
+  const handlePrayerAndFastingGalleryChange = (index, key, value) => {
+    const updated = [...content.gallery];
+    updated[index][key] = value;
+    setPrayerAndFasting(prev => ({ ...prev, gallery: updated }));
+  };
+
+  const handlePrayerAndFastingGalleryImageUpload = (index, file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      handlePrayerAndFastingGalleryChange(index, 'src', reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+
+  const handlePrayerAndFastingSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true)
+      await axios.put('http://localhost:4000/api/prayer-and-fasting', prayerAndFasting);
+      setLoading(false)
+      alert('Content updated successfully');
+    } catch (err) {
+      console.error(err);
+      setLoading(false)
+      setAlert(true)
+      setAlertText('Error updating content');
+    }
+  };
+
+
+
+
+
+
+
+
+    
+    
+   // fetching the baptisim registrant  
     const fetchBaptisimRegistrant = async () => {
       const registrantsRes = await axios.get('http://localhost:4000/api/events/baptism/registrants');
       if (registrantsRes.data.success) {
@@ -537,8 +611,106 @@ const AdminSendmessage = () => {
       </form>
       <button className="btn" type='button' onClick={handleHeroSave}><p>Save <i className="fa-solid fa-arrow-right"></i> </p></button>
     </div>
+
+    <form className='signup-form' onSubmit={handlePrayerAndFastingSubmit}>
+  <h2>Header</h2>
+  <input
+    type="text"
+    value={prayerAndFasting.header.title}
+    onChange={(e) => handlePrayerAndFastingInputChange('header', 'title', e.target.value)}
+    placeholder="Title"
+  />
+  <textarea
+    value={prayerAndFasting.header.subtitle}
+    onChange={(e) => handlePrayerAndFastingInputChange('header', 'subtitle', e.target.value)}
+    placeholder="Subtitle"
+  />
+
+  <h2>Why Fast</h2>
+  {prayerAndFasting.whyFast.map((item, i) => (
+    <textarea
+      key={i}
+      value={item}
+      onChange={(e) => handlePrayerAndFastingListChange('whyFast', i, e.target.value)}
+    />
+  ))}
+
+  <h2>How to Participate</h2>
+  {prayerAndFasting.howToParticipate.map((item, i) => (
+    <textarea
+      key={i}
+      value={item}
+      onChange={(e) => handlePrayerAndFastingListChange('howToParticipate', i, e.target.value)}
+    />
+  ))}
+
+  <h2>Prayer Focus</h2>
+  {prayerAndFasting.prayerFocus.map((item, i) => (
+    <textarea
+      key={i}
+      value={item}
+      onChange={(e) => handlePrayerAndFastingListChange('prayerFocus', i, e.target.value)}
+    />
+  ))}
+
+  <h2>Gallery</h2>
+  {prayerAndFasting.gallery.map((item, i) => (
+    <div key={i}>
+      <input
+        type="text"
+        value={item.alt}
+        placeholder="Alt text"
+        onChange={(e) => handlePrayerAndFastingGalleryChange(i, 'alt', e.target.value)}
+      />
+      <input
+        type="text"
+        value={item.src}
+        placeholder="Image URL"
+        onChange={(e) => handlePrayerAndFastingGalleryChange(i, 'src', e.target.value)}
+      />
+      {item.src && <img src={item.src} alt={item.alt} width={100} />}
+    </div>
+  ))}
+
+  <h2>Join</h2>
+  {prayerAndFasting.join.map((p,index)=>(
+  <input
+  type="text"
+  key={index}
+  value={p}
+  onChange={(e) => handlePrayerAndFastingListChange('join', index, e.target.value)}
+  placeholder="Join text"
+  />
+  ))
+}
+  <h2>Video</h2>
+  <input
+    type="text"
+    value={prayerAndFasting.videoId}
+    onChange={(e) => setPrayerAndFasting(prev=>({...prev, videoId:e.target.value}))}
+    placeholder="YouTube Video ID"
+  />
+  {prayerAndFasting.videoId && (
+    <iframe
+      width="300"
+      height="180"
+      src={`https://www.youtube.com/embed/${prayerAndFasting.videoId}`}
+      title="YouTube Video"
+      frameBorder="0"
+      allowFullScreen
+    />
+  )}
+
+  <br /><br />
+  <button type="submit">Update prayerAndFasting</button>
+</form>
   </>
-)}    </div>
+)}   
+ 
+    </div>
+
+
+
   )
 }
 

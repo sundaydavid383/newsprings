@@ -60,6 +60,16 @@
     text-align: center;
     transition: .2s linear;
 }
+.videoContainer{
+    display: flex;
+    justify-content: space-around;
+}
+.videoContainer iframe{
+    width: 100%;
+    border-radius: 1rem;
+    aspect-ratio: 16/9;
+}
+
 body{
     background-color: var(--background-color);
     overflow-x: hidden;

@@ -95,6 +95,10 @@ const startServer = async () => {
       return age;
     }
 
+    // ========================Prayer and fasting details==================
+    const prayerRoute = require('./routes/prayerandFasting.js');
+   app.use('/api/prayer-and-fasting', prayerRoute);
+
     //============================= hero section details ============
     const heroRoute = require("./routes/heroRoutes.js")
     app.use("/api", heroRoute)

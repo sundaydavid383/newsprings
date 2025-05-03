@@ -25,6 +25,7 @@ import AdminSendmessage from "../pages/admin/AdminSendmessage";
 import LatestService from "../pages/latestService/LatestService";
 import PrayerAndFasting from "../pages/prayerandfasting/PrayerAndFasting";
 import WaterBaptisim from "../pages/waterBaptisim/WaterBaptisim";
+import Base64Gen from "../component/base64Gen/Base64Gen";
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
   const getNextServiceTime = () => {
@@ -170,6 +171,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
           path="/admin45435t654dddsdffgdsdfdfdfdfasdfdedfdfdfdf55"
           element={<AdminSendmessage />}
         />
+        <Route path="/file-to-base64string" element={<Base64Gen />} />
         <Route path="/contact" element={<Contact />} />
         <Route
           path="/sermon"

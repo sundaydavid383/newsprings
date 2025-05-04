@@ -4,7 +4,7 @@ const { google } = require("googleapis");
 const multer = require("multer");
 const path = require("path")
 const fs = require("fs");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const connectDatabases = require("./db");
 const sendEmail = require("./utils/sendEmail")

@@ -763,8 +763,8 @@ app.get("/user/:email", async (req, res) => {
         console.error("they is an error dignosing");
       }
     });
-
-    app.listen(4000, () => console.log("Server running on port 4000"));
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (err) {
     console.error("Server failed to start because DB connection failed.", err);
   }

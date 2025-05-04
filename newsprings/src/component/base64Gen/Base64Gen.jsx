@@ -18,8 +18,9 @@ const Base64Gen = () => {
   };
 
   return (
-    <div style={{marginTop:"14rem"}} className="container">
+    <div style={{marginTop:"6rem"}} className="container">
       <h2>Convert File to Base64</h2>
+
       <input type="file" onChange={handleFileChange} />
       {base64 && (
         <div>

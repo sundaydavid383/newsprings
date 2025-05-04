@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./prayerAndFasting.css";
+import "./prayerandfasting.css";
 import axios from 'axios';
 
 const PrayerAndFasting = () => {

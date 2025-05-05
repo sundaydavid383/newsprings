@@ -168,7 +168,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
         <Route path="/lastestservice" element={<LatestService />} />
         <Route path="/baptisim" element={<WaterBaptisim />} />
         <Route
-          path="/admin45435t654dddsdffgdsdfdfdfdfasdfdedfdfdfdf55"
+          path="/admin"
           element={<AdminSendmessage />}
         />
         <Route path="/file-to-base64string" element={<Base64Gen />} />

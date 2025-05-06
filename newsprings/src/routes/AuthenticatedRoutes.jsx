@@ -194,6 +194,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
           element={<Stories setActivePage={setActivePage} />}
         />
         <Route path="/testimony/:id" element={<Testimony />} />
+        <Route path="*" element={<Testimony />} />
         <Route path="/general" element={<General />} />
         <Route path="/our-pastor" element={<Ourpastor />} />
         <Route path="/career" element={<Career />} />

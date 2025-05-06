@@ -6,7 +6,7 @@ import "./admin.css"
 
 
 const AdminSendmessage = () => {
-
+  const Base_url =  "http://localhost:4000";
   const [formData, setFormData] = useState({
     id: '',
     preacher: '',
@@ -18,7 +18,7 @@ const AdminSendmessage = () => {
   email: '',
   phone: '',
   gender: '',
-  dob: ''
+  age: ''
 });
     const [prayerAndFasting, setPrayerAndFasting] = useState(null)
     const [message, setMessage] = useState("")
@@ -38,7 +38,7 @@ const AdminSendmessage = () => {
   //prayer and fasting change and manipulation 
     useEffect(() => {
       setLoading(true)
-      axios.get('http://localhost:4000/api/prayer-and-fasting')
+      axios.get(`${Base_url}/api/prayer-and-fasting`)
         .then(res => {
           setPrayerAndFasting(res.data);
          setLoading(false);
@@ -62,13 +62,13 @@ const AdminSendmessage = () => {
   };
 
   const handlePrayerAndFastingListChange = (section, index, value) => {
-    const updated = [...content[section]];
+    const updated = [...prayerAndFasting[section]];
     updated[index] = value;
     setPrayerAndFasting(prev => ({ ...prev, [section]: updated }));
   };
 
   const handlePrayerAndFastingGalleryChange = (index, key, value) => {
-    const updated = [...content.gallery];
+    const updated = [...prayerAndFasting.gallery];
     updated[index][key] = value;
     setPrayerAndFasting(prev => ({ ...prev, gallery: updated }));
   };
@@ -86,7 +86,7 @@ const AdminSendmessage = () => {
     e.preventDefault();
     try {
         setLoading(true)
-      await axios.put('http://localhost:4000/api/prayer-and-fasting', prayerAndFasting);
+      await axios.put(`${Base_url}/api/prayer-and-fasting`, prayerAndFasting);
       setLoading(false)
       alert('Content updated successfully');
     } catch (err) {
@@ -108,7 +108,7 @@ const AdminSendmessage = () => {
     
    // fetching the baptisim registrant  
     const fetchBaptisimRegistrant = async () => {
-      const registrantsRes = await axios.get('http://localhost:4000/api/events/baptism/registrants');
+      const registrantsRes = await axios.get(`${Base_url}/api/events/baptism/registrants`);
       if (registrantsRes.data.success) {
         setRegistrants(registrantsRes.data.registrants);
       }
@@ -125,7 +125,7 @@ const AdminSendmessage = () => {
         setEditFormData(prev => ({ ...prev, [name]: value }));
       };
       
-      const handleEditSubmit = async (e) => {
+      const handleBapitsmRegistrant = async (e) => {
         e.preventDefault();
       
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -155,7 +155,7 @@ const AdminSendmessage = () => {
           return;
         }
       
-        if (!editFormData.dob ) {
+        if (!editFormData.age ) {
           setAlert(true)
           setAlertText('Please enter a valid age.');
           return;
@@ -169,7 +169,7 @@ const AdminSendmessage = () => {
         }
       
         try {
-          const response = await axios.put(`http://localhost:4000/api/events/baptism/register/${editingIndex}`, editFormData);
+          const response = await axios.put(`${Base_url}/api/events/baptism/register/${editingIndex}`, editFormData);
           if (response.data.success) {
             setAlert(true)
             setAlertText('Update successful!');
@@ -188,7 +188,7 @@ const AdminSendmessage = () => {
   // Handle delete of registrant
   const handleDelete = async (index) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/api/events/baptism/register/${index}`);
+      const response = await axios.delete(`${Base_url}/api/events/baptism/register/${index}`);
       if (response.data.success) {
         setAlert(true)
         setAlertText('Baptism registrant deleted successfully!');
@@ -203,7 +203,7 @@ const AdminSendmessage = () => {
   }; 
   useEffect(() => {
     //fetch the existing hero sections
-    axios.get("http://localhost:4000/api/hero-sections")
+    axios.get(`${Base_url}/api/hero-sections`)
      .then((response)=>{
       if(response.data && response.data.sections){
         setHeroSections(response.data.sections)
@@ -220,18 +220,19 @@ const AdminSendmessage = () => {
   }, [])
 
 
-  const handleHeroAddSection = () =>{
-    setHeroSections([
-      ...heroSections,
-      {
-        id:heroSections.length+1,
-        header:"",
-        headerspan: "",
-        ps: ["",""],
-        sectionimage: ""
-      }
-    ])
-  };
+  //upload hero image 
+  const handleHeroImageUpload = (id, file)=>{
+     const reader =  new FileReader();
+     reader.onloadend = () =>{
+      setHeroSections(prevSections => 
+        prevSections.map(section=>
+          section.id === id ?  {...section, sectionimage: reader.result}:section
+      )
+    );
+  }
+  if(file) reader.readAsDataURL(file)
+
+  }
 
     // Update ps array for a specific section
     const handlePsChange = (sectionId, index, value) => {
@@ -256,13 +257,13 @@ const AdminSendmessage = () => {
   const handleHeroChange = (e, id) =>{
     const {name,value} = e.target;
     const UpdateSections = heroSections.map((section)=>
-    section.id === id ? {...section, [name]: name === "ps" ? value.split("\n") : value} : section);
+    section.id === id ? {...section, [name]: value} : section);
     setHeroSections(UpdateSections)
   }
   
   const handleHeroSave = ()=>{
     setLoading(true)
-    axios.post('http://localhost:4000/api/hero-sections', {sections: heroSections})
+    axios.post(`${Base_url}/api/hero-sections`, {sections: heroSections})
     .then((response) => {
       console.log("Updated hero sections:", response.data)
       setHeroSections(response.data.data)
@@ -277,19 +278,29 @@ const AdminSendmessage = () => {
       setLoading(false)
     })
   }
-
+  const handleHeroAddSection = () =>{
+    setHeroSections([
+      ...heroSections,
+      {
+        id:heroSections.length+1,
+        header:"",
+        headerspan: "",
+        ps: ["",""],
+        sectionimage: ""
+      }
+    ])
+  };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             setLoading(true);
-            const res = await axios.post("http://localhost:4000/admin/broadcast", {message});
+            const res = await axios.post(`${Base_url}/admin/broadcast`, {message});
 
             if(res.data.success){
                 setAlert(true)
                 setAlertText('✅ Message sent to all users.');
-                setAlert(true)
                 setMessage("")
                 setLoading(false);
             }
@@ -316,7 +327,7 @@ const AdminSendmessage = () => {
       
         try {
           setLoading(true)
-          const res = await axios.post("http://localhost:4000/verify/admin", { password: authText });
+          const res = await axios.post(`${Base_url}/verify/admin`, { password: authText });
       
           if (res.data.success) {
             setAdminAuthorized(true);
@@ -355,7 +366,7 @@ const AdminSendmessage = () => {
       setAlertText("the preacher feild too short it must have a length of more than 50")
     }
     try {
-      const res = await fetch('http://localhost:4000/api/update-sermon-configs', {
+      const res = await fetch(`${Base_url}/api/update-sermon-configs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -380,7 +391,7 @@ const AdminSendmessage = () => {
       }
       try {
         setLoading(true)
-        const res = await axios.post("http://localhost:4000/api/admin/message", {
+        const res = await axios.post(`${Base_url}/api/admin/message`, {
           message: newMsg,
         });
   
@@ -412,7 +423,7 @@ const AdminSendmessage = () => {
   
       try {
         setLoading(true);
-        const res = await axios.post("http://localhost:4000/api/service-description", {
+        const res = await axios.post(`${Base_url}/api/service-description`, {
           description: serviceDescription,
         });
         if (res.data.success) {
@@ -535,7 +546,7 @@ const AdminSendmessage = () => {
                 {registrant.fullName} - {registrant.email} 
                 <div className='btns'>
                 {editingIndex === idx ? (
-  <form className='signup-form update_baptisim_form' onSubmit={handleEditSubmit}>
+  <form className='signup-form update_baptisim_form' onSubmit={handleBapitsmRegistrant}>
     <input
       name="fullName"
       value={editFormData.fullName}
@@ -561,9 +572,9 @@ const AdminSendmessage = () => {
       placeholder="Gender"
     />
     <input
-      name="dob"
+      name="age"
       type='date'
-      value={editFormData.dob}
+      value={editFormData.age}
       onChange={handleEditChange}
       placeholder="Age"
     />
@@ -602,7 +613,18 @@ const AdminSendmessage = () => {
                   onChange={(e) => handlePsChange(section.id, index, e.target.value)}
                 />
               </div>
-            ))}<input type='text' name='sectionimage'  value={section.sectionimage} placeholder='"Image URL"' onChange={(e)=> handleHeroChange(e, section.id)}/>
+            ))}
+<label htmlFor={`sectionimage-${section.id}`}>Upload Section Image:</label>
+<input
+  id={`sectionimage-${sectizon.id}`}
+  type="file"
+  name="sectionimage"
+  accept="image/*"
+  onChange={(e) => handleHeroImageUpload(section.id, e.target.files[0])}
+/>
+            {section.sectionimage && (
+              <img src={section.sectionimage} alt="preview" style={{ width: '200px' }} />
+            )}
           <button className='btn' type='button' onClick={()=> handelRemoveHeroSection(section.id)}><p>Remove <i className="fa-solid fa-arrow-right"></i></p></button>
           </div>
         ))

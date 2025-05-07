@@ -21,6 +21,12 @@ const Career = () => {
       const [move, setMove] = useState(0)
       const txtImaBach2 = "Here at Gateway, you're not just another employee—you’re an essential part of a vision-inspired, mission-driven team."
       const txtImaBacP="We invest in relationships, operate with transparency and integrity, and are committed to helping you reach your full potential. And, we have a lot of fun!"
+      const [alertText, setAlertText] = useState(
+              "I am here to alert to alert you about your problems"
+            );
+      const [alert, setAlert] = useState(false)
+      const [loading, setLoading] = useState(false)
+      const stillNeeded = "yes"
       const benefits = [
         {
           icon: "fa-solid fa-handshake",
@@ -116,7 +122,103 @@ const Career = () => {
           // clearInterval(imageInterval);
          }
        }, [])
+        const handleSubmit = async (e) => {
+           e.preventDefault();
+           const form = e.target;
+         
+           const formData = {
+             fullName: form.fullName.value.trim(),
+             email: form.email.value.trim(),
+             phone: form.phone.value.trim(),
+             dob: form.dob.value,
+             gender: form.gender.value,
+             bornAgain: form.bornAgain.value,
+           };
+         
+           // Validation
+           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+           const phoneRegex = /^(\+234|0)[789][01]\d{8}$/; // Simple Nigerian phone format
+         
+           if (!formData.fullName) {
+             setAlertText("Full name is required.");
+             setAlert(true);
+             return;
+           }
+         
+           if (!emailRegex.test(formData.email)) {
+             setAlertText("Please enter a valid email address.");
+             setAlert(true);
+             return;
+           }
+         
+           if (!phoneRegex.test(formData.phone)) {
+             setAlertText("Enter a valid Nigerian phone number like +2349012345678.");
+             setAlert(true);
+             return;
+           }
+         
+           if (!formData.dob) {
+             setAlertText("Date of birth is required.");
+             setAlert(true);
+             return;
+           }
+         
+           const birthDate = new Date(formData.dob);
+           const today = new Date();
+           const age = today.getFullYear() - birthDate.getFullYear();
+           const monthDiff = today.getMonth() - birthDate.getMonth();
+           const dayDiff = today.getDate() - birthDate.getDate();
+         
+           if (age < 14 || (age === 14 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))) {
+             setAlertText("You must be at least 14 years old to register.");
+             setAlert(true);
+             return;
+           }
+         
+           if (!formData.gender) {
+             setAlertText("Please select your gender.");
+             setAlert(true);
+             return;
+           }
+         
+           if (!formData.bornAgain) {
+             setAlertText("Please indicate if you're born again.");
+             setAlert(true);
+             return;
+           }
+         
+           try {
+            setLoading(true)
+             await axios.post('http://localhost:4000/api/career/register', formData);
+             setAlertText('Registration successful!');
+             setAlert(true);
+             form.reset();
+             setLoading(false)
+           } catch (err) {
+             console.error('Error submitting registration:', err);
+             setAlertText('Registration failed. Please try again.');
+             setAlert(true);
+             setLoading(false)
+           }
+         };
+
+         if (loading) return (
+          <div className="testimonyFormLoader">
+          <div className="loader"></div>
+        </div>
+         );
   return (
+    <>
+       {alert && (
+      <div className="alert_holder">
+        <div className="alert">
+          <p>{alertText}</p>
+          <div onClick={() => setAlert(false)} className="btn">
+            <p>OK</p>
+          </div>
+        </div>
+      </div>
+    )}
     <div className='about career'>
       <SecondNav text={"join the team"} link={"/connect"} btntext={"view all jobs"}/>
        <div className="career_hero">
@@ -154,7 +256,7 @@ const Career = () => {
            ))}
        
        <div className="career_testimony_image_container">
-       {move>-265?<i onClick={()=>{if(move>-265)setMove((prev)=>prev+-65.3); console.log(move)}} className="moveright iconactive fa-solid fa-arrow-right"></i>:null}
+       {move>-205?<i onClick={()=>{if(move>-205)setMove((prev)=>prev+-65.3); console.log(move)}} className="moveright iconactive fa-solid fa-arrow-right"></i>:null}
          {move<=-10?<i onClick={()=>{if(move<=-10)setMove((prev)=>prev+65.3); console.log(move)}} className="moveleft iconactive fa-solid fa-arrow-left"></i>:null}
         
   
@@ -188,7 +290,41 @@ const Career = () => {
           </p>
         </a>
        </div>
+           {stillNeeded.toLowerCase() === "yes" ? (
+        <>
+          <div className="signuppage">
+            <span></span>
+            <img src="https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/487809254_1077807161039898_3562322017601138802_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEJ-Hl3TueI62uYUks1khVgQH0Hr9hY6nVAfQev2FjqddOblFGoV8qpFFvkNFcgzvLyEmoiiLN_ApRSxqO1EpqE&_nc_ohc=ZVwGfFXEUbkQ7kNvwHQG4Ys&_nc_oc=AdkFFd87S2TthDnWflKWiDlmKUSRc-LiKtG0UjNvhwfBsadpQcIbvJQvngtEmG2jhaE&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=3U49bYYBTZtXxC8JgFtGoA&oh=00_AfGuLWMuunkmCSKVI-drqHHT1l-20l6ymJX0W879PJOaEQ&oe=6811D08B" alt="Church welcome" />
+          </div>
+          <form className="signup-form" onSubmit={handleSubmit}>
+            <label htmlFor="fullName">Full Name</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Your full name"  />
+            <label htmlFor="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="your@example.com"  />
+            <label htmlFor="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" placeholder="+234 80 1234 5678"  />
+            <label htmlFor="dob">Date of Birth</label>
+            <input id="dob" name="dob" type="date"  />
+            <label htmlFor="gender">Gender</label>
+            <select id="gender" name="gender" >
+              <option value=""> Select </option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <label htmlFor="bornAgain">Are you born again?</label>
+            <select id="bornAgain" name="bornAgain" >
+              <option value=""> Select </option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            <button type="submit">Register Now</button>
+          </form>
+        </>
+      ) : (
+        <p style={{ color: 'red', textAlign: 'center' }}>Registration is currently closed.</p>
+      )}
     </div>
+    </>
   )
 }
 

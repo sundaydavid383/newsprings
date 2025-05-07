@@ -4,7 +4,7 @@ const { google } = require("googleapis");
 const multer = require("multer");
 const path = require("path")
 const fs = require("fs");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const connectDatabases = require("./db");
 const sendEmail = require("./utils/sendEmail")
@@ -12,16 +12,10 @@ const { default: mongoose } = require("mongoose");
 const nodemailer = require("nodemailer")
 
 
-//app password = anwf blsl unlp jixo
-// Express application
-const app = express();
-console.log("password:", process.env.PASSWORD);
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("APP_PASSWORD:", process.env.APP_PASSWORD);
 
 // Middleware
-
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })); // adjust size as needed
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cors());
 app.use((req, res, next) => {
   console.log(`🛎️ [${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
@@ -30,6 +24,14 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+
+//app password = anwf blsl unlp jixo
+// Express application
+const app = express();
+console.log("password:", process.env.PASSWORD);
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("APP_PASSWORD:", process.env.APP_PASSWORD);
 
 
 //email transporter
@@ -94,6 +96,10 @@ const startServer = async () => {
       }
       return age;
     }
+
+    // ========================Prayer and fasting details==================
+    const prayerRoute = require('./routes/prayerandFasting.js');
+   app.use('/api/prayer-and-fasting', prayerRoute);
 
     //============================= hero section details ============
     const heroRoute = require("./routes/heroRoutes.js")
@@ -759,8 +765,8 @@ app.get("/user/:email", async (req, res) => {
         console.error("they is an error dignosing");
       }
     });
-
-    app.listen(4000, () => console.log("Server running on port 4000"));
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (err) {
     console.error("Server failed to start because DB connection failed.", err);
   }

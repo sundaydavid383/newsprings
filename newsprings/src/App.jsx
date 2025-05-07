@@ -8,26 +8,27 @@ import GuestRoutes from "./routes/GuestRoutes";
 import { useUser } from "./context/Usercontext";
 
 const App = () => {
-  const {user, setUser} = useUser()
+  // const {user, setUser} = useUser()
+   const [isAuthenticated, setIsAuthenticated]  = useState(true); // Change initial state to null
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
   const [activePage, setActivePage] = useState("home");
-  const [isAuthenticated, setIsAuthenticated] = useState(null); // Change initial state to null
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
-    const storedAuth = localStorage.getItem("isAuthenticated");
-    const storedUser = localStorage.getItem("user");
+    // const storedAuth = localStorage.getItem("isAuthenticated");
+    // const storedUser = localStorage.getItem("user");
 
     // Simulate a short delay to wait for loading state
-    setTimeout(() => {
-      if (storedAuth === "true" && storedUser) {
-        setIsAuthenticated(true);
-        setUser(JSON.parse(storedUser));
-      } else {
-        setIsAuthenticated(false);
-        setUser(null);
-      }
-      setIsLoading(false); // Set loading to false after authentication check
-    }, 500); // Optional: Adding a small delay to simulate loading
+    // setTimeout(() => {
+      
+    //   if (storedAuth === "true" && storedUser) {
+    //     setIsAuthenticated(true);
+    //     setUser(JSON.parse(storedUser));
+    //   } else {
+    //     setIsAuthenticated(false);
+    //     setUser(null);
+    //   }
+    //   setIsLoading(false); // Set loading to false after authentication check
+    // }, 500); // Optional: Adding a small delay to simulate loading
   }, []);
 
   if (isLoading) {

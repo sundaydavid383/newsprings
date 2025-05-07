@@ -1,5 +1,5 @@
 import React from 'react'
-import "./IntroText.css"
+import "./introText.css"
 
 const IntroText = ({header, text}) => {
   return (

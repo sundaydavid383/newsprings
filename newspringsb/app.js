@@ -12,16 +12,10 @@ const { default: mongoose } = require("mongoose");
 const nodemailer = require("nodemailer")
 
 
-//app password = anwf blsl unlp jixo
-// Express application
-const app = express();
-console.log("password:", process.env.PASSWORD);
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("APP_PASSWORD:", process.env.APP_PASSWORD);
 
 // Middleware
-
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })); // adjust size as needed
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cors());
 app.use((req, res, next) => {
   console.log(`🛎️ [${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
@@ -30,6 +24,14 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+
+//app password = anwf blsl unlp jixo
+// Express application
+const app = express();
+console.log("password:", process.env.PASSWORD);
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("APP_PASSWORD:", process.env.APP_PASSWORD);
 
 
 //email transporter

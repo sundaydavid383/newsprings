@@ -263,6 +263,7 @@ const AdminSendmessage = () => {
   
   const handleHeroSave = ()=>{
     setLoading(true)
+    console.log(heroSections)
     axios.post(`${Base_url}/api/hero-sections`, {sections: heroSections})
     .then((response) => {
       console.log("Updated hero sections:", response.data)
@@ -616,7 +617,7 @@ const AdminSendmessage = () => {
             ))}
 <label htmlFor={`sectionimage-${section.id}`}>Upload Section Image:</label>
 <input
-  id={`sectionimage-${sectizon.id}`}
+  id={`sectionimage-${section.id}`}
   type="file"
   name="sectionimage"
   accept="image/*"

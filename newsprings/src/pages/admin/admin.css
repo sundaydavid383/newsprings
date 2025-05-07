@@ -7,6 +7,9 @@
 {
     margin-bottom: 3rem;
 }
+label{
+    color: var(--light-text)
+}
 .AdminSendmessage .signup-form .btn{
     border: 0;
 }

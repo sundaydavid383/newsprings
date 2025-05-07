@@ -284,13 +284,18 @@ const Stories = ({ setActivePage }) => {
         <div className="formholder">
           <div className="formconatianer">
             <form className="story_form" onSubmit={onSearch}>
-              <input
+              {/* <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 type="search"
                 placeholder="Search for testimony by keyword, stories, etc..."
               />
-              <button type="submit">
+            */}
+              <input             value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                type="search"
+                placeholder="Search for testimony by keyword, stories, etc..."/>
+                   <button type="submit">
                 <i className="fa-solid fa-search"></i>
               </button>
             </form>

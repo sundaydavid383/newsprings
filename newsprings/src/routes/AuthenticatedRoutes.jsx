@@ -38,7 +38,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
       return date;
     };
 
-    const daysUntil = (targetDay) => (targetDay - now.getDay() + 7) % 7 || 7;
+    const daysUntil = (targetDay) => (targetDay - now.getDay() + 7) % 7;
 
     const sunday = createDate(daysUntil(0), 8, 0); // Sunday 8am
     const tuesday = createDate(daysUntil(2), 18, 0); // Tuesday 6pm

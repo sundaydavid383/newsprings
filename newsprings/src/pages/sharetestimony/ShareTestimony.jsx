@@ -14,6 +14,7 @@ const ShareTestimony = ({ setActivePage }) => {
   const [formData, setFormData] = useState({
           video: null,
           image: null,
+          validated:false,
           name: "David Efiong",
           title: "God healed me miraculously!",
           testimony:

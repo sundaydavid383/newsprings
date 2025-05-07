@@ -22,36 +22,34 @@
     box-shadow: 0px 15px 10px rgba(13, 13, 14, .4);
     margin-top: 4rem;
     border-radius: 1rem;
+    padding-top: .3rem;
+    position: relative;
     background-color: var(--gray);
 }
 .story_form{
     display: flex;
-    border: 1px solid var(--footer-text);
     border-radius: 1rem;
     border: 0;
     background-color: var(--background-color);
     width: 40rem;
     justify-content: space-between;
     padding: .4rem;
-    position: relative;
+    position: relative; 
+   
+    
 }
 .story_form input{
     border: none;
     outline: 0;
-    width: 90%;
+    width: 80%;
     font-size: 1rem;
 }
 .story_form button{
-    font-size: 1.4rem;
-    background: transparent;
-    border: 0;
-    color:var(--text-color);
-    outline: 0;
-    cursor: pointer;
-    border-radius: 50%;
     width: 3rem;
     height: 3rem;
-    transition: .2s linear;
+    margin-top: 0rem; 
+    position: absolute;
+    right: 1rem;
 }
 .story_form button:hover{
     color:var(--light-text);

@@ -800,7 +800,7 @@ const AdminSendmessage = () => {
         <p>Upload Image:</p>
       </label>
       <input type="file" id={`singlefile`} accept="image/*" onChange={(e) => handleBaptismEventFileChange(e, undefined, 'backgroundformimage')} />
-      <input name="backgroundformimage" value={baptismEventData.backgroundformimage} readOnly placeholder="Background Image (Base64)" />
+      <img width={"300px"} src={baptismEventData.backgroundformimage}/>
 
       <h2>Upcoming Events</h2>
       {baptismEventData.upcomingEvents.map((ev, i) => (
@@ -814,7 +814,7 @@ const AdminSendmessage = () => {
            <p> Upload Image:</p>
           </label>
           <input type="file" id={`file-upload${i}`} accept="image/*" onChange={(e) => handleBaptismEventFileChange(e, i, 'image')} />
-          <input value={ev.image || ''} readOnly placeholder="Image (Base64)" />
+          <img width={"300px"} src={ev.image || ''}/>
         </div>
       ))}
 

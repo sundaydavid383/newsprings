@@ -255,13 +255,17 @@ const TestimonyForm = ({ formData, setFormData }) => {
       } else if (
         typeof formData[key] === "object" &&
         key !== "video" &&
-        key !== "image"
+        key !== "image" && 
+        key !== "validated"
       ) {
         formDataToSend.append(key, JSON.stringify(formData[key])); // Append objects as JSON strings
       } else if (key === "video" && formData.video) {
         formDataToSend.append("video", formData.video);
       } else if (key === "image" && formData.image) {
         formDataToSend.append("image", formData.image);
+      } 
+      else if (key === "validated") {
+        formDataToSend.append("validated", formData.validated);
       } else {
         formDataToSend.append(key, formData[key]);
       }

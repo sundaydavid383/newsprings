@@ -10,6 +10,7 @@ const connectDatabases = require("./db");
 const sendEmail = require("./utils/sendEmail")
 const { default: mongoose } = require("mongoose");
 const nodemailer = require("nodemailer")
+const uploadRoutes = require("./routes/uploadRoutes.js");
 
 //app initialization
 const app = express();
@@ -476,6 +477,7 @@ app.get("/user/:email", async (req, res) => {
       const {
         _id,
         image,
+        validated,
         name,
         title,
         testimony,
@@ -525,6 +527,7 @@ app.get("/user/:email", async (req, res) => {
         const storyData = {
           video: response?.data?.id, // YouTube video ID
           image,
+          validated,
           name,
           date: new Date().toLocaleDateString("en-GB"),
           title,
@@ -576,6 +579,7 @@ app.get("/user/:email", async (req, res) => {
         const storyData = {
           image,
           name,
+          validated,
           date: new Date().toLocaleDateString("en-GB"),
           title,
           testimony,
@@ -632,121 +636,124 @@ app.get("/user/:email", async (req, res) => {
       }
     });
 
-    app.post("/uploading-story", upload.single("video"), async (req, res) => {
-      const {
-        image,
-        name,
-        title,
-        testimony,
-        scriptureReference,
-        testimonyCategory,
-        followUpAction,
-        impact,
-        lessonLearned,
-        prayerRequest,
-        churchDetails,
-      } = req.body;
+    // app.post("/uploading-story", upload.single("video"), async (req, res) => {
+    //   const {
+    //     image,
+    //     validated,
+    //     name,
+    //     title,
+    //     testimony,
+    //     scriptureReference,
+    //     testimonyCategory,
+    //     followUpAction,
+    //     impact,
+    //     lessonLearned,
+    //     prayerRequest,
+    //     churchDetails,
+    //   } = req.body;
 
-      const video = req.file;
+    //   const video = req.file;
 
-      try {
-        await refreshAccessTokenIfNeeded();
-        const access_token = oauth2Client.credentials.access_token;
-        oauth2Client.setCredentials({ access_token });
+    //   try {
+    //     await refreshAccessTokenIfNeeded();
+    //     const access_token = oauth2Client.credentials.access_token;
+    //     oauth2Client.setCredentials({ access_token });
 
-        const youtube = google.youtube({
-          version: "v3",
-          auth: oauth2Client,
-        });
+    //     const youtube = google.youtube({
+    //       version: "v3",
+    //       auth: oauth2Client,
+    //     });
 
-        const videoPath = video.path;
+    //     const videoPath = video.path;
 
-        const response = await youtube.videos.insert({
-          part: "snippet,status",
-          requestBody: {
-            snippet: {
-              title: title,
-              description: testimony.slice(0, 200),
-            },
-            status: {
-              privacyStatus: "public",
-            },
-          },
-          media: {
-            body: fs.createReadStream(videoPath),
-          },
-        });
+    //     const response = await youtube.videos.insert({
+    //       part: "snippet,status",
+    //       requestBody: {
+    //         snippet: {
+    //           title: title,
+    //           description: testimony.slice(0, 200),
+    //         },
+    //         status: {
+    //           privacyStatus: "public",
+    //         },
+    //       },
+    //       media: {
+    //         body: fs.createReadStream(videoPath),
+    //       },
+    //     });
 
-        // Video uploaded successfully to YouTube
-        const storyData = {
-          video: response?.data?.id, // YouTube video ID
-          image,
-          name,
-          date: new Date().toLocaleDateString("en-GB"),
-          title,
-          testimony,
-          scriptureReference,
-          testimonyCategory,
-          followUpAction,
-          impact,
-          lessonLearned,
-          prayerRequest,
-          churchDetails,
-        };
+    //     // Video uploaded successfully to YouTube
+    //     const storyData = {
+    //       video: response?.data?.id, // YouTube video ID
+    //       image,
+    //       validated,
+    //       name,
+    //       date: new Date().toLocaleDateString("en-GB"),
+    //       title,
+    //       testimony,
+    //       scriptureReference,
+    //       testimonyCategory,
+    //       followUpAction,
+    //       impact,
+    //       lessonLearned,
+    //       prayerRequest,
+    //       churchDetails,
+    //     };
 
-        const story = await TestimonyModel.create(storyData);
+    //     const story = await TestimonyModel.create(storyData);
 
-        // Clean up: Delete the video file from the server after uploading it
-        fs.unlink(video.path, (err) => {
-          if (err) {
-            console.error("Error deleting the video file:", err);
-          } else {
-            console.log("Video file deleted successfully");
-          }
-        });
+    //     // Clean up: Delete the video file from the server after uploading it
+    //     fs.unlink(video.path, (err) => {
+    //       if (err) {
+    //         console.error("Error deleting the video file:", err);
+    //       } else {
+    //         console.log("Video file deleted successfully");
+    //       }
+    //     });
 
-        return res.status(200).json({
-          success: true,
-          videoId: response.data.id,
-          message: "Successfully uploaded the video to YouTube",
-          formData: req.body,
-        });
-      } catch (error) {
-        console.error("Error uploading video to YouTube:", error.message);
-        const storyData = {
-          image, // YouTube video ID
-          name,
-          date: new Date().toLocaleDateString("en-GB"),
-          title,
-          testimony,
-          scriptureReference,
-          testimonyCategory,
-          followUpAction,
-          impact,
-          lessonLearned,
-          prayerRequest,
-          churchDetails,
-        };
+    //     return res.status(200).json({
+    //       success: true,
+    //       videoId: response.data.id,
+    //       message: "Successfully uploaded the video to YouTube",
+    //       formData: req.body,
+    //     });
+    //   } catch (error) {
+    //     console.error("Error uploading video to YouTube:", error.message);
+    //     const storyData = {
+    //       image, // YouTube video ID
+    //       validated,
+    //       name,
+    //       date: new Date().toLocaleDateString("en-GB"),
+    //       title,
+    //       testimony,
+    //       scriptureReference,
+    //       testimonyCategory,
+    //       followUpAction,
+    //       impact,
+    //       lessonLearned,
+    //       prayerRequest,
+    //       churchDetails,
+    //     };
 
-        const story = await TestimonyModel.create(storyData);
+    //     const story = await TestimonyModel.create(storyData);
 
-        // Clean up: Delete the video file from the server after uploading it
-        fs.unlink(video.path, (err) => {
-          if (err) {
-            console.error("Error deleting the video file:", err);
-          } else {
-            console.log("Video file deleted successfully");
-          }
-        });
+    //     // Clean up: Delete the video file from the server after uploading it
+    //     fs.unlink(video.path, (err) => {
+    //       if (err) {
+    //         console.error("Error deleting the video file:", err);
+    //       } else {
+    //         console.log("Video file deleted successfully");
+    //       }
+    //     });
 
-        return res.status(200).json({
-          success: true,
-          videoId: "no video uploaded",
-          message: "We uploaded it without using the video",
-          formData: req.body,
-        });
-      }
-    });
+    //     return res.status(200).json({
+    //       success: true,
+    //       videoId: "no video uploaded",
+    //       message: "We uploaded it without using the video",
+    //       formData: req.body,
+    //     });
+    //   }
+    // });
 
     app.post("/diagnose", (req, res) => {
       try {
@@ -766,6 +773,9 @@ app.get("/user/:email", async (req, res) => {
         console.error("they is an error dignosing");
       }
     });
+
+    app.use("/api", uploadRoutes);
+
     const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (err) {

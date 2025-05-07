@@ -274,7 +274,7 @@ const TestimonyForm = ({ formData, setFormData }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://localhost:4000/${formData._id ?"update-story":"uploading-story"}`,
+        `http://localhost:4000/api/uploading-story`,
         formDataToSend,
         {
           headers: {

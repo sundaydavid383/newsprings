@@ -45,6 +45,9 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+//serve the static file 
+app.use("/images", express.static("uploading-story/images"));
+
 
 
 // Initializing multer
@@ -88,6 +91,10 @@ const startServer = async () => {
     const Registration = require("./models/registrationModel")(
       registrationsConnection
     );
+
+    app.set("mongooseConnection", testimoniesConnection);
+    app.set("registrationsConnection", registrationsConnection); //for future use
+
     function calculateAge(dob) {
       const birthDate = new Date(dob);
       const today = new Date();

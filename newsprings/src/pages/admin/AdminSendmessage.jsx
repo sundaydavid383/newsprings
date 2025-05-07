@@ -289,7 +289,8 @@ const AdminSendmessage = () => {
 
       const data = await res.json();
       console.log('Updated configs:', data);
-      alert('Sermon updated successfully!');
+      setAlertText('Sermon updated successfully!');
+      setAlert(true)
     } catch (error) {
       console.error('Failed to update sermon config', error);
     }

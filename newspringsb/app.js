@@ -11,7 +11,8 @@ const sendEmail = require("./utils/sendEmail")
 const { default: mongoose } = require("mongoose");
 const nodemailer = require("nodemailer")
 
-
+//app initialization
+const app = express();
 
 // Middleware
 app.use(express.json({ limit: '10mb' })); // adjust size as needed
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
 
 //app password = anwf blsl unlp jixo
 // Express application
-const app = express();
+
 console.log("password:", process.env.PASSWORD);
 console.log("EMAIL_USER:", process.env.EMAIL_USER);
 console.log("APP_PASSWORD:", process.env.APP_PASSWORD);

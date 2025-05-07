@@ -12,6 +12,8 @@ const AdminSendmessage = () => {
     preacher: '',
     description: ''
   });
+
+  const [baptismEventData, setBaptismEventData] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editFormData, setEditFormData] = useState({
   fullName: '',
@@ -34,7 +36,62 @@ const AdminSendmessage = () => {
     const [loading, setLoading] = useState(false)
     const [registrants, setRegistrants] = useState([])
     const [heroSections, setHeroSections] = useState([]);
+
+
+
+    //fetching the baptism event data
+    useEffect(() => {
+      setLoading(true)
+      axios.get(`${Base_url}/api/events/baptism`)
+        .then(res => {
+          if (res.data.success) {
+            setBaptismEventData(res.data.event);
+          }
+        })
+        .catch(err => {setAlertText('Failed to load data');setAlert(true)})
+        .finally(() => setLoading(false));
+    }, []);
     
+    //handling the baptism event change for each input
+    const handleBaptismEventChange = (e, index, field) => {
+      if (index !== undefined) {
+        const updated = [...baptismEventData.upcomingEvents];
+        updated[index][field] = e.target.value;
+        setBaptismEventData({ ...baptismEventData, upcomingEvents: updated });
+      } else {
+        setBaptismEventData({ ...baptismEventData, [e.target.name]: e.target.value });
+      }
+    };
+  
+    //handling the baptism event change for each file changes like images etc..
+    const handleBaptismEventFileChange = (e, index, field) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result;
+          if (index !== undefined) {
+            const updated = [...baptismEventData.upcomingEvents];
+            updated[index][field] = base64String;
+            setBaptismEventData({ ...baptismEventData, upcomingEvents: updated });
+          } else {
+            setBaptismEventData({ ...baptismEventData, [field]: base64String });
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  
+    //submitting the updated change value of the baptism event
+    const handleBaptismEventSubmit = (e) => {
+      e.preventDefault();
+      axios.put('http://localhost:4000/api/events/baptism', baptismEventData)
+        .then(res => {setAlert(true)
+          setAlertText("successfully updated baptism event")})
+        .catch(err => { setAlert(true)
+          setAlertText("there was an error updating the baptism event")});
+    };
+
   //prayer and fasting change and manipulation 
     useEffect(() => {
       setLoading(true)
@@ -88,7 +145,8 @@ const AdminSendmessage = () => {
         setLoading(true)
       await axios.put(`${Base_url}/api/prayer-and-fasting`, prayerAndFasting);
       setLoading(false)
-      alert('Content updated successfully');
+      setAlert(true)
+      setAlertText('Content updated successfully');
     } catch (err) {
       console.error(err);
       setLoading(false)
@@ -249,18 +307,19 @@ const AdminSendmessage = () => {
         )
       );
     };
-
+   
+    //handling remove section from the hero section
   const handelRemoveHeroSection = (id) => {
     setHeroSections(heroSections.filter((section)=> section.id !== id))
   }
-
+  //changing basic input for hero section
   const handleHeroChange = (e, id) =>{
     const {name,value} = e.target;
     const UpdateSections = heroSections.map((section)=>
     section.id === id ? {...section, [name]: value} : section);
     setHeroSections(UpdateSections)
   }
-  
+  //saving hero data
   const handleHeroSave = ()=>{
     setLoading(true)
     console.log(heroSections)
@@ -283,7 +342,7 @@ const AdminSendmessage = () => {
     setHeroSections([
       ...heroSections,
       {
-        id:heroSections.length+1,
+        id:Date.now(),
         header:"",
         headerspan: "",
         ps: ["",""],
@@ -603,22 +662,23 @@ const AdminSendmessage = () => {
       <form className='signup-form'>
       <h2>Hero Sections</h2>
       {
-        heroSections.map((section)=>(
+        heroSections.map((section, index)=>(
           <div key={section.id} className='hero-section'>
           <input type='text' name='header' value={section.header} placeholder='Header' onChange={(e)=> handleHeroChange(e, section.id)}/>
           <input type='text' name='headerspan'  value={section.headerspan}  placeholder='Header Span"' onChange={(e)=> handleHeroChange(e, section.id)}/>
-          {section.ps.map((paragraph, index) => (
-              <div key={index}>
+          {section.ps.map((paragraph, indext) => (
+              <div key={indext}>
                 <input
                   type="text"
                   value={paragraph}
-                  onChange={(e) => handlePsChange(section.id, index, e.target.value)}
+                  placeholder='real talks'
+                  onChange={(e) => handlePsChange(section.id, indext, e.target.value)}
                 />
               </div>
             ))}
-<label htmlFor={`sectionimage-${section.id}`}>Upload Section Image:</label>
+<label htmlFor={`sectionimage-${index}`}>Upload Section Image:</label>
 <input
-  id={`sectionimage-${section.id}`}
+  id={`sectionimage-${index}`}
   type="file"
   name="sectionimage"
   accept="image/*"
@@ -728,6 +788,38 @@ const AdminSendmessage = () => {
   <br /><br />
   <button type="submit">Update prayerAndFasting</button>
 </form>
+
+<form className='signup-form' onSubmit={handleBaptismEventSubmit}>
+      <input name="title" value={baptismEventData.title} onChange={handleBaptismEventChange} placeholder="Title" />
+      <input name="date" value={baptismEventData.date} onChange={handleBaptismEventChange} placeholder="Date" />
+      <input name="time" value={baptismEventData.time} onChange={handleBaptismEventChange} placeholder="Time" />
+      <input name="location" value={baptismEventData.location} onChange={handleBaptismEventChange} placeholder="Location" />
+      <input name="videoId" value={baptismEventData.videoId} onChange={handleBaptismEventChange} placeholder="Video ID" />
+      <textarea name="description" value={baptismEventData.description} onChange={handleBaptismEventChange} placeholder="Description" />
+      <label className='btn' htmlFor={`singlefile`}>
+        <p>Upload Image:</p>
+      </label>
+      <input type="file" id={`singlefile`} accept="image/*" onChange={(e) => handleBaptismEventFileChange(e, undefined, 'backgroundformimage')} />
+      <input name="backgroundformimage" value={baptismEventData.backgroundformimage} readOnly placeholder="Background Image (Base64)" />
+
+      <h2>Upcoming Events</h2>
+      {baptismEventData.upcomingEvents.map((ev, i) => (
+        <div className='each-form' key={i}>
+          <input value={ev.title} onChange={(e) => handleBaptismEventChange(e, i, 'title')} placeholder="Title" />
+          <input value={ev.date} onChange={(e) => handleBaptismEventChange(e, i, 'date')} placeholder="Date" />
+          <input value={ev.time} onChange={(e) => handleBaptismEventChange(e, i, 'time')} placeholder="Time" />
+          <input value={ev.location} onChange={(e) => handleBaptismEventChange(e, i, 'location')} placeholder="Location" />
+          <textarea value={ev.description} onChange={(e) => handleBaptismEventChange(e, i, 'description')} placeholder="Description" />
+          <label className='btn' htmlFor={`file-upload${i}`}>
+           <p> Upload Image:</p>
+          </label>
+          <input type="file" id={`file-upload${i}`} accept="image/*" onChange={(e) => handleBaptismEventFileChange(e, i, 'image')} />
+          <input value={ev.image || ''} readOnly placeholder="Image (Base64)" />
+        </div>
+      ))}
+
+      <button className='btn' type="submit">Save Changes</button>
+    </form>
   </>
 )}   
  

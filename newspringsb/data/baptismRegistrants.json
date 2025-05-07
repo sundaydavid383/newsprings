@@ -22,5 +22,14 @@
     "dob": "2005-05-06",
     "gender": "Male",
     "bornAgain": "Yes"
+  },
+  {
+    "fullName": "david sunday",
+    "email": "sundayudoh383@gmail.com",
+    "phone": "+2349014886853",
+    "dob": "0004-04-04",
+    "gender": "Male",
+    "bornAgain": "Yes",
+    "age": "2025-05-16"
   }
 ]

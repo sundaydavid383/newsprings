@@ -18,6 +18,18 @@ router.get('/baptism', (req, res) => {
   }
 });
 
+// PUT: Update baptism event
+router.put('/baptism', (req, res) => {
+  try {
+    const updatedData = req.body;
+    fs.writeFileSync(dataFile, JSON.stringify(updatedData, null, 2), 'utf8');
+    res.json({ success: true, message: 'Event updated successfully' });
+  } catch (error) {
+    console.error('Error writing baptism event file:', error);
+    res.status(500).json({ success: false, message: 'Could not update event data' });
+  }
+});
+
 // Get all baptism registrants
 router.get('/baptism/registrants', (req, res) => {
   try {

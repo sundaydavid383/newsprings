@@ -21,7 +21,9 @@ const Base64Gen = () => {
     <div style={{marginTop:"6rem"}} className="container">
       <h2>Convert File to Base64</h2>
 
-      <input type="file" onChange={handleFileChange} />
+      <label className='btn' for="base64img"><p>select image</p> </label>
+
+      <input type="file" id='base64img' accept='image/*' onChange={handleFileChange} />
       {base64 && (
         <div>
           <h4>File: {fileName}</h4>
@@ -31,6 +33,7 @@ const Base64Gen = () => {
             cols={60}
             readOnly
           />
+          <img src={base64} width={"200px"}/>
         </div>
       )}
     </div>

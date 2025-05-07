@@ -6,7 +6,7 @@ const WaterBaptisim = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alertText, setAlertText] = useState("");
-  const [alert, setAlert] = useState(true)
+  const [alert, setAlert] = useState(false)
 
   // Fetch baptism event and registrants
   useEffect(() => {
@@ -79,6 +79,11 @@ const WaterBaptisim = () => {
   
     if (age < 14 || (age === 14 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))) {
       setAlertText("You must be at least 14 years old to register.");
+      setAlert(true);
+      return;
+    }
+    if (age > 80){
+      setAlertText("add a valid age you can't be so old.");
       setAlert(true);
       return;
     }
@@ -173,7 +178,7 @@ const WaterBaptisim = () => {
         <>
           <div className="signuppage">
             <span></span>
-            <img src="https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/487809254_1077807161039898_3562322017601138802_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEJ-Hl3TueI62uYUks1khVgQH0Hr9hY6nVAfQev2FjqddOblFGoV8qpFFvkNFcgzvLyEmoiiLN_ApRSxqO1EpqE&_nc_ohc=ZVwGfFXEUbkQ7kNvwHQG4Ys&_nc_oc=AdkFFd87S2TthDnWflKWiDlmKUSRc-LiKtG0UjNvhwfBsadpQcIbvJQvngtEmG2jhaE&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=3U49bYYBTZtXxC8JgFtGoA&oh=00_AfGuLWMuunkmCSKVI-drqHHT1l-20l6ymJX0W879PJOaEQ&oe=6811D08B" alt="Church welcome" />
+            <img src={event.backgroundformimage} alt="Church welcome" />
           </div>
           <form className="signup-form" onSubmit={handleSubmit}>
             <label htmlFor="fullName">Full Name</label>

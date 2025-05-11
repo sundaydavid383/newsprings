@@ -29,8 +29,8 @@ function saveBase64Image(base64String, folder = "uploading-story/images") {
 exports.uploadStory = async (req, res) => {
   const connection = req.app.get("mongooseConnection");
   const TestimonyModel = TestimonyModelFactory(connection);
-
-  const {
+   console.log("this is the data we got form the frontend:",  req.body)
+    const {
     image,
     validated,
     name,
@@ -46,32 +46,34 @@ exports.uploadStory = async (req, res) => {
   } = req.body;
 
   const video = req.file;
+  
+     // Convert and store base64 image
+     let savedImagePath = null;
+     if (image) {
+       savedImagePath = saveBase64Image(image); // Returns relative path like "images/1715087319283.jpeg"
+     }
+ 
+     const storyData = {
+       image: savedImagePath,
+       validated,
+       name,
+       date: new Date().toLocaleDateString("en-GB"),
+       title,
+       testimony,
+       scriptureReference,
+       testimonyCategory,
+       followUpAction,
+       impact,
+       lessonLearned,
+       prayerRequest,
+       churchDetails,
+     };
 
+ 
   try {
-    // Convert and store base64 image
-    let savedImagePath = null;
-    if (image) {
-      savedImagePath = saveBase64Image(image); // Returns relative path like "images/1715087319283.jpeg"
-    }
-
-    const storyData = {
-      image: savedImagePath,
-      validated: validated === "true",
-      name,
-      date: new Date().toLocaleDateString("en-GB"),
-      title,
-      testimony,
-      scriptureReference,
-      testimonyCategory,
-      followUpAction,
-      impact,
-      lessonLearned,
-      prayerRequest,
-      churchDetails,
-    };
-
-    // Upload video if present
-    if (video) {
+     
+     // Upload video if present
+     if (video) {
       const videoId = await uploadVideoToYouTube(
         video.path,
         title,
@@ -79,27 +81,36 @@ exports.uploadStory = async (req, res) => {
       );
       storyData.video = videoId;
     }
-
     const story = await TestimonyModel.create(storyData);
     if (video) deleteFile(video.path);
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       videoId: storyData.video || "no video uploaded",
       imagePath: storyData.image || "no image uploaded",
       message: video
         ? "Successfully uploaded the video to YouTube"
         : "Uploaded without using the video",
-      formData: req.body,
+      data: story,
     });
   } catch (error) {
-    console.error("Upload Error:", error.message);
-    if (video) deleteFile(video.path);
-
-    return res.status(500).json({
-      success: false,
-      message: "An error occurred during upload",
-      error: error.message,
-    });
+    try {
+      const story = await TestimonyModel.create(storyData);
+      if (video) deleteFile(video.path);
+      return res.status(201).json({
+        success: true,
+        message: "uploaded image without the video id",
+        error: error.message,
+        data: story,
+      });
+    } catch (err) {
+      console.error("Upload Error:", err.message); 
+      if (video) deleteFile(video.path);
+      return res.status(500).json({
+        success: false,
+        message: "unbale to even upload data without video id",
+        error: err.message,
+      });
+    }
   }
 };

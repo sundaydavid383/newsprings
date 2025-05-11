@@ -28,6 +28,7 @@ import WaterBaptisim from "../pages/waterBaptisim/WaterBaptisim";
 import Base64Gen from "../component/base64Gen/Base64Gen";
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
+  const [serviceOn, setServiceOn] = useState(true)
   const getNextServiceTime = () => {
     const now = new Date();
 
@@ -73,6 +74,18 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
+    if(serviceOn){
+      if (now.getDay() === 0 && now.getHours() >= 8 && now.getHours() < 13) {
+        return `Sunday Service is currently going on`;
+      }
+      else if(now.getDay() === 2 && ((now.getHours() === 18) || (now.getHours() === 19 && now.getMinutes() < 30))){
+        return `Tuesday Word of Faith is currently going on`;
+      }
+      else if(now.getDay() === 4 && ((now.getHours() === 18) ||(now.getHours() === 19 && now.getMinutes() < 30))){
+        return `Thursday Word of Faith is currently going on`;
+      }
+    }
+    
     return `${days} <small>Days:</small> ${hours} <small>Hours:</small> ${minutes} <small>Minutes:</small> ${seconds} <small>Seconds</small>`;
    };
   console.log(isAuthenticated);

@@ -7,7 +7,7 @@ const Updatingstory = ({ setActivePage }) => {
 
   const [testimonies, setTestimonies] = useState([]);
   const [loading, setLoading] = useState(true);
-
+     const baseUrl = 'http://localhost:4000/'
   useEffect(() => {
     setActivePage("testimonies");
     const fetchingStories = async () => {
@@ -126,7 +126,7 @@ const Updatingstory = ({ setActivePage }) => {
             {filteredTestimonies.map((testifier, index) => (
               <div className="testifier" key={index}>
                 <div className="image">
-                  <img src={testifier.image} alt={testifier.name} />
+                <img src={`${baseUrl}${testifier.image}`} alt={testifier.name} />
                 </div>
       
                 <div className="testifier_text">

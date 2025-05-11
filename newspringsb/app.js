@@ -46,7 +46,7 @@ const transporter = nodemailer.createTransport({
 });
 
 //serve the static file 
-app.use("/images", express.static("uploading-story/images"));
+app.use("/images", express.static(path.join(__dirname, "uploading-story/images")));
 
 
 
@@ -615,31 +615,32 @@ app.get("/user/:email", async (req, res) => {
     app.delete("/delete-story", async (req, res) => {
       try {
         const { id } = req.query;
-
-        if (!id || typeof id !== "string") {
+    
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
           return res
             .status(400)
-            .json({ success: false, data: "Invalid user credentials" });
+            .json({ success: false, data: "Invalid ID format" });
         }
+    
         const result = await TestimonyModel.deleteOne({ _id: id });
-
+    
         if (result.deletedCount === 0) {
           return res
             .status(404)
             .json({ success: false, data: "Story not found" });
         }
-        return res
-          .status(200)
-          .json({
-            success: true,
-            data: "Story deleted successfully",
-            deletedData: result,
-          });
+    
+        return res.status(200).json({
+          success: true,
+          data: "Story deleted successfully",
+          deletedData: result,
+        });
       } catch (error) {
-        console.error("an Error ocurred while deleting data:", error);
-        return res
-          .status(500)
-          .json({ success: false, data: "there was an error deleting user" });
+        console.error("An error occurred while deleting data:", error);
+        return res.status(500).json({
+          success: false,
+          data: "There was an error deleting the story",
+        });
       }
     });
 
@@ -780,7 +781,8 @@ app.get("/user/:email", async (req, res) => {
         console.error("they is an error dignosing");
       }
     });
-
+  
+    //endpoint to upoload a user testimony
     app.use("/api", uploadRoutes);
 
     const PORT = process.env.PORT || 4000;

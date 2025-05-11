@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import "leaflet/dist/leaflet.css";
 
 const TestimonyForm = ({ formData, setFormData }) => {
-  console.log(formData);
+
   const navigate = useNavigate();
   const [alertText, setAlertText] = useState(
     "I am here to alert to alert you about your problems"
@@ -270,7 +270,7 @@ const TestimonyForm = ({ formData, setFormData }) => {
         formDataToSend.append(key, formData[key]);
       }
     }
-
+     let message = "there was an error that occured"
     try {
       setLoading(true);
       const response = await axios.post(
@@ -314,8 +314,12 @@ const TestimonyForm = ({ formData, setFormData }) => {
       console.log("Successfully uploaded your story:", response.data);
       setLoading(false);
     } catch (error) {
+      if(error?.response?.data?.message){
+        message = error?.response?.data?.message
+      }
       console.error("An error occurred while submitting:", error);
-      setAlertText(`There was an error: ${error}`);
+      setAlertText(message);
+      console.log(formData);
       setAlert(true);
       setLoading(false);
     }

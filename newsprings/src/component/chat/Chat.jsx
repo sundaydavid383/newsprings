@@ -7,13 +7,13 @@ const Chat = () => {
     const [seeForm, setSeeForm] = useState(false)
     const [query, setQuery] = useState("");
     const [response, setResponse] = useState("what is going on i dont understand");
-    const openRouterApiKey = "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";
+    const openRouterApiKey = "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"
     const sendMessage = async (message) => {
         try {
           const response = await axios.post(
             "https://openrouter.ai/api/v1/chat/completions",
-            {
-              model: "mistralai/mistral-7b-instruct", // free + smart
+            {  
+                model: "openai/gpt-3.5-turbo", // free + smart
               messages: [
                 {
                   role: "system",
@@ -29,12 +29,12 @@ const Chat = () => {
                 headers: {
                     "Authorization": `Bearer ${openRouterApiKey}`,
                     "Content-Type": "application/json",
-                    "HTTP-Referer": "https://your-vercel-app-name.vercel.app", // must match your deployed frontend
+                    "HTTP-Referer": "https://newsprings-raqf.vercel.app/", // must match your deployed frontend
                     "X-Title": "RCCG Newspings Chatbot"
                   },
             }
           );
-      
+          console.log("API Key:", openRouterApiKey);
           return response.data.choices[0].message.content;
         } catch (error) {
           console.error("OpenRouter error:", error.response?.data || error.message);

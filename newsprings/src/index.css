@@ -495,3 +495,14 @@ use  ia m justleatjing how to type fast=
       transform: translateX(900%) rotate(11deg);
     }
   }
+  @keyframes scaleInAndOut {
+    0%{
+        transform: scale(1.1);
+    }
+    50%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.1);
+    }
+}

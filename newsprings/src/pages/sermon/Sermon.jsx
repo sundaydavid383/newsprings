@@ -16,10 +16,12 @@ const Sermon = ({setActivePage}) => {
   const FEED_URL = `${CORS_PROXY}https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
   
   const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     const fetchFeed = async () => {
       try {
+        setLoading(true);
         const [descripresponse, feedResponse] = await Promise.all([ fetch("http://localhost:4000/api/sermon-configs"),fetch(FEED_URL)])
         
         
@@ -56,9 +58,10 @@ const Sermon = ({setActivePage}) => {
             preacher: descripdata[index]?.preacher, // Optional: you can change this dynamically
           };
         });
-  
+        setLoading(false);
         setVideos(data);
       } catch (error) {
+        setLoading(false);
         console.error("Failed to fetch feed", error);
       }
     };
@@ -83,8 +86,22 @@ const Sermon = ({setActivePage}) => {
 //   );
 // };
 
-
-  return (
+return loading ? (
+  <div className="loader_holder testimony_loading">
+    <div className="loading_card">
+      <div className="loading_img"></div>
+      <div className="loading_title"></div>
+      <div className="loading_details"></div>
+      <div className="loading_text"></div>
+      <div className="loading_btn"></div>
+    </div>
+    <div className="loading_description">
+      <div className="loading_text"></div>
+      <div className="iframe"></div>
+    </div>
+  </div>
+)
+  : (
     <div className='sermon'>
        <ShadowTextHero/>
        <FeatureBottom cards={videos} featureType={featureType}/>

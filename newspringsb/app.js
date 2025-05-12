@@ -11,7 +11,7 @@ const sendEmail = require("./utils/sendEmail")
 const { default: mongoose } = require("mongoose");
 const nodemailer = require("nodemailer")
 const uploadRoutes = require("./routes/uploadRoutes.js");
-
+const chatRoute = require('./routes/chat')
 //app initialization
 const app = express();
 
@@ -784,6 +784,9 @@ app.get("/user/:email", async (req, res) => {
   
     //endpoint to upoload a user testimony
     app.use("/api", uploadRoutes);
+
+    //enddpoint to upload a message to chatgpt
+    app.use('/api/chat', chatRoute)
 
     const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

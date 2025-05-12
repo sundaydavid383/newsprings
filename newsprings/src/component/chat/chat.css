@@ -1,0 +1,57 @@
+.iconactive.chat_state{
+    cursor: pointer;
+    width: 3.4rem !important;
+    height: 3.4rem !important;
+    font-size: 1.9rem;
+    line-height: 3.6rem;
+    z-index:11;
+    animation: scaleInAndOut 3s infinite;
+    position: fixed;
+    bottom: 2rem;
+}
+.iconactive.chat_state{
+    left: 50%;
+}
+
+.chat_box_holder .fa-times{
+    position: fixed;
+    top: -.3.6rem;
+    right: -.3.6rem;
+    width: 3rem;
+    height: 3rem;
+    z-index: 1111;
+    background: var(--tetiary-color);
+    color: var(--secondary-color);
+}
+.chat_box_holder{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    width: 360px;
+    height: auto;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    z-index: 999;
+    padding-top: 0rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.chat_box_holder form{
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+
+}
+.chat_box_holder form input{
+    width: 80%;
+    border: 0;
+    outline: 0;
+    font-size: .93rem;
+    border-bottom: 1px solid var(--secondary-color);
+}
+.chat_box_holder form button i{
+    color:var(--secondary-color);
+    
+}

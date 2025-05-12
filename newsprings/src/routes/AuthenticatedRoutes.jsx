@@ -26,6 +26,7 @@ import LatestService from "../pages/latestService/LatestService";
 import PrayerAndFasting from "../pages/prayerandfasting/PrayerAndFasting";
 import WaterBaptisim from "../pages/waterBaptisim/WaterBaptisim";
 import Base64Gen from "../component/base64Gen/Base64Gen";
+import Chat from "../component/chat/Chat";
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
   const [serviceOn, setServiceOn] = useState(true)
@@ -117,6 +118,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
   }
   return (
     <>
+    <Chat/>
       <i
         onClick={() => setSeeMessage(true)}
         className="iconactive message_state fa-solid fa-message"

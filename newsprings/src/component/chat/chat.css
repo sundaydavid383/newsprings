@@ -8,11 +8,42 @@
     animation: scaleInAndOut 3s infinite;
     position: fixed;
     bottom: 2rem;
-}
-.iconactive.chat_state{
     left: 50%;
 }
-
+.bot_state{
+    position:relative;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    z-index:11;
+}
+.chat_bot_words{
+   position: absolute;
+   top: -6.4rem;
+   right: -9.7rem;
+   background-color: var(--background-color);
+   border-radius: 48%;
+   width: 6rem;
+   aspect-ratio: 10/7;
+   font-size: .8rem;
+   font-weight: 600;
+   text-align: center;
+   display: flex;
+   border: 1px solid var(--black);
+   align-items: center;
+   z-index:111;
+}
+.chat_bot_words::after{
+    content:'';
+    position: absolute;
+    width: 3rem;
+    transform: rotate(50deg);
+    height: 1.8rem;
+    bottom: -.7rem;
+    left: -1rem;
+    clip-path: polygon(18% 0, 41% 100%, 71% 0);
+    background-color: var(--background-color);
+}
 .chat_box_holder .fa-times{
     position: fixed;
     top: -.3.6rem;
@@ -37,21 +68,39 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    padding-inline: 1.3rem;
+    padding-block: .5rem;
 }
 .chat_box_holder form{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     border: 0;
-
 }
 .chat_box_holder form input{
     width: 80%;
     border: 0;
     outline: 0;
+    border-radius: 0rem;
     font-size: .93rem;
     border-bottom: 1px solid var(--secondary-color);
 }
+.chat_box_holder form button{
+    width: 20%;
+}
 .chat_box_holder form button i{
     color:var(--secondary-color);
-    
+}
+.chat_box_holder .fa-times{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    top:0rem;
+    left: 0rem; 
+    padding-left: .3rem;
+    cursor: pointer;
+}
+.bot-reply{
+    font-size: .87rem;
 }

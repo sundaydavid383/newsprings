@@ -29,7 +29,7 @@ const Chat = () => {
                 headers: {
                     "Authorization": `Bearer ${openRouterApiKey}`,
                     "Content-Type": "application/json",
-                    "HTTP-Referer": "https://newsprings-raqf.vercel.app/", // must match your deployed frontend
+                    "HTTP-Referer": "https://newsprings-raqf.vercel.app", // must match your deployed frontend
                     "X-Title": "RCCG Newspings Chatbot"
                   },
             }

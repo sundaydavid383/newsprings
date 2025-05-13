@@ -13,13 +13,13 @@ const Hero = () => {
  const [printedSection, setPrintedSection] = useState(0)
  const printedSectionRef = useRef(0)
   const [section, setSection] = useState([])
-
+  const baseUrl = 'https://newsprings.onrender.com/'
   
   useEffect( () => {
    
   const fetchHero = async()=>{
     try {
-     const response = await axios.get("http://localhost:4000/api/hero-sections") 
+     const response = await axios.get(`${baseUrl}api/hero-sections`) 
      setSection(response.data.sections)
      console.log(response.data.sections)
   } catch (error) {

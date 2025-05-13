@@ -133,13 +133,14 @@ const Testimony = ({}) => {
   const [testimony, setTestimony] = useState([]);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+    const baseUrl = 'https://newsprings.onrender.com/'
 
   let numid = id ? String(id) : null;
   useEffect(() => {
     const fetchingStories = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/getting-story?id=${numid}`);
+        const response = await fetch(`${baseUrl}getting-story?id=${numid}`);
         const data = await response.json();
         console.log("testimonies:", data);
         if (data.error) {

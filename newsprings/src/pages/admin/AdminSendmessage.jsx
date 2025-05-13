@@ -6,7 +6,7 @@ import "./admin.css"
 
 
 const AdminSendmessage = () => {
-  const Base_url =  "http://localhost:4000";
+  const Base_url =  "https://newsprings.onrender.com/";
   const [formData, setFormData] = useState({
     id: '',
     preacher: '',

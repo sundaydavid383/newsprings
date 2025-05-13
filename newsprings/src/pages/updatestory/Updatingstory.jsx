@@ -7,13 +7,13 @@ const Updatingstory = ({ setActivePage }) => {
 
   const [testimonies, setTestimonies] = useState([]);
   const [loading, setLoading] = useState(true);
-     const baseUrl = 'http://localhost:4000/'
+     const baseUrl = 'https://newsprings.onrender.com/'
   useEffect(() => {
     setActivePage("testimonies");
     const fetchingStories = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:4000/getting-story");
+        const response = await fetch(`${baseUrl}getting-story`);
         const data = await response.json();
         console.log("testimonies:", data);
         if (data.error) {

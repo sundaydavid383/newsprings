@@ -94,7 +94,14 @@ const startServer = async () => {
 
     app.set("mongooseConnection", testimoniesConnection);
     app.set("registrationsConnection", registrationsConnection); //for future use
+    
 
+
+
+    //===================welcome to newsprings server==================
+    app.get("/welcome", (req,res)=>{
+      return res.status(200).json("hello you are welcome home. this is the newsprings server what would like to eat")
+    })
     function calculateAge(dob) {
       const birthDate = new Date(dob);
       const today = new Date();

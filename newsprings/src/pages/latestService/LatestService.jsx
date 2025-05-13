@@ -7,13 +7,13 @@ const LatestService = () => {
   const [description, setDescription] = useState("")
   const [isError, setIsError] = useState(false);
   const CHANNEL_ID = "UCjFN5R2r5U8avPicFnDjkng";
-
+  const baseUrl = 'https://newsprings.onrender.com/'
 
 
   useEffect(() => {
     const fetchDescription = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/service-description");
+        const res = await axios.get(`${baseUrl}api/service-description`);
         setDescription(res.data.data.description || "no description");
       } catch (err) {
         console.error("Failed to fetch description", err);

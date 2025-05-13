@@ -9,10 +9,12 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null); // user = response.data.user
   const lastMessageRef = useRef(null);
   const audioRef = useRef(new Audio(alarm));
+  const baseUrl = 'https://newsprings.onrender.com/'
+
 
   const fetchMessages = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/admin/messages");
+      const res = await axios.get(`${baseUrl}api/admin/messages`);
         const data = res.data;
 
         if (data.success) {

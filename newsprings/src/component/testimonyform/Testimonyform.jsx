@@ -18,6 +18,7 @@ const TestimonyForm = ({ formData, setFormData }) => {
   const [locationSearch, setLocationSearch] = useState("");
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [coordinates, setCoordinates] = useState([6.5244, 3.3792]); // Default to Lagos
+    const baseUrl = 'https://newsprings.onrender.com/'
   const testimonyCategories = [
     "Healing",
     "Financial Breakthrough",
@@ -274,7 +275,7 @@ const TestimonyForm = ({ formData, setFormData }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://localhost:4000/api/uploading-story`,
+        `${baseUrl}api/uploading-story`,
         formDataToSend,
         {
           headers: {

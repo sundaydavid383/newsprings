@@ -7,6 +7,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false)
   const [alertText, setAlertText] = useState("")
+    const baseUrl = 'https://newsprings.onrender.com/'
 
   const [formData, setFormData] = useState({
     name: '',
@@ -17,7 +18,7 @@ const Contact = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get("http://localhost:4000/api/contact")
+    axios.get(`${baseUrl}contact`)
       .then(res => {
         setContactData(res.data.data);
         console.log("contact data", res.data);
@@ -48,7 +49,7 @@ const Contact = () => {
     try {
       setLoading(true)
       // You can POST it to your backend email service
-      await axios.post('http://localhost:4000/api/contact/send-contact-message', formData);
+      await axios.post(`${baseUrl}api/contact/send-contact-message`, formData);
       setAlert(true)
       setAlertText('Message sent successfully!');
       setFormData({ name: '', email: '', phone:'', message: '' }); // Reset form

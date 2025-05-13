@@ -7,10 +7,11 @@ const PrayerAndFasting = () => {
   const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState(false)
     const [alertText, setAlertText] = useState("unable to receive prayer and fasting data")
+    const baseUrl = 'https://newsprings.onrender.com/'
 
   useEffect(() => {
     setLoading(true)
-    axios.get('http://localhost:4000/api/prayer-and-fasting')
+    axios.get(`${baseUrl}api/prayer-and-fasting`)
       .then(res =>{ setTexts(res.data); console.log(res.data); setLoading(false)})
       .catch(err => {console.error("Fetch failed", err); setLoading(false)});
   }, []);

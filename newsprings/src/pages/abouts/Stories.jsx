@@ -191,7 +191,7 @@ const Stories = ({ setActivePage }) => {
   // ];
   const [testimonies, setTestimonies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const baseUrl = 'http://localhost:4000/'
+  const baseUrl = 'https://newsprings.onrender.com/'
 
   useEffect(() => {
     setActivePage("testimonies");

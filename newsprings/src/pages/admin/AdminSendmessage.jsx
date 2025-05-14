@@ -42,7 +42,7 @@ const AdminSendmessage = () => {
     //fetching the baptism event data
     useEffect(() => {
       setLoading(true)
-      axios.get(`${Base_url}/api/events/baptism`)
+      axios.get(`${Base_url}api/events/baptism`)
         .then(res => {
           if (res.data.success) {
             setBaptismEventData(res.data.event);
@@ -85,7 +85,7 @@ const AdminSendmessage = () => {
     //submitting the updated change value of the baptism event
     const handleBaptismEventSubmit = (e) => {
       e.preventDefault();
-      axios.put('http://localhost:4000/api/events/baptism', baptismEventData)
+      axios.put(`${Base_url}api/events/baptism`, baptismEventData)
         .then(res => {setAlert(true)
           setAlertText("successfully updated baptism event")})
         .catch(err => { setAlert(true)
@@ -95,7 +95,7 @@ const AdminSendmessage = () => {
   //prayer and fasting change and manipulation 
     useEffect(() => {
       setLoading(true)
-      axios.get(`${Base_url}/api/prayer-and-fasting`)
+      axios.get(`${Base_url}api/prayer-and-fasting`)
         .then(res => {
           setPrayerAndFasting(res.data);
          setLoading(false);
@@ -143,7 +143,7 @@ const AdminSendmessage = () => {
     e.preventDefault();
     try {
         setLoading(true)
-      await axios.put(`${Base_url}/api/prayer-and-fasting`, prayerAndFasting);
+      await axios.put(`${Base_url}api/prayer-and-fasting`, prayerAndFasting);
       setLoading(false)
       setAlert(true)
       setAlertText('Content updated successfully');
@@ -166,7 +166,7 @@ const AdminSendmessage = () => {
     
    // fetching the baptisim registrant  
     const fetchBaptisimRegistrant = async () => {
-      const registrantsRes = await axios.get(`${Base_url}/api/events/baptism/registrants`);
+      const registrantsRes = await axios.get(`${Base_url}api/events/baptism/registrants`);
       if (registrantsRes.data.success) {
         setRegistrants(registrantsRes.data.registrants);
       }
@@ -227,7 +227,7 @@ const AdminSendmessage = () => {
         }
       
         try {
-          const response = await axios.put(`${Base_url}/api/events/baptism/register/${editingIndex}`, editFormData);
+          const response = await axios.put(`${Base_url}api/events/baptism/register/${editingIndex}`, editFormData);
           if (response.data.success) {
             setAlert(true)
             setAlertText('Update successful!');
@@ -246,7 +246,7 @@ const AdminSendmessage = () => {
   // Handle delete of registrant
   const handleDelete = async (index) => {
     try {
-      const response = await axios.delete(`${Base_url}/api/events/baptism/register/${index}`);
+      const response = await axios.delete(`${Base_url}api/events/baptism/register/${index}`);
       if (response.data.success) {
         setAlert(true)
         setAlertText('Baptism registrant deleted successfully!');
@@ -261,7 +261,7 @@ const AdminSendmessage = () => {
   }; 
   useEffect(() => {
     //fetch the existing hero sections
-    axios.get(`${Base_url}/api/hero-sections`)
+    axios.get(`${Base_url}api/hero-sections`)
      .then((response)=>{
       if(response.data && response.data.sections){
         setHeroSections(response.data.sections)
@@ -323,7 +323,7 @@ const AdminSendmessage = () => {
   const handleHeroSave = ()=>{
     setLoading(true)
     console.log(heroSections)
-    axios.post(`${Base_url}/api/hero-sections`, {sections: heroSections})
+    axios.post(`${Base_url}api/hero-sections`, {sections: heroSections})
     .then((response) => {
       console.log("Updated hero sections:", response.data)
       setHeroSections(response.data.data)
@@ -356,7 +356,7 @@ const AdminSendmessage = () => {
         e.preventDefault()
         try {
             setLoading(true);
-            const res = await axios.post(`${Base_url}/admin/broadcast`, {message});
+            const res = await axios.post(`${Base_url}admin/broadcast`, {message});
 
             if(res.data.success){
                 setAlert(true)
@@ -387,7 +387,7 @@ const AdminSendmessage = () => {
       
         try {
           setLoading(true)
-          const res = await axios.post(`${Base_url}/verify/admin`, { password: authText });
+          const res = await axios.post(`${Base_url}verify/admin`, { password: authText });
       
           if (res.data.success) {
             setAdminAuthorized(true);
@@ -426,7 +426,7 @@ const AdminSendmessage = () => {
       setAlertText("the preacher feild too short it must have a length of more than 50")
     }
     try {
-      const res = await fetch(`${Base_url}/api/update-sermon-configs`, {
+      const res = await fetch(`${Base_url}api/update-sermon-configs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -452,7 +452,7 @@ const AdminSendmessage = () => {
       }
       try {
         setLoading(true)
-        const res = await axios.post(`${Base_url}/api/admin/message`, {
+        const res = await axios.post(`${Base_url}api/admin/message`, {
           message: newMsg,
         });
   
@@ -484,7 +484,7 @@ const AdminSendmessage = () => {
   
       try {
         setLoading(true);
-        const res = await axios.post(`${Base_url}/api/service-description`, {
+        const res = await axios.post(`${Base_url}api/service-description`, {
           description: serviceDescription,
         });
         if (res.data.success) {

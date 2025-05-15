@@ -12,9 +12,11 @@ def preprocess_data(data):
     data['weekday'] = data['date'].dt.weekday
 
     # Encode categorical variables like 'weather' and 'special_event'
-    label_encoder = LabelEncoder()
-    data['weather'] = label_encoder.fit_transform(data['weather'])
-    data['special_event'] = label_encoder.fit_transform(data['special_event'])
+    weather_encoder = LabelEncoder()
+    event_encoder = LabelEncoder()
+
+    data['weather'] = weather_encoder.fit_transform(data['weather'])
+    data['special_event'] = event_encoder.fit_transform(data['special_event'])
 
     #fill missing values if any
     data.fillna(method='ffill', inplace=True)

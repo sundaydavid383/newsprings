@@ -28,6 +28,7 @@ const AdminSendmessage = () => {
     const [adminAuthorized, setAdminAuthorized] = useState(false)
     const [authText, setAuthText] = useState("")
     const [serviceDescription, setServiceDescription] = useState("")
+    const [serviceTime, setServiceTime] = useState("")
     const {setMessages} = useUser()
     const [alertText, setAlertText] = useState(
         "I am here to alert to alert you about your problems"

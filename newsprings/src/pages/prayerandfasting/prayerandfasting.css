@@ -85,5 +85,8 @@
     line-height: 1.6;
   }
   .prayerandfasting .videoContainer{
-    width: 60%;
+    width: 70%;
+    margin: auto;
+    display: flex;
+    align-items: center;
   }

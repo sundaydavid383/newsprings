@@ -1,0 +1,135 @@
+
+.easter-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--background-color);
+  border-radius: 12px;
+  box-shadow: var(--light-shadow);
+}
+.easter-image{
+  width: 100%;
+  margin-bottom: .8rem
+}
+/* Section styling */
+.easter-wrapper section {
+  padding: 3rem 0;
+  border-bottom: 1px solid #e1e1e1;
+  display: flex;
+  flex-direction: column;
+}
+.easter-wrapper section a{
+    color: var(--light-text)
+}
+.easter-wrapper section .btn p{
+    margin-left: .3rem;
+}
+section:last-child {
+  border-bottom: none;
+}
+
+h2 {
+  font-size: 2rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 12px;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.text, .description, section p {
+  font-size: 1rem;
+  color: var(--light-text-color);
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: disc inside;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .easter-wrapper {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+}
+
+/* Animations and Decorative Effects */
+section {
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Optional Background Highlight for Hero Section */
+.easter-wrapper .hero {
+  background: linear-gradient(145deg, #e3f2fd, #ffffff);
+  padding: 3rem 2rem;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  line-height: 1.4rem;
+  height: 23rem;
+}
+
+.easter-wrapper .hero h2 {
+  color: var(--primary-color);
+}
+
+.easter-wrapper .hero .subtitle {
+  color: #0056b3;
+  font-weight: 500;
+}
+
+/* Special sections */
+.easter-wrapper .event-highlights {
+  background-color: #f1f8ff;
+  padding: 2rem;
+  border-radius: 8px;
+}
+.easter-wrapper .event-highlights h2{
+  color: var(--unchange-text-color)
+}
+.easter-wrapper .plan-your-visit {
+  background-color: #fff3cd;
+  padding: 2rem;
+  border-radius: 8px;
+  color: #856404;
+}
+
+.easter-wrapper .contact a {
+  color: #d63384;
+  font-weight: 500;
+}
+
+.easter-wrapper .contact p {
+  margin-top: 1rem;
+}

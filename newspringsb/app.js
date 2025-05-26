@@ -396,6 +396,11 @@ app.get("/users", async (req, res) => {
   }
 });
 
+
+///=======================FETCH EASTER DETAILS===================
+ const easterRoute = require('./routes/easter.js')
+ app.use('/api', easterRoute)
+
 // ================== Fetch user by email ==================
 app.get("/user/:email", async (req, res) => {
   try {

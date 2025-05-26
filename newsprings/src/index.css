@@ -18,23 +18,26 @@
     align-items: center;
   }
 :root{
-    --primary-color:rgb(36, 110, 170);
+    --primary-color:rgb(0, 123, 255);
     --gray: rgb(209, 209, 209);
     --lighter-gray: rgb(228, 225, 225);
     --nav-color: rgb(255, 255, 255, .99);
+    --unchange-text-color: rgb(74, 74, 75);
     --text-color : rgb(74, 74, 75);
+    --light-text-color: rgb(122, 122, 122);
     --light-text: rgb(231, 230, 230);
     --footer-text:rgb(107, 107, 107);
     --opaque-light-text: rgba(233, 232, 232, 0.8);
     --very-opaque-light-text: rgb(202, 200, 200);
-    --secondary-color:rgb(5, 4, 65);
+    --secondary-color:rgb(15, 14, 83);
+    --lighter-secondary-color:rgb(36, 35, 124);
     --light-background:rgba(12, 13, 107, 0.7);
     --dark-secondary : rgb(1, 0, 19);
     --dark-secondary-shadow: rgba(1, 0, 19, 0.7);
     --background-color: rgb(255, 255, 255);
-    --light-backgound: rgb(187, 238, 187);
+    --light-backgound:shadow rgb(187, 238, 187);
     --shadow-white: rgba(77, 75, 75, 0.3);
-    --loading-shadow: 0px 0px 68px 58px var(--lighter-gray);
+    --loading-: 0px 0px 68px 58px var(--lighter-gray);
 
 
 
@@ -60,7 +63,7 @@
 .iconactive,
 .icon{
     color:var(--light-text);
-    background: var(--secondary-color);
+    background: var(--lighter-secondary-color);
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 50%;
@@ -80,14 +83,15 @@
 }
 
 body{
-    background-color: var(--background-color);
     overflow-x: hidden;
+    background-color: var(--background-color);
+    transition: background-color 0.3s ease;
 }
 
 .iconactive:hover{
     background: var(--tetiary-color);
     animation: iconhover 4s infinite;
-    color: var(--secondary-color);
+    color: var(--lighter-secondary-color);
 }
 @keyframes iconhover {
     0%{
@@ -167,10 +171,55 @@ body{
     width: 7rem;
     padding-top: .9rem;
   }
+  
+.EasterLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background: var(--dark-secondary-shadow);
+  position: fixed;
+  top:0rem;
+  left:0rem;
+  width: 100%;
+  height: 100vh;
+  z-index:111111;
+}
+.visualizer {
+  display: flex;
+  gap: 10px;
+  height: 60px;
+  align-items: center;
+}
+
+.visualizer span {
+  width: 16px;
+  height: 20px;
+  background-color: var(--primary-color);
+  animation: bounce 1s infinite ease-in-out;
+  animation-delay: calc(var(--i) * 0.1s);
+  border-radius: .1rem;
+  transform-origin: center center; /* center grow/shrink */
+}
+
+.visualizer span:nth-child(1) { --i: 0; }
+.visualizer span:nth-child(2) { --i: 1; }
+.visualizer span:nth-child(3) { --i: 2; }
+.visualizer span:nth-child(4) { --i: 3; }
+.visualizer span:nth-child(5) { --i: 4; }
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(3);
+  }
+}
 .btn{
     background: var(--primary-color);
     width: 8rem;
-    border-radius: 3rem;
+    border-radius: 1.2rem;
     height:3rem;
     text-align: center;
     line-height: 3rem;
@@ -190,7 +239,7 @@ body{
     transition: .5s ease-in-out;
     content: '';
     background: var(--tetiary-color);
-    height: 9rem;
+    height: 9.7rem;
     width: 10rem;
     border-radius: 50%;
     z-index: 0;

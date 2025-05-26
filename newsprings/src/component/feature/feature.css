@@ -79,6 +79,7 @@
 .feature_bottom .feature_card h2{
     font-size: 1.3rem;
     font-weight: 500;
+    color: var(--light-text)
 }
 .feature_bottom .feature_card p{
     font-size: .9rem;

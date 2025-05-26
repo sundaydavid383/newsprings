@@ -9,6 +9,44 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
   const [showUserDetails, setShowUserDetails] = useState(false);
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(false);
+
+  const handleColorClick = () => {
+    document.documentElement.style.setProperty(
+      "--background-color",
+      isDark ? "white" : "rgb(32, 32, 34)"
+    );
+     document.documentElement.style.setProperty(
+      "--nav-color",
+      isDark ? "white" : "black"
+    );
+    document.documentElement.style.setProperty(
+      "--text-color",
+      isDark ? "black" : "white"
+    );
+    document.documentElement.style.setProperty(
+      "--secondary-color",
+      isDark ? "rgb(5, 4, 65)" : "rgba(199, 199, 224, 0.7)"
+    );
+        document.documentElement.style.setProperty(
+      "--box-shadow",
+      isDark ? "0px 0px 18px 1px rgba(34, 34, 34,.4);" : "0px 0px 18px 1px rgba(255, 255, 255, 0.4);"
+    );
+     document.documentElement.style.setProperty(
+      "--light-text-color",
+      isDark ? "rgb(122, 122, 122)" : "rgb(207, 204, 204)"
+    );
+    document.documentElement.style.setProperty(
+      "--gray",
+      isDark ? "rgb(209, 209, 209)" : "rgb(127, 127, 128)"
+    );
+
+    
+    
+    
+    
+    setIsDark(!isDark);
+  };
   const handleLogout = () => {
     setIsAuthenticated(false);
     setUser(null);
@@ -24,7 +62,11 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
   return (
     <div className="nav">
       <div className="nav-upper">
-
+        <i
+      className={`fa ${isDark ? "fa-sun" : "fa-moon"}`}
+      onClick={handleColorClick}
+      style={{ cursor: "pointer", fontSize: "24px" }}
+    ></i>
         <a href="mailto:rccgnewsprings@yahoo.com" className="email">
           <i className="fa-solid fa-envelope"></i>rccgnewsprings@yahoo.com
         </a>

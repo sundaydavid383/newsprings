@@ -11,7 +11,7 @@ const App = () => {
   // const {user, setUser} = useUser()
    const [isAuthenticated, setIsAuthenticated]  = useState(true); // Change initial state to null
   const [isLoading, setIsLoading] = useState(false); // Add loading state
-  const [activePage, setActivePage] = useState("home");
+  const [activePage, setActivePage] = useState("");
 
   useEffect(() => {
     // const storedAuth = localStorage.getItem("isAuthenticated");

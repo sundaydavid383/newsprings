@@ -97,7 +97,7 @@ const moveRight = () => {
         <div className="ps">
           {page.ps.map(p=><p key={p}>{p}</p>)} 
         </div>
-        <Link className="btn" to="/connect">
+        <Link className="btn" to="/contact">
           <p>
             CONTACT <i className="fa-solid fa-arrow-right-long"></i>
           </p>

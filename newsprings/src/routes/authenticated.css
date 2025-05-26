@@ -5,8 +5,8 @@
     width: 360px;
     max-height: 400px;
     overflow-y: auto;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: var(--background-color);
+    box-shadow: var(--lighter-shadow);
     border-radius: 10px;
     z-index: 999;
     padding-top: 0rem;
@@ -17,8 +17,8 @@
     left: 20px;
     width: 360px;
     max-height: 400px;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: var(--background-color);
+    box-shadow: var(--lighter-shadow);
     border-radius: 10px;
     z-index: 999;
     padding-top: 0rem;
@@ -30,11 +30,12 @@
 .schedule_box_holder .title,
 .message_box .title{
    margin-bottom: 0.5rem;
-   background-color: var(--secondary-color);
+   background-color: var(--lighter-secondary-color);
    padding: .77rem;
    color: var(--light-text);
    position: fixed;
    right: 2.3rem;
+   top: 3rem;
    width: 21.5rem;
    text-align: center;
    margin-bottom: 3rem;
@@ -49,10 +50,14 @@
     padding-bottom: 1.4rem;
     line-height: 1.94rem;
     font-size: 1.2rem;
+    
 }
 .schedule_box_holder .text span{
     font-weight: 600;
     color: var(--secondary-color);
+}
+.schedule_box_holder .text p{
+    color: var(--text-color)
 }
 .schedule_box_holder .text span small{
     font-size: .9rem;
@@ -75,10 +80,11 @@ font-size: .8rem;
 }
 .message_box li .time{
    font-size: .7rem;
+   color: var(--text-color)
 }
 .message_box .box{
     margin-bottom: 0.5rem;
-    background: var(--secondary-color);
+    background: var(--lighter-secondary-color);
     width: 90%;
     padding: .9rem;
     border-radius: .3rem;
@@ -112,5 +118,5 @@ font-size: .8rem;
     height: 3rem;
     z-index: 1111;
     background: var(--tetiary-color);
-    color: var(--secondary-color);
+    color: var(--lighter-secondary-color);
 }

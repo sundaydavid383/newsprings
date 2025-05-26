@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./contact.css";
+import MapSection from '../../component/mapsection/MapSection';
 
 const Contact = () => {
   const [contactData, setContactData] = useState(null);
@@ -18,7 +19,7 @@ const Contact = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${baseUrl}contact`)
+    axios.get(`${baseUrl}api/contact`)
       .then(res => {
         setContactData(res.data.data);
         console.log("contact data", res.data);
@@ -86,8 +87,9 @@ const Contact = () => {
         <h2>Visit Us</h2>
         <a target='_blank' href={`https://www.google.com/maps/place/Capital+Building,+332+Ikorodu+Rd,+Anthony,+Lagos+105102,+Lagos/@6.5643704,3.3624986,17z/data=!3m1!4b1!4m6!3m5!1s0x103b8d88f6105f45:0x9816a89e9be63dc4!8m2!3d6.5643651!4d3.367112!16s%2Fg%2F12hn69cfb?entry=ttu&g_ep=EgoyMDI1MDQyMy4wIKXMDSoASAFQAw%3D%3D`}>{contactData.address}</a>
       </section>
-
-      <section className="map-section">
+  
+      <MapSection/>
+      {/* <section className="map-section">
         <h2>Find Us on Map</h2>
         <div className="map-embed">
           <iframe
@@ -104,7 +106,7 @@ const Contact = () => {
             title="RCCG NewSprings Location"
           />
         </div>
-      </section>
+      </section> */}
 
       <section className="email-us">
         <h2>Email Us</h2>

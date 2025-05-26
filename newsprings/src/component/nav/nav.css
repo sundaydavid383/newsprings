@@ -15,8 +15,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    background-color: var(--nav-color);
-
+    background-color: var(--nav-color)
    
 }
 .nav-upper{
@@ -32,6 +31,9 @@
 }
 .nav-upper .btn p{
     margin-top: -.66rem;
+}
+.nav-upper i{
+    color: var(--text-color)
 }
 a.btn p{
     margin-top: 0rem;

@@ -338,7 +338,7 @@ const TestimonyForm = ({ formData, setFormData }) => {
             We love hearing what God is doing in your life! Share your story
             here.
           </h2>
-          {alert ? (
+          {alert && (
             <div className="alert_holder">
               <div className="alert">
                 <p>{alertText}</p>
@@ -347,7 +347,7 @@ const TestimonyForm = ({ formData, setFormData }) => {
                 </div>
               </div>
             </div>
-          ) : null}
+          ) }
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">

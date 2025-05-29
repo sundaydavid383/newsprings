@@ -11,7 +11,7 @@
     background: var(--gray);
 }
 .footer h3{
-   color:var(--secondary-color)
+   color:var(--lighter-secondary-color)
 }
 .footer .about{
     width: 65%;
@@ -72,15 +72,15 @@
     gap:1rem;
 }
 .footer_terms p{
-    color: var(--secondary-color);
+    color: var(--lighter-secondary-color);
     font-size: .85rem;
     font-weight: 300;
     line-height: 1.5rem;
 }
 .footer_terms a{
-    color: var(--secondary-color);
+    color: var(--lighter-secondary-color);
     font-size: .87rem;
-    border-left: 1px solid var(--secondary-color);
+    border-left: 1px solid var(--lighter-secondary-color);
     padding-left: .5rem;
     font-weight: 200;
     line-height: 1.5rem;
@@ -91,7 +91,7 @@
 }
 .footer_social .footer_media a{
     font-size: .9rem;
-    color: var(--secondary-color);
+    color: var(--lighter-secondary-color);
     font-weight: 300;
 }
 .footer_social .footer_media a i{

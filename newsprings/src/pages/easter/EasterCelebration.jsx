@@ -89,7 +89,7 @@ const EasterCelebration = () => {
       const fetchEasterDetails = async ()=>{
         setLoading(true)
         try {
-        const response = await fetch('http://localhost:4000/api/easter');
+        const response = await fetch(`${baseUrl}api/easter`);
         const data = await response.json()
         setEasterSections(data)
         console.log("this is the easter details response:", data)
@@ -160,11 +160,11 @@ const EasterCelebration = () => {
             </a>
           )}
 
-          {/* {section.cta && (
+           {section.cta && (
             <a href={section.cta.href} className="btn">
               <p>{section.cta.text}<i className="fa-solid fa-arrow-right-long"></i></p>
             </a>
-          )} */}
+          )} 
 
           {section.contact && (
             <p>

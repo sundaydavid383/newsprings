@@ -24,7 +24,7 @@
     --nav-color: rgb(255, 255, 255, .99);
     --unchange-text-color: rgb(74, 74, 75);
     --text-color : rgb(74, 74, 75);
-    --light-text-color: rgb(122, 122, 122);
+    --light-text-color: rgb(110, 110, 110);
     --light-text: rgb(231, 230, 230);
     --footer-text:rgb(107, 107, 107);
     --opaque-light-text: rgba(233, 232, 232, 0.8);
@@ -219,7 +219,7 @@ body{
 .btn{
     background: var(--primary-color);
     width: 8rem;
-    border-radius: 1.2rem;
+    border-radius: 1.6rem;
     height:3rem;
     text-align: center;
     line-height: 3rem;
@@ -534,6 +534,16 @@ use  ia m justleatjing how to type fast=
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--secondary-color);
+}
+@keyframes fadeInUp {
+  from {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes moveLeftToRight {

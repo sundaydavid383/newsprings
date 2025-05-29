@@ -32,9 +32,15 @@ const App = () => {
   }, []);
 
   if (isLoading) {
-    return   <div className="testimonyFormLoader">
-    <div className="loader"></div>
-  </div>; 
+    return     <div className="EasterLoader">
+  <div className="visualizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>; 
   }
   return (
     <BrowserRouter>

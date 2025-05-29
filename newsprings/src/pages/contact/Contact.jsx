@@ -32,9 +32,15 @@ const Contact = () => {
   }, []);
 
   if (!contactData) return (
-    <div className="testimonyFormLoader">
-      <div className="loader"></div>
-    </div>
+    <div className="EasterLoader">
+  <div className="visualizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
   );
 
   const handleChange = (e) => {

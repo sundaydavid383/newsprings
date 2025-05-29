@@ -79,16 +79,7 @@ section {
   animation: fadeInUp 0.5s ease-in-out;
 }
 
-@keyframes fadeInUp {
-  from {
-    transform: translateY(15px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+
 
 /* Optional Background Highlight for Hero Section */
 .easter-wrapper .hero {
@@ -97,7 +88,10 @@ section {
   border-radius: 10px;
   box-shadow: var(--box-shadow);
   line-height: 1.4rem;
-  height: 23rem;
+}
+.easter-wrapper .plan-your-visit p,
+.easter-wrapper .hero p{
+  color: var(--unchange-text-color) !important;
 }
 
 .easter-wrapper .hero h2 {
@@ -115,6 +109,7 @@ section {
   padding: 2rem;
   border-radius: 8px;
 }
+.easter-wrapper .plan-your-visit h2,
 .easter-wrapper .event-highlights h2{
   color: var(--unchange-text-color)
 }

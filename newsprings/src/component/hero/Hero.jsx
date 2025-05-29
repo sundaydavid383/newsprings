@@ -80,10 +80,7 @@ const moveRight = () => {
     : (
     section.map((page, index)=>(
       index === printedSection ? <div key={index} className={`hero hero${page.id}  container`}>
-
-
-
-
+        
   <div onClick={moveLeft} className="moveleft iconactive">
     <i className="fa-solid fa-arrow-left-long"></i>
   </div>

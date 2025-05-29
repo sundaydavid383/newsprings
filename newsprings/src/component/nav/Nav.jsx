@@ -40,6 +40,11 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
       "--gray",
       isDark ? "rgb(209, 209, 209)" : "rgb(127, 127, 128)"
     );
+    document.documentElement.style.setProperty(
+     "--footer-text",
+     isDark ? "rgb(107, 107, 107)" : "rgb(219, 219, 219)"
+    )
+    
 
     
     

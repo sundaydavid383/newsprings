@@ -17,8 +17,14 @@ const PrayerAndFasting = () => {
   }, []);
 
 
-  if (loading) return     <div className="testimonyFormLoader">
-  <div className="loader"></div>
+  if (loading) return       <div className="EasterLoader">
+  <div className="visualizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>; // Wait until data is loaded
 
   if(!texts) 

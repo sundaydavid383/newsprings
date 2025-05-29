@@ -10,6 +10,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
+  const [linkSeen, setLinkSeen]  = useState(false);
 
   const handleColorClick = () => {
     document.documentElement.style.setProperty(
@@ -102,7 +103,8 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
         <Link to="/" className="logo">
           <img src={logo} alt="" />
         </Link>
-        <div className="links">
+        <i onClick={()=>setLinkSeen(prev=> !prev)} className={`${!linkSeen ? "fa-solid fa-bars-staggered" : "fa-solid fa-xmark"}`}></i>
+        <div className={`links ${linkSeen ? "" :"linksForSmallScreenClass"}`}>
           <Link className={`${activePage == "home" ? "active" : ""}`} to="/">
             <p>HOME</p>
             <div></div>

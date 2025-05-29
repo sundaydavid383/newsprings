@@ -40,7 +40,7 @@ const PrayerAndFasting = () => {
 
   return (
     <div className="prayerandfasting container">
-    <img className="first_image" src={texts.image1} alt="" />
+    <img className="first_image" src={texts.image.image1} alt="" />
       <header className="prayer-header">
         <h1>{texts.header.title}</h1>
         <p>{texts.header.subtitle}</p>

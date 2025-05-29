@@ -24,7 +24,7 @@
     justify-content: center;
     position: absolute;
     right: 0rem;
-    background-color: var(--nav-color);
+    background-color: transparent;
     margin-top: .2rem;
     gap:1rem;
     width: 32rem;
@@ -68,7 +68,11 @@ a.btn p{
     padding-inline: 5rem;
     margin-top: .7rem;
 }
-
+.nav-lower .fa-bars-staggered{
+    font-size: 2rem;
+    color: var(--text-color);
+    display: none;
+}
 .nav-lower .logo img{
     width: 9rem;
     margin-bottom: .9rem;
@@ -193,4 +197,59 @@ a.btn p{
     height: 2rem;
     line-height: 2rem;
 
+}
+
+@media screen and (max-width: 768px) {
+
+  /* .nav-lower {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-inline: 1rem;
+  } */
+   .nav-lower .fa-xmark,
+  .nav-lower .fa-bars-staggered {
+    display: block;
+    cursor: pointer;
+    font-size: 2rem;
+  }
+
+  /* .nav-upper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+    width: 100%;
+    position: relative;
+    margin-top: 0;
+    padding: 0.5rem 1rem;
+  } */
+
+  .nav-upper a {
+    font-size: .85rem;
+    padding: .4rem;
+  }
+  .linksForSmallScreenClass{
+    top: 4rem;
+  }
+  .links {
+    flex-direction: column;
+    width: 100%;
+    gap: .8rem;
+    margin-top: 1rem;
+    position: absolute;
+    top: -44rem;
+    left: 0rem;
+    padding: 1rem;
+    background: var(--background-color)
+  }
+
+  .ministry_dropdown {
+    width: 100%;
+    position: static;
+    padding: 1rem;
+  }
+
+  .nav-lower .logo img {
+    width: 7rem;
+    margin-bottom: .5rem;
+  }
 }

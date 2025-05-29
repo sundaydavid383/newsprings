@@ -508,9 +508,15 @@ const AdminSendmessage = () => {
   return (
     <div className='sign container AdminSendmessage'>
 {loading ? (
-  <div className="testimonyFormLoader">
-    <div className="loader"></div>
+ <div className="EasterLoader">
+  <div className="visualizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
+</div>
 ) : !adminAuthorized ? (
   <>
     <div className="signuppage">

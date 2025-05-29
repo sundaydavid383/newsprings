@@ -106,8 +106,14 @@ const Feature = () => {
 
 
   return loading ? (
-<div className="testimonyFormLoader">
-  <div className="loader"></div>
+<div className="EasterLoader">
+  <div className="visualizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
   ) : alert ?(
     <div className="alert_holder">

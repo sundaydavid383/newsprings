@@ -5,11 +5,12 @@
     flex-wrap: wrap;
     column-gap:.5rem;
     row-gap:2rem;
+    animation: fadeInUp 0.5s ease-in-out;
 }
 .first-section a{
     width: 48%;
     position: relative;
-    color: var(--text-color);
+    color: var(--lighter-secondary-color);
 }
 .first-section a img{
     width: 100%;
@@ -27,6 +28,7 @@
     display: flex;
     flex-direction: column;
     gap:.3rem;
+    color: var(--lighter-secondary-color);
 }
 .first-section a .text h1{
     font-size: 1.7rem;
@@ -64,9 +66,9 @@
     align-items: center;
     justify-content: center;
     font-weight: 500;
-    color: var(--secondary-color);
+    color: var(--lighter-secondary-color);
     width: 100%;
-height: 20vh;
+    height: 20vh;
     backdrop-filter: blur(-15px);
 }
 .middle-section  .text p{
@@ -96,9 +98,7 @@ height: 20vh;
     overflow:hidden;
 }
 .last-section a img{
-    width: 100%;
-
-    
+    width: 100%;  
 }
 .last-section .text{
     position: absolute;

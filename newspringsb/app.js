@@ -758,7 +758,19 @@ app.get("/user/:email", async (req, res) => {
     //     const story = await TestimonyModel.create(storyData);
 
     //     // Clean up: Delete the video file from the server after uploading it
-    //     fs.unlink(video.path, (err) => {
+    //     fs.unlink(video.path, (er
+    //   }
+    // });
+
+    app.post("/diagnose", (req, res) => {
+      try {
+        const { symptoms } = req.body;
+        const malariaSymptoms = ["Fever", "Chills", "Sweating", "Headache"];
+
+        const matches = symptoms.filter((symptom) =>
+          malariaSymptoms.includes(symptom)
+        );
+r) => {
     //       if (err) {
     //         console.error("Error deleting the video file:", err);
     //       } else {
@@ -772,18 +784,6 @@ app.get("/user/:email", async (req, res) => {
     //       message: "We uploaded it without using the video",
     //       formData: req.body,
     //     });
-    //   }
-    // });
-
-    app.post("/diagnose", (req, res) => {
-      try {
-        const { symptoms } = req.body;
-        const malariaSymptoms = ["Fever", "Chills", "Sweating", "Headache"];
-
-        const matches = symptoms.filter((symptom) =>
-          malariaSymptoms.includes(symptom)
-        );
-
         if (matches.length >= 3) {
           res.json({ message: "High chance of malaria. Visit a doctor!" });
         } else {

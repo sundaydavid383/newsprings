@@ -198,7 +198,7 @@ const Stories = ({ setActivePage }) => {
     const fetchingStories = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5173/getting-story`);
+        const response = await fetch(`${baseUrl}getting-story`);
         const data = await response.json();
         console.log("testimonies:", data);
         if (data.error) {

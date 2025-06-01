@@ -770,20 +770,7 @@ app.get("/user/:email", async (req, res) => {
         const matches = symptoms.filter((symptom) =>
           malariaSymptoms.includes(symptom)
         );
-r) => {
-    //       if (err) {
-    //         console.error("Error deleting the video file:", err);
-    //       } else {
-    //         console.log("Video file deleted successfully");
-    //       }
-    //     });
-
-    //     return res.status(200).json({
-    //       success: true,
-    //       videoId: "no video uploaded",
-    //       message: "We uploaded it without using the video",
-    //       formData: req.body,
-    //     });
+    
         if (matches.length >= 3) {
           res.json({ message: "High chance of malaria. Visit a doctor!" });
         } else {

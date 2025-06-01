@@ -118,6 +118,7 @@
 .last-section .text h2{
      font-weight: 500;
      font-size: 2rem;
+     color: var(--light-text);
 }
 .last-section .text p{
     font-weight: 300;
@@ -127,4 +128,92 @@
     font-weight: 600;
     font-size: 1rem;
     color: var(--primary-color);
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .sections img {
+    width: 3rem;
+  }
+
+  .first-section {
+    flex-direction: column;
+    row-gap: 1.5rem;
+    column-gap: 0;
+  }
+
+  .first-section a {
+    width: 100%;
+  }
+
+  .first-section a .text {
+    width: 90%;
+    padding: 0.7rem;
+  }
+
+  .first-section a .text h1 {
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+  }
+
+  .first-section a .text p {
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+  }
+
+  .first-section a .text .link {
+    font-size: 0.85rem;
+  }
+
+  .middle-section img {
+    height: 60vh;
+    object-fit: cover;
+    width: 100%;
+
+  }
+
+  .middle-section .text {
+    padding-inline: 6rem;
+    padding-top: 6rem;
+    height: auto;
+  }
+
+  .middle-section .text p::before {
+    bottom: -5rem;
+    height: 5rem;
+  }
+
+  .middle-section .text span {
+    bottom: -5.1rem;
+  }
+    .last-section {
+    flex-direction: column;
+    row-gap: 1.5rem;
+    column-gap: 0;
+  }
+
+  .last-section a {
+    width: 100%;
+  }
+
+  .last-section .text {
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .last-section .text h2 {
+    font-size: 1.5rem;
+  }
+
+  .last-section .text p {
+    font-size: 0.95rem;
+  }
+
+  .last-section .text span {
+    font-size: 0.95rem;
+  }
 }

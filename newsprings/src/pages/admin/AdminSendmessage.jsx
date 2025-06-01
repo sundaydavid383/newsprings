@@ -665,7 +665,7 @@ const AdminSendmessage = () => {
         )}
       </div>
 
-    <div className='hero_hero'>
+  <div className='hero_hero'>
       <form className='signup-form'>
       <h2>Hero Sections</h2>
       {
@@ -701,7 +701,7 @@ const AdminSendmessage = () => {
        <button  className="btn" type="button" onClick={handleHeroAddSection}><p>Add  <i className="fa-solid fa-arrow-right"></i></p></button>
       </form>
       <button className="btn" type='button' onClick={handleHeroSave}><p>Save <i className="fa-solid fa-arrow-right"></i> </p></button>
-    </div>
+    </div>  
 
     <form className='signup-form' onSubmit={handlePrayerAndFastingSubmit}>
   <h2>Header</h2>

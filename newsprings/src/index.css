@@ -33,7 +33,7 @@
     --lighter-secondary-color:rgb(36, 35, 124);
     --light-background:rgba(12, 13, 107, 0.7);
     --dark-secondary : rgb(1, 0, 19);
-    --dark-secondary-shadow: rgba(1, 0, 19, 0.7);
+    --dark-secondary-shadow: rgba(1, 0, 19, 0.9);
     --background-color: rgb(255, 255, 255);
     --light-backgound:shadow rgb(187, 238, 187);
     --shadow-white: rgba(77, 75, 75, 0.3);
@@ -565,3 +565,16 @@ use  ia m justleatjing how to type fast=
         transform: scale(1.1);
     }
 }
+
+@media screen and (max-width: 768px) {
+      html{
+        font-size: 85%;
+      }
+      .container {
+    padding: .5rem 1rem;
+  }
+}
+
+
+
+

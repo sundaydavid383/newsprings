@@ -1,44 +1,44 @@
-
 .hero {
   position: relative;
   z-index: 0;
-  transition: none;
   margin-top: 7rem;
   height: 70vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: linear-gradient(to right, var(--secondary-color) 40%,   var(--background-color));
-  
-  /* Blend mode only works with an image */
-  background-blend-mode: multiply;
-
-}
-/* .hero1{
-  background-image:linear-gradient(var(--tetiary-color), var(--background-color)), url("../../assets/church1.jpg");
-}
-.hero2{
-  background-image: linear-gradient( var(--tetiary-color), var(--background-color)),url("../../assets/church2.jpg");
-}.hero3{
-  background-image: linear-gradient(var(--tetiary-color), var(--background-color)), url("../../assets/church3.jpg");
-}.hero4{
-  background-image: linear-gradient(var(--tetiary-color), var(--background-color)), url("../../assets/church4.jpg");
-} */
-.bubble{
-  position: absolute;
-  width: 5rem;
-  height:5rem;
-  box-shadow: inset var(--bubbles-shadow);
-  border-radius: 50%; 
+  width: 100%;
+  overflow: hidden;
   display: flex;
-  align-items: center; 
-  z-index: -11;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 2rem;
+  background-color: var(--lighter-secondary-color);
 }
-.hero .text{
+
+.hero  .person {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw; /* full width */
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.8; /* optional, to help blend with text */
+}
+
+/* optional gradient overlay */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--secondary-color) 40%, var(--background-color));
+  z-index: -1;
+  mix-blend-mode: multiply;
+}
+
+.hero .text {
+  z-index: 1;
+  width: 45%;
   display: flex;
   flex-direction: column;
-  width: 40%;
+  gap: 0.5rem;
 }
 .hero .text .question {
   color: var(--tetiary-color);
@@ -66,12 +66,7 @@
   color: var(--light-text);
   line-height: 1.4rem;
 }
-.hero .image {
-  position: relative;
-  display: flex;
-  justify-items: center;
-  align-items: center;
-}
+
 .hero .btn p {
   margin-top: .7rem;
   color: var(--light-text);
@@ -79,17 +74,6 @@
 }
 .hero .btn:hover p {
   color: var(--light-text);
-}
-.image .person {
-  width: 41.5rem;
- margin-right: -5.2rem;
-}
-.image .stars {
-  width: 3.5rem;
-  position: absolute;
-  right: -0.5rem;
-  top: 5rem;
-  animation: scale 2s infinite;
 }
 .moveright,
 .moveleft{
@@ -155,3 +139,26 @@
 
   }
 }
+
+
+
+@media (max-width: 1024px) {
+  .hero {
+    margin-top: 27rem;
+    height: 60vh;
+    background: blue;
+  }
+
+  .hero .text {
+    width: 100%;
+  }
+
+  .hero .text h1 {
+    font-size: 2.5rem;
+    line-height: 2.7rem;
+  }
+
+}
+
+
+

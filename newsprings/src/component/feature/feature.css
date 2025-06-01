@@ -5,7 +5,7 @@
     background: var(--black);
     color: var(--light-text);
     box-shadow: 0px -70px 90px -30px black;
-    padding-block: 3rem;
+    padding-block: 1rem;
     position: relative;
 }
 .features .iframe{
@@ -13,6 +13,7 @@
     flex-direction: column;
    text-align: left;
     gap: 1rem;
+    width: 50%;
 }
 .features .iframe a{
     color: var(--tetiary-color);
@@ -134,4 +135,131 @@
 }
 .giving_card h2{
     color: var(--secondary-color);
+}
+
+
+@media (max-width: 1024px) {
+    .feature_top{
+        padding-block: 0rem;
+        flex-direction: column;
+    }
+  .features .feature_top .iframe iframe,
+  .loading {
+    width: 150%;
+    height: auto;
+    align-self: center;
+    aspect-ratio: 16 / 9;
+  }
+
+  .feature_text {
+    width: 100%;
+    margin-top: 3rem;
+  }
+
+  .feature_bottom {
+    flex-direction: column;
+    padding-inline: 1.5rem;
+    gap: 2.5rem;
+    row-gap: 3rem;
+  }
+
+  .feature_bottom .feature_card {
+    width: 100%;
+  }
+
+  .sermon_card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .features {
+    padding-block: 2rem;
+  }
+
+  .features .iframe {
+    width: 84%;
+  }
+
+  .feature_text h1 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .feature_text p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .feature_bottom {
+    padding-inline: 1rem;
+    padding-block: 5rem;
+  }
+
+  .feature_bottom .feature_card h2 {
+    font-size: 1.1rem;
+  }
+
+  .feature_bottom .feature_card p {
+    font-size: 0.85rem;
+  }
+
+  .sermon_card .text h2 {
+    font-size: 1.1rem;
+  }
+
+  .sermon_card .text .description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .features .iframe iframe,
+  .loading {
+    width: 130%;
+    height: auto;
+  }
+
+  .feature_text h1 {
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  }
+
+  .feature_text p,
+  .feature_text small {
+    font-size: 0.9rem;
+  }
+
+  .feature_bottom {
+    padding-inline: 1rem;
+    padding-block: 3rem;
+  }
+
+  .feature_bottom .feature_card {
+    gap: 0.7rem;
+  }
+
+  .feature_bottom .feature_card h2 {
+    font-size: 1rem;
+  }
+
+  .feature_bottom .feature_card a {
+    font-size: 0.75rem;
+  }
+
+  .sermon_card {
+    width: 100%;
+  }
+
+  .sermon_card .text h2 {
+    font-size: 1rem;
+  }
+
+  .sermon_card .text .details {
+    font-size: 0.85rem;
+  }
+
+  .sermon_card .text .description {
+    font-size: 0.8rem;
+  }
 }

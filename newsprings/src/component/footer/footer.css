@@ -97,3 +97,47 @@
 .footer_social .footer_media a i{
     font-size: 1rem;
 }
+
+
+
+
+@media (max-width: 768px) {
+  .footer_holder.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+
+  .footer .about,
+  .footer .ministries,
+  .footer .event_conference,
+  .footer .resources {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .footer_social {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .footer_terms {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .footer_terms a {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .footer_media {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

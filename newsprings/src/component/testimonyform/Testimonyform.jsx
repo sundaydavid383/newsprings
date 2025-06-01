@@ -195,11 +195,7 @@ const TestimonyForm = ({ formData, setFormData }) => {
       setAlert(true);
       return;
     }
-    if (!formData.video) {
-      setAlertText("Add a video.");
-      setAlert(true);
-      return;
-    }
+         
     if (!formData.image) {
       setAlertText("Select an image.");
       setAlert(true);

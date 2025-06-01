@@ -27,6 +27,7 @@ import PrayerAndFasting from "../pages/prayerandfasting/PrayerAndFasting";
 import WaterBaptisim from "../pages/waterBaptisim/WaterBaptisim";
 import Base64Gen from "../component/base64Gen/Base64Gen";
 import Chat from "../component/chat/Chat";
+import Connect from"../pages/connect/Connect"
 import EasterCelebration from "../pages/easter/EasterCelebration";
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
@@ -184,6 +185,7 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
         <Route path="/lastestservice" element={<LatestService />} />
         <Route path="/easter" element={<EasterCelebration/>}/>
         <Route path="/baptisim" element={<WaterBaptisim />} />
+        <Route path="/connect" element={<Connect />} />
         <Route
           path="/admin"
           element={<AdminSendmessage />}

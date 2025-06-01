@@ -27,7 +27,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
     );
     document.documentElement.style.setProperty(
       "--secondary-color",
-      isDark ? "rgb(5, 4, 65)" : "rgba(199, 199, 224, 0.7)"
+      isDark ? "rgb(5, 4, 65)" : "rgba(155, 155, 240, 0.7)"
     );
         document.documentElement.style.setProperty(
       "--box-shadow",
@@ -103,8 +103,9 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
         <Link to="/" className="logo">
           <img src={logo} alt="" />
         </Link>
-        <i onClick={()=>setLinkSeen(prev=> !prev)} className={`${!linkSeen ? "fa-solid fa-bars-staggered" : "fa-solid fa-xmark"}`}></i>
-        <div className={`links ${linkSeen ? "" :"linksForSmallScreenClass"}`}>
+        <i onClick={()=>setLinkSeen(prev=> !prev)} className={`${!linkSeen ?  "fa-solid fa-xmark" : "fa-solid fa-bars-staggered" }`}></i>
+        
+         <div className={`links ${linkSeen ? "" :"linksForSmallScreenClass"}`}>
           <Link className={`${activePage == "home" ? "active" : ""}`} to="/">
             <p>HOME</p>
             <div></div>

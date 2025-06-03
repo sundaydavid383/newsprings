@@ -11,7 +11,7 @@ const PrayerAndFasting = () => {
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`http://localhost:4000/api/prayer-and-fasting`)
+    axios.get(`${baseUrl}api/prayer-and-fasting`)
       .then(res =>{ setTexts(res.data); console.log(res.data); setLoading(false)})
       .catch(err => {console.error("Fetch failed", err); setLoading(false)});
   }, []);

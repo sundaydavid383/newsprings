@@ -11,7 +11,8 @@ router.get('/', (req, res) => {
     const data = fs.readFileSync(dataPath, 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
-    res.status(500).json({ error: 'Failed to load data.' });
+    console.log("this is the error that occured:", err)
+    res.status(500).json({ error: 'Failed to load data.', err});
   }
 });
 

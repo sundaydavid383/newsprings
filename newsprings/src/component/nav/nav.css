@@ -68,6 +68,7 @@ a.btn p{
     padding-inline: 5rem;
     margin-top: .7rem;
 }
+.nav-lower .fa-xmark,
 .nav-lower .fa-bars-staggered{
     font-size: 2rem;
     color: var(--text-color);

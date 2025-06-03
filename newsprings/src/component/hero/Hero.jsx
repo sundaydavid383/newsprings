@@ -19,7 +19,7 @@ const Hero = () => {
    
   const fetchHero = async()=>{
     try {
-     const response = await axios.get(`${baseUrl}api/hero-sections`) 
+const response = await axios.get(`${baseUrl}api/hero-sections?timestamp=${Date.now()}`);
      setSection(response.data.sections)
      console.log(response.data.sections)
   } catch (error) {
@@ -28,6 +28,10 @@ const Hero = () => {
 }
 
   fetchHero()
+  
+}, [])
+
+useEffect(() => {
   if (section.length === 0) return; // ❗ don't start interval until we have sections
 
   const sectionInterval = setInterval(() => {
@@ -43,7 +47,8 @@ const Hero = () => {
   return () => {
     clearInterval(sectionInterval);
   }
-}, [])
+}, [section])
+
  
 // Now for clicking the arrows:
 const moveLeft = () => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./stories.css";
 import { Link } from "react-router";
+import imag1 from "../../assets/church1.jpg"
 
 
 const Stories = ({ setActivePage }) => {
@@ -198,7 +199,7 @@ const Stories = ({ setActivePage }) => {
     const fetchingStories = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${baseUrl}getting-story`);
+        const response = await fetch(`http://localhost:4000/getting-story`);
         const data = await response.json();
         console.log("testimonies:", data);
         if (data.error) {
@@ -316,7 +317,7 @@ const Stories = ({ setActivePage }) => {
             {filteredTestimonies.map((testifier, index) => (
               <div className="testifier" key={index}>
                 <div className="image">
-                  <img src={`${baseUrl}${testifier.image}`} alt={testifier.name} />
+                  <img src={imag1} alt={testifier.name} />
                 </div>
       
                 <div className="testifier_text">

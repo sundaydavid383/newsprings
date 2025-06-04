@@ -106,39 +106,40 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
         <i onClick={()=>setLinkSeen(prev=> !prev)} className={`${!linkSeen ?  "fa-solid fa-xmark" : "fa-solid fa-bars-staggered" }`}></i>
         
          <div className={`links ${linkSeen ? "" :"linksForSmallScreenClass"}`}>
-          <Link className={`${activePage == "home" ? "active" : ""}`} to="/">
+          <Link onClick={()=>setLinkSeen(prev=> !prev)} 
+          className={`${activePage == "home" ? "active" : ""}`} to="/">
             <p>HOME</p>
             <div></div>
           </Link>
-          <Link
+          <Link onClick={()=>setLinkSeen(prev=> !prev)}
             className={`${activePage == "about" ? "active" : ""}`}
             to="/mission-and-vision"
           >
             <p>ABOUT</p>
             <div></div>
           </Link>
-          <Link
+          <Link onClick={()=>setLinkSeen(prev=> !prev)}
             className={`${activePage == "sermons" ? "active" : ""}`}
             to="/sermon"
           >
             <p>SERMONS</p>
             <div></div>
           </Link>
-          <Link
+          <Link onClick={()=>setLinkSeen(prev=> !prev)}
             className={`${activePage == "giving" ? "active" : ""}`}
             to="/giving"
           >
             <p>GIVE</p>
             <div></div>
           </Link>
-          <Link
+          <Link onClick={()=>setLinkSeen(prev=> !prev)}
             className={`${activePage == "share-testimony" ? "active" : ""}`}
             to="/share-testimony"
           >
             <p>SHARE TESTIMONY</p>
             <div></div>
           </Link>
-          <Link
+          <Link onClick={()=>setLinkSeen(prev=> !prev)}
             className={`${activePage == "locations" ? "active" : ""}`}
             to="/locations"
           >
@@ -160,7 +161,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
               <div></div>
             </div>
             <div className="ministry_dropdown">
-              <Link
+              <Link 
                 className={`dropdown_link ${
                   activePage == "testimonies" ? "active" : ""
                 }`}
@@ -168,6 +169,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
+                   setLinkSeen(prev=> !prev);
                 }}
                 to="/stories"
               >
@@ -182,6 +184,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
+                    setLinkSeen(prev=> !prev)
                 }}
                 to="/ministries"
               >
@@ -196,6 +199,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
+                    setLinkSeen(prev=> !prev)
                 }}
                 to="/baptisim"
               >
@@ -210,6 +214,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
+                    setLinkSeen(prev=> !prev)
                 }}
                 to="/events"
               >
@@ -224,6 +229,7 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
+                    setLinkSeen(prev=> !prev)
                 }}
                 to="/membership-class"
               >

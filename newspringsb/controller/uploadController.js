@@ -4,6 +4,7 @@ const uploadVideoToYouTube = require("../services/youtubeUploader");
 const deleteFile = require("../utils/deleteFile");
 const TestimonyModelFactory = require("../models/testimonyModel");
 
+let filePath;
 // Function to save base64 image to file
 function saveBase64Image(base64String, folder = "uploading-story/images") {
   // Ensure folder exists
@@ -19,9 +20,9 @@ function saveBase64Image(base64String, folder = "uploading-story/images") {
   const ext = matches[1].split("/")[1]; // e.g., image/jpeg => jpeg
   const buffer = Buffer.from(matches[2], "base64");
   const filename = `${Date.now()}.${ext}`;
-  const filePath = path.join(folder, filename);
+   filePath = path.join(folder, filename);
   fs.writeFileSync(filePath, buffer);
-
+     console.log("Image saved to:", filePath);
   return `images/${filename}`; // This is the relative URL path you'll store
 }
 
@@ -29,6 +30,7 @@ function saveBase64Image(base64String, folder = "uploading-story/images") {
 exports.uploadStory = async (req, res) => {
   const connection = req.app.get("mongooseConnection");
   const TestimonyModel = TestimonyModelFactory(connection);
+  console.log("this is the filePath", filePath);
    console.log("this is the data we got form the frontend:",  req.body)
     const {
     image,
@@ -52,7 +54,7 @@ exports.uploadStory = async (req, res) => {
      if (image) {
        savedImagePath = saveBase64Image(image); // Returns relative path like "images/1715087319283.jpeg"
      }
- 
+      
      const storyData = {
        image: savedImagePath,
        validated,
@@ -99,6 +101,7 @@ exports.uploadStory = async (req, res) => {
       if (video) deleteFile(video.path);
       return res.status(201).json({
         success: true,
+        filePath: filePath || "no file path",
         message: "uploaded image without the video id",
         error: error.message,
         data: story,

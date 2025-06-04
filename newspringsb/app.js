@@ -51,22 +51,22 @@ app.use("/images", express.static(path.join(__dirname, "uploading-story/images")
 
 
 // Initializing multer
-const storage = multer.diskStorage({
-  destination: "uploading-story/",
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: "uploading-story/",
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
 
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    if (!file.mimetype.startsWith("video/")) {
-      return cb(new Error("Only video files are allowed"), false);
-    }
-    cb(null, true);
-  },
-});
+// const upload = multer({
+//   storage: storage,
+//   fileFilter: (req, file, cb) => {
+//     if (!file.mimetype.startsWith("video/")) {
+//       return cb(new Error("Only video files are allowed"), false);
+//     }
+//     cb(null, true);
+//   },
+// });
 
 // OAuth2 Client setup
 const CLIENT_ID = process.env.CLIENT_ID;

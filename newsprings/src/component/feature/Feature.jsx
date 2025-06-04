@@ -62,7 +62,6 @@ const Feature = () => {
           if (videoId && !videoId.includes("RESTRICTED")) {
             setVideoId(videoId);
             setTitle(title);
-            
             return;
           }
         }
@@ -107,14 +106,15 @@ const Feature = () => {
 
   return loading ? (
  <div className="hero_loading_holder">
-                  <div className="loading_text">
+            <div className="loading_image">
+          </div>
+          <div className="loading_text">
             <div className="text text1"></div>
             <div className="text text3"></div>
             <div className="text text2"></div>
             <div className="loading_button"></div>
           </div>
-          <div className="loading_image">
-          </div>
+
       </div>
   ) : alert ?(
     <div className="alert_holder">

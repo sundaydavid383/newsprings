@@ -187,7 +187,7 @@ const Testimony = ({}) => {
         
               
               <div className="image">
-                <img src={testimony.image} alt={testimony.name} />
+                <img src={`https://newsprings.onrender.com/${testimony.image}`} alt={testimony.name} />
               </div>
                 <img src={image1} alt={testimony.name} />
               <div className="testimony_text">

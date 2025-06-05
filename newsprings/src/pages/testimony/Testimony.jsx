@@ -189,7 +189,7 @@ const Testimony = ({}) => {
               <div className="image">
                 <img src={testimony.image} alt={testimony.name} />
               </div>
-            
+                <img src={image1} alt={testimony.name} />
               <div className="testimony_text">
                 <h2 className="title">{testimony.title}</h2>
                 <div className="testimony_text_upper_details">

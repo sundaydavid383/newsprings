@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./stories.css";
 import { Link } from "react-router";
-import imag1 from "../../assets/church1.jpg"
+import image5 from "../../assets/testifier6.jpg";
 
 
 const Stories = ({ setActivePage }) => {
@@ -199,7 +199,7 @@ const Stories = ({ setActivePage }) => {
     const fetchingStories = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/getting-story`);
+        const response = await fetch(`${baseUrl}getting-story`);
         const data = await response.json();
         console.log("testimonies:", data);
         if (data.error) {
@@ -316,9 +316,11 @@ const Stories = ({ setActivePage }) => {
           <div className="about_stories_holder container">
             {filteredTestimonies.map((testifier, index) => (
               <div className="testifier" key={index}>
+                      <img src={image5} alt={testifier.name} />
                 <div className="image">
-                  <img src={imag1} alt={testifier.name} />
+                  <img src={testifier.image} alt={testifier.name} />
                 </div>
+            
       
                 <div className="testifier_text">
                   <h2 className="title">{testifier.title} id_{testifier._id}</h2>
@@ -347,6 +349,7 @@ const Stories = ({ setActivePage }) => {
             {testimonies.map((testifier, index) => (
               <div className="testifier" key={index}>
                 <div className="image">
+                  <img src={image5} alt={testifier.name} />
                   <img src={`${baseUrl}${testifier.image}`} alt={testifier.name} />
                 </div>
       

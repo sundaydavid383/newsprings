@@ -224,7 +224,7 @@ a.btn p{
     padding: 1rem;
     background: var(--background-color);
     transition: .3s ease-in-out;
-    z-index: 1;
+    z-index: 111111;
   }
  .linksForSmallScreenClass{
     top: 6rem;

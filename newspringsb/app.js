@@ -50,13 +50,13 @@ app.use("/images", express.static(path.join(__dirname, "uploading-story/images")
 
 
 
-// Initializing multer
-// const storage = multer.diskStorage({
-//   destination: "uploading-story/",
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
+ //Initializing multer
+ const storage = multer.diskStorage({
+   destination: "uploading-story/",
+   filename: (req, file, cb) => {
+     cb(null, Date.now() + "-" + file.originalname);
+   },
+ });
 
 // const upload = multer({
 //   storage: storage,

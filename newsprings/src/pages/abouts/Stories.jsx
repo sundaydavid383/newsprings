@@ -349,7 +349,7 @@ const Stories = ({ setActivePage }) => {
             {testimonies.map((testifier, index) => (
               <div className="testifier" key={index}>
                 <div className="image">
-                  <img src={`https://newsprings.onrender.com/${testifier.image}`} alt={testifier.name} />
+                  <img src={`http://localhost:4000/${testifier.image}`} alt={testifier.name} />
                 </div>
       
                 <div className="testifier_text">

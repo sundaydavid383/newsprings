@@ -276,6 +276,7 @@ const Stories = ({ setActivePage }) => {
         <h1>Stories</h1>
         <h3>Go through people testimonies</h3>
         <div className="formholder">
+
           <div className="formconatianer">
             <form className="story_form" onSubmit={onSearch}>
               {/* <input
@@ -288,9 +289,9 @@ const Stories = ({ setActivePage }) => {
               <input             value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 type="search"
-                placeholder="Search for testimony by keyword, stories, etc..."/>
+                placeholder={filteredTestimonies.length > 0 ? "Search with an empty input to see all data.":"Search for testimony by keyword, stories, etc..."}/>
                    <button type="submit">
-                <i className="fa-solid fa-search"></i>
+                <i title="search" className="fa-solid fa-search"></i>
               </button>
             </form>
             <label htmlFor="" id="formlb"></label>
@@ -316,14 +317,13 @@ const Stories = ({ setActivePage }) => {
           <div className="about_stories_holder container">
             {filteredTestimonies.map((testifier, index) => (
               <div className="testifier" key={index}>
-                      <img src={image5} alt={testifier.name} />
                 <div className="image">
-                  <img src={testifier.image} alt={testifier.name} />
+                  <img src={`${baseUrl}${testifier.image}`} alt={testifier.name} />
                 </div>
             
       
                 <div className="testifier_text">
-                  <h2 className="title">{testifier.title} id_{testifier._id}</h2>
+                  <h2 className="title">{testifier.title} </h2>
                   <div className="testifier_text_upper_details">
                     <p className="name">{testifier.name}</p>
                     <p>{testifier._id}</p>
@@ -349,7 +349,7 @@ const Stories = ({ setActivePage }) => {
             {testimonies.map((testifier, index) => (
               <div className="testifier" key={index}>
                 <div className="image">
-                  <img src={`https://newsprings.onrender.com/${testifier.image}`} alt={testifier.name} />
+                  <img src={`${baseUrl}${testifier.image}`} alt={testifier.name} />
                 </div>
       
                 <div className="testifier_text">

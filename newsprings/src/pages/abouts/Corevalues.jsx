@@ -6,10 +6,20 @@ const Corevalues = ({setActivePage}) => {
    useEffect(() => {
          setActivePage("about")
        }, [])
+    const [navOpen, setNavOpen] = useState(false);
+  
+    const toggleNav = () => {
+      setNavOpen(!navOpen);
+    };
        
   return (
     <div className="about">
-    <ul className="about_nav">
+               <button className="nav-toggle" onClick={toggleNav}>
+         <p>About menu dropdown</p> ☰
+      </button>
+
+           <ul className={`about_nav ${navOpen ? "open" : ""}`}>
+        
      <li
      >
        <Link to="/mission-and-vision">Mission and Vision</Link>

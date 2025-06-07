@@ -17,6 +17,11 @@ import SecondNav from '../../component/secondNav/SecondNav'
 import TxtImgBac from '../../component/txtImgBac/TxtImgBac'
 
 const Career = () => {
+   const [navOpen, setNavOpen] = useState(false);
+  
+    const toggleNav = () => {
+      setNavOpen(!navOpen);
+    };
       const [printedSection, setPrintedSection] = useState(0)
       const [move, setMove] = useState(0)
       const txtImaBach2 = "Here at Gateway, you're not just another employee—you’re an essential part of a vision-inspired, mission-driven team."

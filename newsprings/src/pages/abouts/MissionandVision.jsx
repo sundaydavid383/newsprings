@@ -22,10 +22,19 @@ const MissionandVision = ({setActivePage}) => {
         <Link to="/connect"> connect with us</Link> and experience the transforming power of God's presence.
         </p></>
     );
+     const [navOpen, setNavOpen] = useState(false);
+
+  const toggleNav = () => {
+    setNavOpen(!navOpen);
+  };
   return (
 
     <div className="about">
-       <ul className="about_nav">
+            <button className="nav-toggle" onClick={toggleNav}>
+         <p>About menu dropdown</p> ☰
+      </button>
+
+           <ul className={`about_nav ${navOpen ? "open" : ""}`}>
         <li >
           <Link  className={`liactive`} to="/mission-and-vision">Mission and Vision</Link>
         </li>

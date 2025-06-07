@@ -1,40 +1,185 @@
-
-
-.connect-section {
-  padding: 60px 20px;
-  background-color: white;
-  border-bottom: 1px solid #eee;
+.connect-wrapper {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+.connect-wrapper section{
+  padding-inline: 10%;
 }
 
-.connect-section:nth-of-type(even) {
-  background-color: #f1f5f9;
-}
-
-.connect-section h2 {
-  color: #002855;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.connect-section p,
-.connect-section li {
-  font-size: 1.05rem;
-  margin-bottom: 0.5rem;
-}
-
-.connect-section ul {
+.connect-wrapper .hero-section {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  padding-top: 6rem;
   margin-top: 1rem;
-  padding-left: 20px;
+  padding-inline: 0rem;
 }
 
-.connect-section ul li {
-  list-style-type: disc;
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%);
 }
 
-footer {
-  background-color: #002855;
-  color: white;
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--light-text);
   text-align: center;
-  padding: 30px 20px;
-  font-size: 0.95rem;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.intro-section {
+  display: flex;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.intro-image {
+  width: 50%;
+  border-radius: 8px;
+  margin-right: 40px;
+}
+
+.intro-text {
+  width: 50%;
+}
+
+.connect-section, .social-section, .plan-visit, .connect-pastor {
+  padding: 60px 20px;
+}
+
+.connect-section.alt {
+  background-color: #f9f9f9;
+}
+
+.connect-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.connect-card {
+  background: var(--light-text);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.connect-card .icon {
+  font-size: 36px;
+  background: var(--lighter-secondary-color);
+  margin-bottom: 15px;
+  width: 4rem;
+  height: 4rem;
+  line-height: 3.9rem
+}
+.social-links, .plan-visit ul {
+  list-style: none;
+  padding: 0;
+}
+
+.social-links li, .plan-visit ul li {
+  margin-bottom: 12px;
+}
+
+.social-links a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.connect-button {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: var(--primary-color);
+  color: var(--light-text);
+  padding: 14px 30px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.connect-button:hover {
+  background-color: var(--primary-color);
+}
+.connect-wrapper .iconactive{
+  margin-right: .5rem
+}
+.connect-pastor a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.connect-pastor a:hover {
+  color: var(--tetiary-color);
+}
+
+.connect-pastor i {
+  color: var(--primary-color);
+  font-size: 20px;
+}
+/* Medium screens (tablets and below) */
+@media (max-width: 991px) {
+  .intro-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .intro-image,
+  .intro-text {
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+
+  .intro-image {
+    margin-bottom: 30px;
+  }
+
+  .hero-content {
+    padding: 0 10px;
+  }
+}
+
+/* Small screens (phones and small tablets) */
+@media (max-width: 600px) {
+  .hero-section {
+    height: 300px;
+  }
+
+  .hero-content {
+    font-size: 16px;
+  }
+
+  .connect-button {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  .connect-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-section {
+    padding: 40px 15px;
+  }
+
+  .connect-section,
+  .social-section,
+  .plan-visit,
+  .connect-pastor {
+    padding: 40px 15px;
+  }
 }

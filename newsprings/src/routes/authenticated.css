@@ -119,3 +119,49 @@ font-size: .8rem;
     background: var(--tetiary-color);
     color: var(--lighter-secondary-color);
 }
+@media (max-width: 768px) {
+  .message_box_holder,
+  .schedule_box_holder {
+    width: 80%;
+    left: 2%;
+    right: 5%;
+    bottom: 10px;
+    max-height: 60vh;
+    border-radius: 8px;
+  }
+
+  .iconactive.message_state,
+  .iconactive.schedule_state {
+    width: 3rem !important;
+    height: 3rem !important;
+    font-size: 1.6rem;
+    bottom: 1rem;
+  }
+
+  .iconactive.message_state {
+    right: 1rem;
+  }
+
+  .iconactive.schedule_state {
+    left: 1rem;
+  }
+
+  .message_box .box {
+    width: 95%;
+    font-size: 0.85rem;
+    padding: 0.7rem;
+  }
+
+  .schedule_box_holder .title,
+  .message_box .title {
+    width: 100%;
+    position: static;
+    font-size: 1.1rem;
+    padding: 0.6rem;
+  }
+
+  .schedule_box_holder .text {
+    font-size: 1rem;
+    line-height: 1.7rem;
+  }
+}

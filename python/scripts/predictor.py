@@ -24,7 +24,7 @@ def predict_donations(input_data):
     # Extract relavant features
     x_input = input_data[['day_of_week', 'weather', 'special_event', 'month', 'weekday']]
 
-    #make prediction
+    # make prediction
     print("🔮 Making prediction...") 
     prediction = model.predict(x_input)
 
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         'day_of_week': ['Saturday'],
         'weather': ['Sunny'],
         'special_event': ['Youth Revival'],
-        'donation_amount': [0] #placeholder, not used in prediction
+        'donation_amount': [0] # placeholder, not used in prediction
     })
 
     result = predict_donations(sample_data)

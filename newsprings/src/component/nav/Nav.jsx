@@ -45,12 +45,6 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
      "--footer-text",
      isDark ? "rgb(107, 107, 107)" : "rgb(219, 219, 219)"
     )
-    
-
-    
-    
-    
-    
     setIsDark(!isDark);
   };
   const handleLogout = () => {
@@ -103,8 +97,10 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
         <Link to="/" className="logo">
           <img src={logo} alt="" />
         </Link>
-        <i onClick={()=>setLinkSeen(prev=> !prev)} className={`${!linkSeen ?  "fa-solid fa-xmark" : "fa-solid fa-bars-staggered" }`}></i>
-        
+        <div className="i" onClick={()=>setLinkSeen(prev=> !prev)}>
+        <i  className={`${!linkSeen ?  "fa-solid fa-xmark" : "fa-solid fa-bars-staggered" }`}></i>
+        </div>
+
          <div className={`links ${linkSeen ? "" :"linksForSmallScreenClass"}`}>
           <Link onClick={()=>setLinkSeen(prev=> !prev)} 
           className={`${activePage == "home" ? "active" : ""}`} to="/">

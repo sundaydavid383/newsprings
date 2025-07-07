@@ -69,10 +69,14 @@ a.btn p{
     margin-top: .7rem;
 }
 .nav-lower .fa-xmark,
-.nav-lower .fa-bars-staggered{
+.nav-lower .fa-bars-staggered,
+.nav-lower .i{
     font-size: 2rem;
     color: var(--text-color);
     display: none;
+    background: red;
+    width: 4rem;
+    aspect-ratio: 1/2
 }
 .nav-lower .logo img{
     width: 9rem;

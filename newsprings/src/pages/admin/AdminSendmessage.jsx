@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import image1 from "../../assets/church15.jpg";
 import { useUser } from '../../context/Usercontext';
 import "./admin.css"
+import ConnectedUsersList from './ConnectedUsersList';
 
 
 const AdminSendmessage = () => {
@@ -827,6 +828,7 @@ const AdminSendmessage = () => {
 
       <button className='btn' type="submit">Save Changes</button>
     </form>
+    <ConnectedUsersList/>
   </>
 )}   
  

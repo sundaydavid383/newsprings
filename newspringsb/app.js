@@ -92,6 +92,10 @@ const startServer = async () => {
       registrationsConnection
     );
 
+    
+
+    
+
     app.set("mongooseConnection", testimoniesConnection);
     app.set("registrationsConnection", registrationsConnection); //for future use
     
@@ -128,6 +132,11 @@ const startServer = async () => {
       //=========================change and send contact info ==============
     const contactRoutes = require('./routes/contact.js'); 
       app.use('/api', contactRoutes);
+
+    // ===================== Connect visitor =======
+    const connectRouter = require('./routes/connectVisitor.js')
+    app.use("/api", connectRouter);
+
 
     //=========================send otp==============
     

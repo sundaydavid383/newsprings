@@ -4,7 +4,7 @@
   margin-top: 7rem;
   height: 70vh;
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -97,6 +97,9 @@
   background: var(--secondary-color);
   animation: darkiconhover 4s infinite;
 }
+.hero .person {
+  width: 100%; /* Changed from 100vw to prevent horizontal scroll */
+}
 @keyframes scale {
   0% {
     transform: scale(1);
@@ -160,5 +163,119 @@
 
 }
 
+@media screen and (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    margin-top: 8rem;
+    height: 50vh;
+    padding-inline: 1.5rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero .text {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero .text h1 {
+    font-size: 2.2rem;
+    line-height: 2.6rem;
+  }
+
+  .hero .text .question {
+    font-size: 1rem;
+  }
+
+  .hero .text p {
+    font-size: 0.95rem;
+    line-height: 1.5rem;
+  }
+
+  .moveright,
+  .moveleft {
+    top: auto;
+    bottom: 20%;
+    transform: scale(0.9);
+  }
+
+  .moveright {
+    right: 1rem;
+  }
+
+  .moveleft {
+    left: 1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .hero {
+    margin-top: 3rem;
+    height: auto;
+    padding-inline: 1rem;
+   
+
+  }
+
+  .hero .text h1 {
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    margin-top: 9rem
+  }
+
+  .hero .text .question {
+    font-size: 0.9rem;
+  }
+
+  .hero .text p {
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+  }
+
+  .moveright,
+  .moveleft {
+    display: none; /* optional for very small screens */
+  }
+}
+@media screen and (max-width: 480px) {
+  .hero {
+    height: auto;
+    flex-direction: column;
+  
+    overflow-x: hidden;
+    gap: 1.5rem;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+     margin-bottom: -5rem;
+  }
+
+  .hero .text {
+    margin-top: .3rem;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero .text h1 {
+    font-size: 1.6rem;
+    line-height: 2rem;
+  }
+
+  .hero .text .question {
+    font-size: 0.85rem;
+  }
+
+  .hero .text p {
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+  }
+
+  .moveright,
+  .moveleft {
+    display: none;
+  }
+}
 
 

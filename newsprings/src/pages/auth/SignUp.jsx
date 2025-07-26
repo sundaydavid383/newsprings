@@ -57,7 +57,7 @@ const [isOtpSent, setIsOtpSent] = useState(false);
       // 2nd stage: Verify OTP and Register user
       try {
         setLoading(true);
-        const verifyResponse = await axios.post("http://localhost:4000/verify-otp", {
+        const verifyResponse = await axios.post(`${import.meta.env.VITE_API_URL}verify-otp`, {
           email: formData.email,
           otp,
         });
@@ -69,7 +69,7 @@ const [isOtpSent, setIsOtpSent] = useState(false);
           return;
         }
   
-        const response = await axios.post("http://localhost:4000/register", formData);
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}register`, formData);
         if (response.data.success) {
           setAlertText(`${response.data.message}. Check your inbox or spam.`);
           setIsAuthenticated(true);
@@ -240,7 +240,7 @@ const [isOtpSent, setIsOtpSent] = useState(false);
       setLoading(true);
 
       //verify if email already use
-      const checkEmailRes = await axios.post("http://localhost:4000/check-email", {
+      const checkEmailRes = await axios.post(`${import.meta.env.VITE_API_URL}check-email`, {
         email: formData.email,
       });
 
@@ -258,7 +258,7 @@ const [isOtpSent, setIsOtpSent] = useState(false);
         return;
       }
   // Send OTP
-    const otpResponse = await axios.post("http://localhost:4000/send-otp", {
+    const otpResponse = await axios.post(`${import.meta.env.VITE_API_URL}send-otp`, {
       email: formData.email,
     });
 

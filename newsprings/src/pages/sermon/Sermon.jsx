@@ -22,7 +22,7 @@ const Sermon = ({setActivePage}) => {
     const fetchFeed = async () => {
       try {
         setLoading(true);
-        const [descripresponse, feedResponse] = await Promise.all([ fetch("http://localhost:4000/api/sermon-configs"),fetch(FEED_URL)])
+        const [descripresponse, feedResponse] = await Promise.all([ fetch(`${import.meta.env.VITE_API_URL}api/sermon-configs`),fetch(FEED_URL)])
         
         
         const descripdata = await descripresponse.json()

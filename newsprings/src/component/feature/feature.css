@@ -8,6 +8,10 @@
     padding-block: 1rem;
     position: relative;
 }
+.dark-feature-bottom{
+  background: var(--black);
+  width: 100%;
+}
 .features .iframe{
     display: flex;
     flex-direction: column;
@@ -85,6 +89,7 @@
 .feature_bottom .feature_card p{
     font-size: .9rem;
     font-weight: 300;
+    color: var(--lighter-gray)   
 }
 .feature_bottom .feature_card a{
     font-size: .8rem;
@@ -145,7 +150,7 @@
     }
   .features .feature_top .iframe iframe,
   .loading {
-    width: 150%;
+    width: 120%;
     height: auto;
     align-self: center;
     aspect-ratio: 16 / 9;
@@ -173,12 +178,13 @@
 }
 
 @media (max-width: 768px) {
+
   .features {
     padding-block: 2rem;
   }
 
-  .features .iframe {
-    width: 84%;
+  .features .feature_top .iframe iframe {
+    width: 204%;
   }
 
   .feature_text h1 {
@@ -214,9 +220,14 @@
 }
 
 @media (max-width: 480px) {
+  .dark-feature-bottom{
+  background: var(--black);
+  width: 100%;
+  margin-left: -1rem;
+  }
   .features .iframe iframe,
   .loading {
-    width: 130%;
+    width: 180%;
     height: auto;
   }
 

@@ -1,0 +1,40 @@
+
+.career_hero {
+  margin-top: 0.5rem;
+  width: 100%;
+  position: relative;
+  padding-bottom: 12rem;
+}
+
+.career_hero img {
+  width: 100%;
+}
+
+.career_hero .text {
+  position: absolute;
+  width: 40rem;
+  background: var(--background-color);
+  bottom: 0rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 1rem;
+  padding: 1.4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.career_hero .text h3 {
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: var(--secondary-color);
+  width: 100%;
+}
+
+.career_hero .text p {
+  color: var(--text-color);
+  font-weight: 300;
+  letter-spacing: .04rem;
+  font-size: 1rem;
+}

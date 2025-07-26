@@ -35,7 +35,7 @@
     --dark-secondary : rgb(1, 0, 19);
     --dark-secondary-shadow: rgba(1, 0, 19, 0.9);
     --background-color: rgb(255, 255, 255);
-    --light-backgound:shadow rgb(187, 238, 187);
+    --light-backgound: rgb(187, 238, 187);
     --shadow-white: rgba(77, 75, 75, 0.3);
     --loading-: 0px 0px 68px 58px var(--lighter-gray);
 
@@ -45,7 +45,7 @@
     --black: rgb(36, 35, 35);
     --box-shadow:0px 0px 18px 1px rgba(34, 34, 34,.4);
     --lighter-shadow:0px 0px 5px 1px rgba(163, 163, 163, 0.4);
-    --light-shadow: 0px 0px 5px 4px rgba(232, 248, 227, 0.4);
+    --light-shadow: 0px 0px 8px 6px rgba(232, 248, 227, 0.4);
     --bubbles-shadow: 0px 0px 7px 0px rgba(114, 121, 114, 0.7);
     --primary-shadow: 0px 0px 5px 4px rgba(36, 170, 36,.4);
     --video-background: rgba(0,0,0,.9);
@@ -148,8 +148,10 @@ body{
     justify-content: center;
   }
   .alert {
-    width: 15rem;
-    height: 11rem;
+    width: 19rem;
+    max-width: 25rem;
+    height: 13rem;
+    max-height: 18rem;
     background-color: var(--background-color);
     border-radius: 1rem;
     display: flex;

@@ -32,9 +32,7 @@
 .nav-upper .btn p{
     margin-top: -.66rem;
 }
-.nav-upper i{
-    color: var(--text-color)
-}
+
 a.btn p{
     margin-top: 0rem;
 }
@@ -48,9 +46,7 @@ a.btn p{
     border-radius: 1.3rem;
     color: var(--secondary-color);
 }
-.nav-upper a i{
-    font-size: 1.4rem;
-}
+
 .user{
     border: 1px solid var(--secondary-color);
     background-color: var(--secondary-color) !important;
@@ -74,9 +70,7 @@ a.btn p{
     font-size: 2rem;
     color: var(--text-color);
     display: none;
-    background: red;
     width: 4rem;
-    aspect-ratio: 1/2
 }
 .nav-lower .logo img{
     width: 9rem;
@@ -207,7 +201,8 @@ a.btn p{
 
 @media screen and (max-width: 768px) {
    .nav-lower .fa-xmark,
-  .nav-lower .fa-bars-staggered {
+  .nav-lower .fa-bars-staggered,
+  .nav-lower .i {
     display: block;
     cursor: pointer;
     font-size: 2rem;
@@ -215,6 +210,10 @@ a.btn p{
   }
   .nav-upper a {
     font-size: .85rem;
+  }
+  .nav-upper{
+    width: 100%;
+    gap: .3rem;
   }
  
   .links {

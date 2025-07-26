@@ -2,7 +2,7 @@ import "./nav.css";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router";
 import { useNavigate } from "react-router";
-import React, { useState,  } from "react";
+import React, { useState, } from "react";
 import { useUser } from "../../context/Usercontext"; // Adjust the path based on your project
 
 const Nav = ({ activePage, setIsAuthenticated }) => {
@@ -10,14 +10,14 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
-  const [linkSeen, setLinkSeen]  = useState(false);
+  const [linkSeen, setLinkSeen] = useState(false);
 
   const handleColorClick = () => {
     document.documentElement.style.setProperty(
       "--background-color",
       isDark ? "white" : "rgb(32, 32, 34)"
     );
-     document.documentElement.style.setProperty(
+    document.documentElement.style.setProperty(
       "--nav-color",
       isDark ? "white" : "black"
     );
@@ -29,11 +29,11 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
       "--secondary-color",
       isDark ? "rgb(5, 4, 65)" : "rgba(155, 155, 240, 0.7)"
     );
-        document.documentElement.style.setProperty(
+    document.documentElement.style.setProperty(
       "--box-shadow",
-      isDark ? "0px 0px 18px 1px rgba(34, 34, 34,.4);" : "0px 0px 18px 1px rgba(255, 255, 255, 0.4);"
+      isDark ? "0px 0px 18px 1px rgba(34, 34, 34, 0.4);" : "0px 0px 18px 1px rgba(255, 255, 255, 0.4);"
     );
-     document.documentElement.style.setProperty(
+    document.documentElement.style.setProperty(
       "--light-text-color",
       isDark ? "rgb(122, 122, 122)" : "rgb(207, 204, 204)"
     );
@@ -42,8 +42,8 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
       isDark ? "rgb(209, 209, 209)" : "rgb(127, 127, 128)"
     );
     document.documentElement.style.setProperty(
-     "--footer-text",
-     isDark ? "rgb(107, 107, 107)" : "rgb(219, 219, 219)"
+      "--footer-text",
+      isDark ? "rgb(107, 107, 107)" : "rgb(219, 219, 219)"
     )
     setIsDark(!isDark);
   };
@@ -54,88 +54,103 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("user");
     setShowUserDetails(false)
-     // Optionally store in localStorage
+    // Optionally store in localStorage
     // Redirect to the login page
     navigate("/signin"); // or use <Navigate /> to redirect
   };
-  console.log("user",user);
+  console.log("user", user);
   return (
     <div className="nav">
       <div className="nav-upper">
         <i
-      className={`fa ${isDark ? "fa-sun" : "fa-moon"}`}
-      onClick={handleColorClick}
-      style={{ cursor: "pointer", fontSize: "24px" }}
-    ></i>
-        <a href="mailto:rccgnewsprings@yahoo.com" className="email">
-          <i className="fa-solid fa-envelope"></i>rccgnewsprings@yahoo.com
+          className={`fa ${isDark ? "fa-sun" : "fa-moon"}`}
+          onClick={handleColorClick}
+          style={{ cursor: "pointer", fontSize: "24px" }}
+        ></i>
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=rccgnewsprings@yahoo.com`;
+            const win = window.open(gmailUrl, '_blank');
+
+            // Fallback after a timeout if Gmail didn't open (e.g. popup blocked)
+            setTimeout(() => {
+              if (!win || win.closed || typeof win.closed === 'undefined') {
+                window.location.href = 'mailto:rccgnewsprings@yahoo.com';
+              }
+            }, 1000);
+          }}
+          className="email"
+        >
+          <i className="fa-solid fa-envelope"></i> rccgnewsprings@yahoo.com
         </a>
         <Link className="" to="/search">
           <i className="fa-solid fa-magnifying-glass"></i>
           <p>Search</p>
         </Link>
         {user && (
-  <div className="user_holder">
-    <div className="iconactive user" onClick={() => setShowUserDetails(prev => !prev)}>
-      <h3>{user.firstName.slice(0, 2)}</h3>
-    </div>
+          <div className="user_holder">
+            <div className="iconactive user" onClick={() => setShowUserDetails(prev => !prev)}>
+              <h3>{user.firstName.slice(0, 2)}</h3>
+            </div>
 
-    {showUserDetails && (
-      <div className="user_dropdown">
-        <i onClick={()=>setShowUserDetails(false)} className="fa-solid fa-times iconactive"></i>
-        <p><strong>Name:</strong> {user.firstName} {user.lastName}</p>
-        <p><strong>Email:</strong> {user.email}</p>
-        <button className="btn" onClick={handleLogout}>
-          <p>Logout<i className="fa-solid fa-right-from-bracket"></i></p> 
-        </button>
-      </div>
-    )}
-  </div>
-)}
+            {showUserDetails && (
+              <div className="user_dropdown">
+                <i onClick={() => setShowUserDetails(false)} className="fa-solid fa-times iconactive"></i>
+                <p><strong>Name:</strong> {user.firstName} {user.lastName}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+                <button className="btn" onClick={handleLogout}>
+                  <p>Logout<i className="fa-solid fa-right-from-bracket"></i></p>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
       <div className="nav-lower">
         <Link to="/" className="logo">
           <img src={logo} alt="" />
         </Link>
-        <div className="i" onClick={()=>setLinkSeen(prev=> !prev)}>
-        <i  className={`${!linkSeen ?  "fa-solid fa-xmark" : "fa-solid fa-bars-staggered" }`}></i>
+        <div className="i" onClick={() => setLinkSeen(prev => !prev)}>
+          <i className={`${!linkSeen ? "fa-solid fa-xmark" : "fa-solid fa-bars-staggered"}`}></i>
         </div>
 
-         <div className={`links ${linkSeen ? "" :"linksForSmallScreenClass"}`}>
-          <Link onClick={()=>setLinkSeen(prev=> !prev)} 
-          className={`${activePage == "home" ? "active" : ""}`} to="/">
+        <div className={`links ${linkSeen ? "" : "linksForSmallScreenClass"}`}>
+          <Link onClick={() => setLinkSeen(prev => !prev)}
+            className={`${activePage == "home" ? "active" : ""}`} to="/">
             <p>HOME</p>
             <div></div>
           </Link>
-          <Link onClick={()=>setLinkSeen(prev=> !prev)}
+          <Link onClick={() => setLinkSeen(prev => !prev)}
             className={`${activePage == "about" ? "active" : ""}`}
             to="/mission-and-vision"
           >
             <p>ABOUT</p>
             <div></div>
           </Link>
-          <Link onClick={()=>setLinkSeen(prev=> !prev)}
+          <Link onClick={() => setLinkSeen(prev => !prev)}
             className={`${activePage == "sermons" ? "active" : ""}`}
             to="/sermon"
           >
             <p>SERMONS</p>
             <div></div>
           </Link>
-          <Link onClick={()=>setLinkSeen(prev=> !prev)}
+          <Link onClick={() => setLinkSeen(prev => !prev)}
             className={`${activePage == "giving" ? "active" : ""}`}
             to="/giving"
           >
             <p>GIVE</p>
             <div></div>
           </Link>
-          <Link onClick={()=>setLinkSeen(prev=> !prev)}
+          <Link onClick={() => setLinkSeen(prev => !prev)}
             className={`${activePage == "share-testimony" ? "active" : ""}`}
             to="/share-testimony"
           >
             <p>SHARE TESTIMONY</p>
             <div></div>
           </Link>
-          <Link onClick={()=>setLinkSeen(prev=> !prev)}
+          <Link onClick={() => setLinkSeen(prev => !prev)}
             className={`${activePage == "locations" ? "active" : ""}`}
             to="/locations"
           >
@@ -157,15 +172,14 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
               <div></div>
             </div>
             <div className="ministry_dropdown">
-              <Link 
-                className={`dropdown_link ${
-                  activePage == "testimonies" ? "active" : ""
-                }`}
+              <Link
+                className={`dropdown_link ${activePage == "testimonies" ? "active" : ""
+                  }`}
                 onClick={() => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
-                   setLinkSeen(prev=> !prev);
+                  setLinkSeen(prev => !prev);
                 }}
                 to="/stories"
               >
@@ -173,14 +187,13 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                 <div></div>
               </Link>
               <Link
-                className={`dropdown_link ${
-                  activePage == "ministries" ? "active" : ""
-                }`}
+                className={`dropdown_link ${activePage == "ministries" ? "active" : ""
+                  }`}
                 onClick={() => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
-                    setLinkSeen(prev=> !prev)
+                  setLinkSeen(prev => !prev)
                 }}
                 to="/ministries"
               >
@@ -188,14 +201,13 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                 <div></div>
               </Link>
               <Link
-                className={`dropdown_link ${
-                  activePage == "next-steps" ? "active" : ""
-                }`}
+                className={`dropdown_link ${activePage == "next-steps" ? "active" : ""
+                  }`}
                 onClick={() => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
-                    setLinkSeen(prev=> !prev)
+                  setLinkSeen(prev => !prev)
                 }}
                 to="/baptisim"
               >
@@ -203,14 +215,13 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                 <div></div>
               </Link>
               <Link
-                className={`dropdown_link ${
-                  activePage == "events" ? "active" : ""
-                }`}
+                className={`dropdown_link ${activePage == "events" ? "active" : ""
+                  }`}
                 onClick={() => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
-                    setLinkSeen(prev=> !prev)
+                  setLinkSeen(prev => !prev)
                 }}
                 to="/events"
               >
@@ -218,14 +229,13 @@ const Nav = ({ activePage, setIsAuthenticated }) => {
                 <div></div>
               </Link>
               <Link
-                className={`dropdown_link ${
-                  activePage == "membership" ? "active" : ""
-                }`}
+                className={`dropdown_link ${activePage == "membership" ? "active" : ""
+                  }`}
                 onClick={() => {
                   document
                     .querySelector(".ministry_dropdown")
                     .classList.remove("active");
-                    setLinkSeen(prev=> !prev)
+                  setLinkSeen(prev => !prev)
                 }}
                 to="/membership-class"
               >

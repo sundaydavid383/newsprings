@@ -32,7 +32,7 @@ function SignIn({setIsAuthenticated}){
     try {
       setLoading(true)
       console.log(formData)
-      const response = await axios.post('http://localhost:4000/api/login', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}api/login`, formData);
       if (response.data.success) {
         setAlertText(`${response.data.message}. check your email or spam list in your email to get latest response`);
         setIsAuthenticated(true)

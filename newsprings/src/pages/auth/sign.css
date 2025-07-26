@@ -16,7 +16,7 @@
   justify-content: space-between;
 }
 .signinorup a{
-  color: var(--light-text);
+  color: var(--text-color);
   transition: .2s linear;
 }
 .signinorup a:hover{
@@ -25,6 +25,9 @@
 .signuppage span {
   background: var(--dark-secondary-shadow);
   z-index: -1;
+}
+.signuppage span.whitebackground{
+   background: var(--background-color)
 }
 .sign.container {
     display: flex;
@@ -52,6 +55,7 @@
     border-radius: 0.7rem;
     padding: 1.5rem;
     width: 100%;
+    margin: auto;
     max-width: 600px;
     backdrop-filter: blur(12px);
     z-index: 1;
@@ -61,12 +65,12 @@
     border: 1px solid var(--light-text);
   }
   .signup-form small{
-    color: var(--light-text);
+    color: var(--text-color);
   }
   .signup-form h2 {
     font-size: 1.8rem;
     text-align: center;
-    color: var(--light-text);
+    color: var(--text-color);
     margin-bottom: 1rem;
   }
   
@@ -76,7 +80,7 @@
     border-radius: 0.5rem;
     padding: 0.8rem 1rem;
     font-size: 1rem;
-    color: var(--light-text);
+    color: var(--text-color);
     width: 100%;
     background: var(--fadedWhite);
     border: 1px solid #ccc;
@@ -90,7 +94,7 @@
   
   .signup-form select option {
     background-color: var(--black);
-    color: var(--light-text);
+    color: var(--text-color);
   }
   
   

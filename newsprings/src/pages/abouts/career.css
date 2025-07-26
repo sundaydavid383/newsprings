@@ -127,23 +127,30 @@
 =========================career_testimony_image_container======
 ------=================================
 =========================*/
-.career_testimony_image_container{
-    position: relative;
-    overflow: hidden;
-    padding: 2rem;
-    background: var(--gray);
-    padding-inline: 1rem;
+.career_testimony_image_container {
+  position: relative;
+  overflow-x: auto;         /* Enable horizontal scroll */
+  overflow-y: hidden;
+  padding: 2rem 1rem;
+  background: var(--gray);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;    /* Firefox */
 }
-.career_testimony_image{
-    display: flex;
-    gap: 3rem;
-    position: relative;
-    transform: translateX(-200%);
-    transition: .3s linear ;
-    /*animation: scrollImage 53s infinite;*/
+
+
+
+.career_testimony_image {
+  display: flex;
+  gap: 3rem;
+  position: relative;
+  /* Removed transform so content is not pushed out of view */
+  transition: 0.3s linear;
 }
-.career_testimony_image img{
-    width: 68%;
+
+.career_testimony_image img {
+  width: 68%;
+  flex-shrink: 0; /* Prevent images from shrinking */
 }
 @keyframes scrollImage {
     0% {
@@ -293,4 +300,119 @@
     font-size: .97rem;
     margin-top: .6rem;
     font-weight: 400;
+}
+/* ========== Mobile (Phones ≤ 600px) ========== */
+@media (max-width: 600px) {
+  .career_hero .text {
+    width: 90%;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .career_testimony {
+    flex-direction: column;
+    padding: 2rem 1rem;
+  }
+
+  .career_testimony .text,
+  .career_testimony .career_image {
+    width: 100%;
+    text-align: center;
+  }
+
+  .career_image .moveleft,
+  .career_image .moveright {
+    top: 100%;
+    transform: scale(0.8);
+  }
+
+  .career_testimony_image img {
+    width: 90%;
+  }
+
+  .career_benefit_container.container {
+    padding-inline: 1rem;
+  }
+
+  .career_benefit_container .benefit_card {
+    width: 100%;
+  }
+
+  .university {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .career_testimony_image_container {
+    padding: 1rem;
+  }
+}
+
+
+/* ========== Tablet (601px – 991px) ========== */
+@media (min-width: 601px) and (max-width: 991px) {
+  .career_hero .text {
+    width: 80%;
+    padding: 1.2rem;
+  }
+
+  .career_testimony {
+    flex-direction: column;
+    padding: 3rem 2rem;
+  }
+
+  .career_testimony .text,
+  .career_testimony .career_image {
+    width: 90%;
+  }
+
+  .career_image .moveleft,
+  .career_image .moveright {
+    top: 102%;
+  }
+
+  .career_testimony_image img {
+    width: 75%;
+  }
+
+  .career_benefit_container.container {
+    padding-inline: 2rem;
+  }
+
+  .career_benefit_container .benefit_card {
+    width: 100%;
+  }
+
+  .university {
+    width: 90%;
+  }
+}
+
+
+/* ========== Small Desktops (992px – 1200px) ========== */
+@media (min-width: 992px) and (max-width: 1200px) {
+  .career_hero .text {
+    width: 60%;
+  }
+
+  .career_testimony .text,
+  .career_testimony .career_image {
+    width: 45%;
+  }
+
+  .career_testimony_image img {
+    width: 70%;
+  }
+
+  .career_benefit_container.container {
+    padding-inline: 4rem;
+  }
+
+  .career_benefit_container .benefit_card {
+    width: 48%;
+  }
+
+  .university {
+    width: 80%;
+  }
 }

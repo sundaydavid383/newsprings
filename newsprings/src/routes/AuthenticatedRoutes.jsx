@@ -29,6 +29,9 @@ import Base64Gen from "../component/base64Gen/Base64Gen";
 import Chat from "../component/chat/Chat";
 import Connect from"../pages/connect/Connect"
 import EasterCelebration from "../pages/easter/EasterCelebration";
+import PlanVisit from "../pages/planVisit/PlanVisit";
+import SunCityPage from "../component/sunCity/SunCityPage";
+import ConnectForm from "../pages/connectForm/ConnectForm";
 
 const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
   const [serviceOn, setServiceOn] = useState(true)
@@ -186,6 +189,9 @@ const AuthenticatedRoutes = ({ setActivePage, isAuthenticated }) => {
         <Route path="/easter" element={<EasterCelebration/>}/>
         <Route path="/baptisim" element={<WaterBaptisim />} />
         <Route path="/connect" element={<Connect />} />
+        <Route path="/visit" element={<PlanVisit />} />
+        <Route path="/connect-form" element={<ConnectForm />} />
+        <Route path="/suncity" element={<SunCityPage />} />
         <Route
           path="/admin"
           element={<AdminSendmessage />}

@@ -8,7 +8,7 @@ const FeatureBottom = ({ cards, featureType }) => {
 
 
   return (
-    <div className="feature_bottom container">
+    <div className={`feature_bottom  ${featureType === "homepage" ? "dark-feature-bottom":""} container`}>
       {featureType === "homepage" ? (
         cards.map((feature, index) => (
           <div key={index} className="feature_card">

@@ -17,6 +17,15 @@ export default function Connect() {
         </div>
       </section>
 
+            <section className="connect-section alt">
+        <h2>Ready to Take a Next Step?</h2>
+        <p>
+          We’d love to guide you! Whether you're exploring faith, considering baptism/membership,
+          or want to serve—we're here to help.
+        </p>
+        <a href="/connect-form" className="connect-button">Fill Out Connect Form</a>
+      </section>
+
       <section className="intro-section">
         <img src={image2} alt="People connecting" className="intro-image" />
         <div className="intro-text">
@@ -148,14 +157,7 @@ export default function Connect() {
   </ul>
 </section>
 
-      <section className="connect-section alt">
-        <h2>Ready to Take a Next Step?</h2>
-        <p>
-          We’d love to guide you! Whether you're exploring faith, considering baptism/membership,
-          or want to serve—we're here to help.
-        </p>
-        <a href="/connect-form" className="connect-button">Fill Out Connect Form</a>
-      </section>
+
     </div>
   );
 }

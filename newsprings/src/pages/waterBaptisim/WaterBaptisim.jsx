@@ -13,7 +13,7 @@ const WaterBaptisim = () => {
     const fetchEvent = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('http://localhost:4000/api/events/baptism');
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}api/events/baptism`);
         if (res.data.success) {
           setEvent(res.data.event);
         }
@@ -101,7 +101,7 @@ const WaterBaptisim = () => {
     }
   
     try {
-      await axios.post('http://localhost:4000/api/events/baptism/register', formData);
+      await axios.post(`${import.meta.env.VITE_API_URL}api/events/baptism/register`, formData);
       setAlertText('Registration successful!');
       setAlert(true);
       form.reset();

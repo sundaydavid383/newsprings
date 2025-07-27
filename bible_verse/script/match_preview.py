@@ -6,7 +6,7 @@ import threading
 import speech_recognition as sr
 
 # Load Bible data
-jifile_path = os.path.join(script_dir, '..', 'data', 'en_kjv.json')
+file_path = os.path.join(script_dir, '..', 'data', 'en_kjv.json')
 with open(file_path, 'r', encoding='utf-8') as file:
     bible = json.load(file)
 

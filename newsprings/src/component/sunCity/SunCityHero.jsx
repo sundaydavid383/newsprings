@@ -1,5 +1,5 @@
 import React from "react";
-import "./suncity.css";
+import "./sunCity.css";
 
 const SunCityHero = ({ image, h1, span, p }) => {
   return (

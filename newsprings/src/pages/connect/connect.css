@@ -15,11 +15,27 @@
   margin-top: 1rem;
   padding-inline: 0rem;
 }
+.connect-wrapper .hero-section span{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+  z-index: -1;
+     background: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ), url('/path/to/hero-image.jpg') no-repeat center center;
+
+}
 
 .hero-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: sticky;
+  z-index: -11;
   filter: brightness(60%);
 }
 
@@ -33,7 +49,9 @@
   max-width: 800px;
   padding: 0 20px;
 }
-
+.hero-content p{
+  color: var(---light-text);
+}
 .intro-section {
   display: flex;
   align-items: center;
@@ -53,9 +71,13 @@
 .connect-section, .social-section, .plan-visit, .connect-pastor {
   padding: 60px 20px;
 }
+.plan-visit ul li,
+.connect-section ul li{
+    color: var(--text-color);
+}
 
 .connect-section.alt {
-  background-color: #f9f9f9;
+  background-color: var(--background-color);
 }
 
 .connect-grid {
@@ -66,7 +88,7 @@
 }
 
 .connect-card {
-  background: var(--light-text);
+  background: var(--gray);
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -86,6 +108,7 @@
 
 .social-links li, .plan-visit ul li {
   margin-bottom: 12px;
+
 }
 
 .social-links a {

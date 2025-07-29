@@ -5,6 +5,7 @@ import "./txtImgBac.css"
 const TxtImgBac = ({p,h2,img, textClass, link,linktext}) => {
   return (
     <div className="career_intro">
+      <span></span>
     <div className={textClass}>
     <h2>{h2}</h2>
     <p>{p}</p>

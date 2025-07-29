@@ -32,9 +32,16 @@
 .nav-upper .btn p{
     margin-top: -.66rem;
 }
-
+.nav i{
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-right: .6rem;
+}
 a.btn p{
     margin-top: 0rem;
+}
+a.btn i{
+    color: var(--white)
 }
 .nav-upper a{
     display: flex;
@@ -68,7 +75,6 @@ a.btn p{
 .nav-lower .fa-bars-staggered,
 .nav-lower .i{
     font-size: 2rem;
-    color: var(--text-color);
     display: none;
     width: 4rem;
 }
@@ -206,7 +212,6 @@ a.btn p{
     display: block;
     cursor: pointer;
     font-size: 2rem;
-    color: var(--text-color)
   }
   .nav-upper a {
     font-size: .85rem;
@@ -247,8 +252,8 @@ a.btn p{
 
   .nav-lower .logo img {
     width: 7rem;
-    margin-bottom: .5rem;
-    margin-top: 1rem;
+    margin-bottom: .1rem;
+    margin-top: 1.52rem;
   }
 }
 

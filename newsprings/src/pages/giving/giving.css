@@ -5,6 +5,9 @@
     padding-inline: 18%;
     margin-block: 2rem;
 }
+.questionAndAnswer h1{
+    color: var(--text-color)
+}
 .moreInfo{
     font-size: 1.09rem;
     color: var(--secondary-color);

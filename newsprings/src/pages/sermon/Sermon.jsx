@@ -4,9 +4,9 @@ import FeatureBottom from '../../component/feature/FeatureBottom'
 
 const Sermon = ({setActivePage}) => {
   const [descirptionDetails, setsetDescirptionDetails] = useState([])
-  useEffect(() => {
-    setActivePage("sermons")
-  }, [])
+ 
+
+
     
 
 
@@ -19,6 +19,14 @@ const Sermon = ({setActivePage}) => {
     const [loading, setLoading] = useState(false);
   
   useEffect(() => {
+      setActivePage("sermons");
+
+      const localData = localStorage.getItem("sermonVideos");
+      if (localData) {
+        setVideos(JSON.parse(localData));
+      }
+      // Fetch the feed from YouTube
+      // and store it in localStorage
     const fetchFeed = async () => {
       try {
         setLoading(true);
@@ -58,12 +66,18 @@ const Sermon = ({setActivePage}) => {
             preacher: descripdata[index]?.preacher, // Optional: you can change this dynamically
           };
         });
+
+        localStorage.setItem("sermonVideos", JSON.stringify(data));
+        
         setLoading(false);
         setVideos(data);
       } catch (error) {
         setLoading(false);
         console.error("Failed to fetch feed", error);
       }
+       finally {
+      setLoading(false);
+    }
     };
 
       fetchFeed()

@@ -138,8 +138,11 @@
 .giving_card p{
     line-height: 1.4rem;
 }
-.giving_card h2{
+.feature_bottom .feature_card.giving_card .feature_text h2{
     color: var(--secondary-color);
+}
+.feature_bottom .feature_card.giving_card .feature_text p{
+  color: var(--text-color)
 }
 
 

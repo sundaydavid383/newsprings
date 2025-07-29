@@ -7,6 +7,7 @@ export default function Connect() {
   return (
     <div className="connect-wrapper">
       <section className="hero-section">
+        <span></span>
         <img src={image1} alt="Worship gathering" className="hero-image" />
         <div className="hero-content">
           <h1>We’re Glad You’re Here</h1>
